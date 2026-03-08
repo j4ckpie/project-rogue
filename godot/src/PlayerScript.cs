@@ -4,7 +4,7 @@ using System;
 [GlobalClass]
 public partial class PlayerScript : CharacterBody2D
 {
-	public enum MovementMode { IDLE, WALK, SPRINT, ATTACK, SHOOT }
+	public enum MovementMode { IDLE, WALK, SPRINT, ATTACK, HEAVY_ATTACK, SHOOT }
 
 	[ExportGroup("Nodes")]
 	[Export]
@@ -39,6 +39,14 @@ public partial class PlayerScript : CharacterBody2D
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
 	}
 
+    public override void _Input(InputEvent @event)
+    {
+        if(@event.IsActionPressed("attack")) Attack();
+		if(@event.IsActionPressed("heavy_attack")) HeavyAttack();
+		if(@event.IsActionPressed("shoot")) Shoot();
+    }
+
+
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
@@ -55,7 +63,12 @@ public partial class PlayerScript : CharacterBody2D
 		float currentSpeedMultiplier = 1.0f;
 		if(_isSprinting) currentSpeedMultiplier = _sprintSpeedMultiplier;
 		else if(_isSneaking) currentSpeedMultiplier = _sneakSpeedMultiplier;
-		
+
+		if (_movementMode == MovementMode.IDLE || _movementMode == MovementMode.WALK)
+    	{
+        	_movementMode = _direction.Length() > 0 ? MovementMode.WALK : MovementMode.IDLE;
+    	}
+
 		_desiredVelocity = _direction.Normalized() * _movementSpeed * currentSpeedMultiplier;
 
 		if(_direction.Length() > 0)
@@ -69,24 +82,33 @@ public partial class PlayerScript : CharacterBody2D
 
 
         MoveAndSlide();
-		UpdatePlayerAnimation();
+		UpdateMovementAnimation();
     }
 
-	private void UpdatePlayerAnimation()
+	public void _on_animation_player_animation_finished(string animName)
+	{
+    	if(animName == "attack" || animName == "heavy_attack" || animName == "shoot")
+    	{
+        	_movementMode = MovementMode.IDLE;
+    	}
+	}
+
+	private void UpdateMovementAnimation()
 	{
 		UpdateSpriteDirection();
-		if(_desiredVelocity.Length() ==  0)
+		if(_movementMode == MovementMode.IDLE || _movementMode == MovementMode.WALK)
 		{
-			_movementMode = MovementMode.IDLE;
-			_animationPlayer.Play("idle");
-		}
-		else if(_desiredVelocity.Length() > 0)
-		{
-			_movementMode = MovementMode.WALK;
-			_animationPlayer.Play("walk");
-			if(_isSprinting && !_isSneaking) _animationPlayer.SpeedScale = 1.075f;
-			else if(!_isSprinting && _isSneaking) _animationPlayer.SpeedScale = 0.5f;
-			else _animationPlayer.SpeedScale = 1.0f;
+			if(_desiredVelocity.Length() ==  0)
+			{
+				_animationPlayer.Play("idle");
+			}
+			else if(_desiredVelocity.Length() > 0)
+			{
+				_animationPlayer.Play("walk");
+				if(_isSprinting && !_isSneaking) _animationPlayer.SpeedScale = 1.075f;
+				else if(!_isSprinting && _isSneaking) _animationPlayer.SpeedScale = 0.5f;
+				else _animationPlayer.SpeedScale = 1.0f;
+			}
 		}
 	}
 
@@ -100,6 +122,24 @@ public partial class PlayerScript : CharacterBody2D
 		{
 			_playerSprite.FlipH = false;
 		}
+	}
+
+	private void Attack()
+	{
+		_movementMode = MovementMode.ATTACK;
+		_animationPlayer.Play("attack");
+	}
+
+	private void HeavyAttack()
+	{
+		_movementMode = MovementMode.HEAVY_ATTACK;
+		_animationPlayer.Play("heavy_attack");
+	}
+
+	private void Shoot()
+	{
+		_movementMode = MovementMode.SHOOT;
+		_animationPlayer.Play("shoot");
 	}
 
 }
