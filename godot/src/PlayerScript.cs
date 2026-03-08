@@ -11,6 +11,8 @@ public partial class PlayerScript : CharacterBody2D
 	private Sprite2D _playerSprite;
 	[Export]
 	private AnimationPlayer _animationPlayer;
+	[Export]
+	private Control _crosshairSprite;
 
 	[ExportGroup("Settings")]
 	[Export]
@@ -34,11 +36,13 @@ public partial class PlayerScript : CharacterBody2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		Input.MouseMode = Input.MouseModeEnum.Hidden;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		_crosshairSprite.GlobalPosition = GetGlobalMousePosition();
 	}
 
     public override void _PhysicsProcess(double delta)

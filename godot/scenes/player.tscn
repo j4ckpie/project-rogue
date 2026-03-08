@@ -1,10 +1,25 @@
 [gd_scene load_steps=8 format=3 uid="uid://3ge6xu5jyc62"]
 
 [ext_resource type="Script" path="res://src/PlayerScript.cs" id="1_gdyaw"]
-[ext_resource type="Texture2D" uid="uid://df7hcg84ravtb" path="res://sprites/Soldier/Soldier with shadows/Soldier.png" id="2_7kh3q"]
+[ext_resource type="Texture2D" uid="uid://df7hcg84ravtb" path="res://sprites/Soldier/Soldier.png" id="2_7kh3q"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t2ic1"]
 height = 24.0
+
+[sub_resource type="Animation" id="Animation_s0svk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_5mpda"]
 resource_name = "idle"
@@ -20,21 +35,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 2, 3, 4, 5]
-}
-
-[sub_resource type="Animation" id="Animation_s0svk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_r7c2s"]
@@ -61,10 +61,11 @@ _data = {
 "walk": SubResource("Animation_r7c2s")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_playerSprite", "_animationPlayer")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_playerSprite", "_animationPlayer", "_crosshairSprite")]
 script = ExtResource("1_gdyaw")
 _playerSprite = NodePath("Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
+_crosshairSprite = NodePath("")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_t2ic1")
