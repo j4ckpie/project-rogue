@@ -14,7 +14,11 @@ public partial class PlayerScript : CharacterBody2D
 
 	[ExportGroup("Settings")]
 	[Export]
-	private float _movementSpeed = 100.0f;
+	private float _movementSpeed = 75.0f;
+	[Export]
+	private float _sprintSpeedMultiplier = 1.75f;
+	[Export]
+	private float _sneakSpeedMultiplier = 0.5f;
 	[Export]
 	private float _acceleration = 12.0f;
 	[Export]
@@ -24,6 +28,7 @@ public partial class PlayerScript : CharacterBody2D
 	private Vector2 _direction = Vector2.Zero;
 	private Vector2 _desiredVelocity = Vector2.Zero;
 	private bool _isSprinting = false;
+	private bool _isSneaking = false;
 	private MovementMode _movementMode = MovementMode.IDLE;
 
 	// Called when the node enters the scene tree for the first time.
@@ -40,10 +45,14 @@ public partial class PlayerScript : CharacterBody2D
     {
 		_direction.X = Input.GetActionStrength("right") - Input.GetActionStrength("left");
 		_direction.Y = Input.GetActionStrength("down") - Input.GetActionStrength("up");
-		_isSprinting = Input.GetActionStrength("sprint") > 0 ? true : false;
+		_isSprinting = Input.IsActionPressed("sprint");
+		_isSneaking = Input.IsActionPressed("sneak") && !_isSprinting;
 
-		if(_isSprinting) _desiredVelocity = _direction.Normalized() * _movementSpeed * 1.75f;
-		else _desiredVelocity = _direction.Normalized() * _movementSpeed;
+		float currentSpeedMultiplier = 1.0f;
+		if(_isSprinting) currentSpeedMultiplier = _sprintSpeedMultiplier;
+		else if(_isSneaking) currentSpeedMultiplier = _sneakSpeedMultiplier;
+		
+		_desiredVelocity = _direction.Normalized() * _movementSpeed * currentSpeedMultiplier;
 
 		if(_direction.Length() > 0)
 		{
@@ -71,7 +80,8 @@ public partial class PlayerScript : CharacterBody2D
 		{
 			_movementMode = MovementMode.WALK;
 			_animationPlayer.Play("walk");
-			if(_isSprinting) _animationPlayer.SpeedScale = 1.075f;
+			if(_isSprinting && !_isSneaking) _animationPlayer.SpeedScale = 1.075f;
+			else if(!_isSprinting && _isSneaking) _animationPlayer.SpeedScale = 0.5f;
 			else _animationPlayer.SpeedScale = 1.0f;
 		}
 	}
