@@ -6,13 +6,23 @@ public partial class PlayerScript : CharacterBody2D
 {
 	public enum MovementMode { IDLE, WALK, SPRINT, ATTACK, SHOOT }
 
+	[ExportGroup("Nodes")]
 	[Export]
 	private Sprite2D _playerSprite;
 	[Export]
 	private AnimationPlayer _animationPlayer;
-	private float _health = 100.0f;
+
+	[ExportGroup("Settings")]
+	[Export]
 	private float _movementSpeed = 100.0f;
+	[Export]
+	private float _acceleration = 12.0f;
+	[Export]
+	private float _friction = 7.0f;
+
+	private float _health = 100.0f;
 	private Vector2 _direction = Vector2.Zero;
+	private Vector2 _desiredVelocity = Vector2.Zero;
 	private bool _isSprinting = false;
 	private MovementMode _movementMode = MovementMode.IDLE;
 
@@ -31,8 +41,20 @@ public partial class PlayerScript : CharacterBody2D
 		_direction.X = Input.GetActionStrength("right") - Input.GetActionStrength("left");
 		_direction.Y = Input.GetActionStrength("down") - Input.GetActionStrength("up");
 		_isSprinting = Input.GetActionStrength("sprint") > 0 ? true : false;
-		if(_isSprinting) Velocity = _direction * _movementSpeed * 1.75f;
-		else Velocity = _direction * _movementSpeed;
+
+		if(_isSprinting) _desiredVelocity = _direction.Normalized() * _movementSpeed * 1.75f;
+		else _desiredVelocity = _direction.Normalized() * _movementSpeed;
+
+		if(_direction.Length() > 0)
+		{
+			Velocity = Velocity.Lerp(_desiredVelocity, _acceleration * (float)delta);
+		}
+		else
+		{
+			Velocity = Velocity.Lerp(_desiredVelocity, _friction * (float)delta);
+		}
+
+
         MoveAndSlide();
 		UpdatePlayerAnimation();
     }
@@ -40,12 +62,12 @@ public partial class PlayerScript : CharacterBody2D
 	private void UpdatePlayerAnimation()
 	{
 		UpdateSpriteDirection();
-		if(Velocity.Length() ==  0)
+		if(_desiredVelocity.Length() ==  0)
 		{
 			_movementMode = MovementMode.IDLE;
 			_animationPlayer.Play("idle");
 		}
-		else if(Velocity.Length() > 0)
+		else if(_desiredVelocity.Length() > 0)
 		{
 			_movementMode = MovementMode.WALK;
 			_animationPlayer.Play("walk");
