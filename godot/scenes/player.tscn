@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://3ge6xu5jyc62"]
+
+[ext_resource type="Script" path="res://src/PlayerScript.cs" id="1_gdyaw"]
+[ext_resource type="Texture2D" uid="uid://dsj6rsgomqa6a" path="res://sprites/Soldier/Soldier with shadows/Soldier-Idle.png" id="1_okkey"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t2ic1"]
+height = 24.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_gdyaw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_t2ic1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_okkey")
+hframes = 6
