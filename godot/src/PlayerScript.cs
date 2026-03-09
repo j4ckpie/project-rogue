@@ -33,9 +33,9 @@ public partial class PlayerScript : CharacterBody2D
 	private bool _isSneaking = false;
 	private MovementMode _movementMode = MovementMode.IDLE;
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		Engine.MaxFps = 0;	// TODO: PLACEHOLDER
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
 	}
 
@@ -46,10 +46,9 @@ public partial class PlayerScript : CharacterBody2D
 		if(@event.IsActionPressed("shoot")) Shoot();
     }
 
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps");	// TODO: PLACEHOLDER
 		_crosshairSprite.GlobalPosition = GetGlobalMousePosition();
 	}
 

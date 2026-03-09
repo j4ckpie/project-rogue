@@ -19,10 +19,11 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=480
 window/size/viewport_height=270
-window/size/mode=4
+window/size/mode=2
 window/size/window_width_override=1366
 window/size/window_height_override=768
 window/stretch/mode="viewport"
+window/vsync/vsync_mode=0
 
 [dotnet]
 
@@ -84,3 +85,4 @@ shoot={
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.0261756, 0.0261756, 0.0261756, 1)
