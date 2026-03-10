@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://3ge6xu5jyc62"]
+[gd_scene load_steps=14 format=3 uid="uid://3ge6xu5jyc62"]
 
-[ext_resource type="Script" path="res://src/PlayerScript.cs" id="1_gdyaw"]
+[ext_resource type="Script" path="res://src/Player.cs" id="1_8cjk2"]
 [ext_resource type="Texture2D" uid="uid://df7hcg84ravtb" path="res://sprites/Soldier/Soldier.png" id="2_7kh3q"]
+[ext_resource type="PackedScene" uid="uid://baejn2du4r8qi" path="res://scenes/arrow.tscn" id="2_w8j0u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t2ic1"]
 height = 24.0
@@ -146,11 +147,11 @@ _data = {
 "walk": SubResource("Animation_r7c2s")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_playerSprite", "_animationPlayer", "_crosshairSprite")]
-script = ExtResource("1_gdyaw")
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_playerSprite", "_animationPlayer")]
+script = ExtResource("1_8cjk2")
+_arrowSprite = ExtResource("2_w8j0u")
 _playerSprite = NodePath("Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
-_crosshairSprite = NodePath("")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_t2ic1")

@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://bixj6o88fpnho"]
+[gd_scene load_steps=3 format=3 uid="uid://bixj6o88fpnho"]
 
+[ext_resource type="Script" path="res://src/Crosshair.cs" id="1_77qyb"]
 [ext_resource type="Texture2D" uid="uid://dgw6wenfbgrbe" path="res://sprites/Crosshair/crosshair.png" id="1_mhstw"]
 
 [node name="Crosshair" type="Control"]
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_77qyb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_mhstw")

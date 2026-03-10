@@ -2,8 +2,14 @@ using Godot;
 using System;
 using System.ComponentModel;
 
-public partial class PlayerScript : CharacterScript
+public partial class Player : Character
 {
+    [ExportGroup("Nodes")]
+    [Export]
+	protected PackedScene _arrowSprite;
+	[Export]
+	protected Control _crosshairSprite;
+
     [ExportGroup("Base Variables")]
 	[Export]
     protected string _actionUpName = "up";
@@ -78,6 +84,20 @@ public partial class PlayerScript : CharacterScript
     protected override bool HeavyAttack()
     {
         return base.HeavyAttack();
+    }
+
+    protected override void SpawnProjectile()
+    {
+        Arrow arrow = _arrowSprite.Instantiate<Arrow>();
+
+        arrow.GlobalPosition = GlobalPosition;
+
+        Vector2 targetPos = GetGlobalMousePosition();
+        Vector2 direction = (targetPos - GlobalPosition).Normalized();
+
+        arrow.Rotation = direction.Angle();
+
+        GetTree().CurrentScene.AddChild(arrow);
     }
 
     protected override bool Shoot()

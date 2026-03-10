@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public abstract partial class CharacterScript : CharacterBody2D
+public abstract partial class Character : CharacterBody2D
 {
 	public enum MovementMode { IDLE, WALK, SPRINT, ATTACK, HEAVY_ATTACK, SHOOT }
 
@@ -11,8 +11,6 @@ public abstract partial class CharacterScript : CharacterBody2D
 	protected Sprite2D _playerSprite;
 	[Export]
 	protected AnimationPlayer _animationPlayer;
-	[Export]
-	protected Control _crosshairSprite;
 
 	[ExportGroup("Base Variables")]
 	[Export]
@@ -89,8 +87,14 @@ public abstract partial class CharacterScript : CharacterBody2D
     	{
         	_movementMode = MovementMode.IDLE;
     	}
-		else if(animName == _animHeavyAttackName || animName == _animShootName)
+		else if(animName == _animHeavyAttackName)
 		{
+			_movementMode = MovementMode.IDLE;
+			_currentSpeedMultiplier = 1.0f;
+		}
+		else if(animName == _animShootName)
+		{
+			SpawnProjectile();
 			_movementMode = MovementMode.IDLE;
 			_currentSpeedMultiplier = 1.0f;
 		}
@@ -133,6 +137,8 @@ public abstract partial class CharacterScript : CharacterBody2D
 		_currentSpeedMultiplier = 0.1f;
 		return true;
 	}
+
+	protected abstract void SpawnProjectile();
 
 	protected virtual bool Shoot()
 	{
