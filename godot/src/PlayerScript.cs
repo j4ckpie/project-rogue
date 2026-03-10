@@ -1,8 +1,30 @@
 using Godot;
 using System;
+using System.ComponentModel;
 
 public partial class PlayerScript : CharacterScript
 {
+    [ExportGroup("Base Variables")]
+	[Export]
+    protected string _actionUpName = "up";
+    [Export]
+    protected string _actionDownName = "down";
+    [Export]
+    protected string _actionLeftName = "left";
+    [Export]
+    protected string _actionRightName = "right";
+    [Export]
+    protected string _actionSprintName = "sprint";
+    [Export]
+    protected string _actionSneakName = "sneak";
+    [Export]
+    protected string _actionAttackName = "attack";
+    [Export]
+    protected string _actionHeavyAttackName = "heavy_attack";
+    [Export]
+    protected string _actionShootName = "shoot";
+
+    
     public override void _Ready()
 	{
         base._Ready();
@@ -21,19 +43,19 @@ public partial class PlayerScript : CharacterScript
 
     public override void _PhysicsProcess(double delta)
     {
-		_direction.X = Input.GetActionStrength("right") - Input.GetActionStrength("left");
-		_direction.Y = Input.GetActionStrength("down") - Input.GetActionStrength("up");
-		_isSprinting = Input.IsActionPressed("sprint");
-		_isSneaking = Input.IsActionPressed("sneak") && !_isSprinting;
+		_direction.X = Input.GetActionStrength(_actionRightName) - Input.GetActionStrength(_actionLeftName);
+		_direction.Y = Input.GetActionStrength(_actionDownName) - Input.GetActionStrength(_actionUpName);
+		_isSprinting = Input.IsActionPressed(_actionSprintName);
+		_isSneaking = Input.IsActionPressed(_actionSneakName) && !_isSprinting;
 
         base._PhysicsProcess(delta);
     }
     
     public override void _Input(InputEvent @event)
     {
-        if(@event.IsActionPressed("attack")) Attack();
-		if(@event.IsActionPressed("heavy_attack")) HeavyAttack();
-		if(@event.IsActionPressed("shoot")) Shoot();
+        if(@event.IsActionPressed(_actionAttackName)) Attack();
+		if(@event.IsActionPressed(_actionHeavyAttackName)) HeavyAttack();
+		if(@event.IsActionPressed(_actionShootName)) Shoot();
     }
 
     protected override void UpdateSpriteDirection()
