@@ -1,4 +1,5 @@
 using Godot;
+using Godot.NativeInterop;
 using System;
 using System.ComponentModel;
 
@@ -6,38 +7,51 @@ public partial class Player : Character
 {
     [ExportGroup("Nodes")]
     [Export]
-	protected PackedScene _arrowSprite;
+	private PackedScene _arrowSprite;
 	[Export]
-	protected Control _crosshairSprite;
+	private Control _crosshairSprite;
     [Export]
-    protected Camera _camera;
+    private Camera _camera;
+    [Export]
+    private TextureProgressBar _staminaBar;
+    [Export]
+    private Timer _staminaRegenTimer;
 
     [ExportGroup("Base Variables")]
     [Export]
-    protected float _attackShakeIntensity = 1.25f;
+    private float _staminaMax = 100.0f;
     [Export]
-    protected float _heavyAttackShakeIntensity = 5.0f;
+    private float _staminaRate = 25.0f;
     [Export]
-    protected float _shootShakeIntensity = 3.0f;
+    private float _staminaDelay = 1.0f;
+    [Export]
+    private float _attackShakeIntensity = 1.25f;
+    [Export]
+    private float _heavyAttackShakeIntensity = 5.0f;
+    [Export]
+    private float _shootShakeIntensity = 3.0f;
 	[Export]
-    protected string _actionUpName = "up";
+    private string _actionUpName = "up";
     [Export]
-    protected string _actionDownName = "down";
+    private string _actionDownName = "down";
     [Export]
-    protected string _actionLeftName = "left";
+    private string _actionLeftName = "left";
     [Export]
-    protected string _actionRightName = "right";
+    private string _actionRightName = "right";
     [Export]
-    protected string _actionSprintName = "sprint";
+    private string _actionSprintName = "sprint";
     [Export]
-    protected string _actionSneakName = "sneak";
+    private string _actionSneakName = "sneak";
     [Export]
-    protected string _actionAttackName = "attack";
+    private string _actionAttackName = "attack";
     [Export]
-    protected string _actionHeavyAttackName = "heavy_attack";
+    private string _actionHeavyAttackName = "heavy_attack";
     [Export]
-    protected string _actionShootName = "shoot";
+    private string _actionShootName = "shoot";
 
+    private float _staminaCurrent = 100.0f;
+    private bool _canRegenStamina = true;
+    private Tween _fadeTween;
     
     public override void _Ready()
 	{
@@ -45,6 +59,7 @@ public partial class Player : Character
 
 		Engine.MaxFps = 0;	// TODO: PLACEHOLDER
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
+        _staminaBar.Value = _staminaCurrent;
 	}
 
 	public override void _Process(double delta)
@@ -52,6 +67,12 @@ public partial class Player : Character
         base._Process(delta);
 
 		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps");	// TODO: PLACEHOLDER
+
+        if(_canRegenStamina && _staminaCurrent < _staminaMax)
+        {
+            _staminaCurrent = Mathf.MoveToward(_staminaCurrent, _staminaMax, _staminaRate * (float)delta);
+            _staminaBar.Value = _staminaCurrent;
+        }
 	}
 
     public override void _PhysicsProcess(double delta)
@@ -71,6 +92,12 @@ public partial class Player : Character
 		if(@event.IsActionPressed(_actionShootName)) Shoot();
     }
 
+    public void _on_stamina_timer_timeout()
+    {
+        _canRegenStamina = true;
+        FadeStaminaBar(0.0f, 1.5f);
+    }
+
     protected override void UpdateSpriteDirection()
     {
         if(GlobalPosition.X - GetGlobalMousePosition().X > 0)
@@ -83,10 +110,37 @@ public partial class Player : Character
 		}
     }
 
+    private bool SpendStamina(float amount)
+    {
+        if(_staminaCurrent - amount < 0) return false;
+        _staminaCurrent = _staminaCurrent - amount;
+        _staminaBar.Value = _staminaCurrent;
+        _canRegenStamina = false;
+        FadeStaminaBar(1.0f, 0.25f);
+        _staminaRegenTimer.Stop();
+        _staminaRegenTimer.Start(2.0f);
+        return true;
+    }
+
+    private void FadeStaminaBar(float targetAlpha, float duration)
+    {
+        if(_fadeTween != null && _fadeTween.IsRunning())
+        {
+            _fadeTween.Kill();
+        }
+        _fadeTween = CreateTween();
+        _fadeTween.TweenProperty(_staminaBar, "modulate:a", targetAlpha, duration)
+              .SetTrans(Tween.TransitionType.Cubic);
+    }
+
     protected override bool Attack()
     {
-        _camera.StartCameraShake(_attackShakeIntensity);
-        return base.Attack();
+        if(SpendStamina(5.0f))
+        {
+            _camera.StartCameraShake(_attackShakeIntensity);
+            return base.Attack();
+        }
+        return false;
     }
 
     protected override void AfterAttack()
@@ -96,8 +150,12 @@ public partial class Player : Character
 
     protected override bool HeavyAttack()
     {
-        _camera.StartCameraShake(_attackShakeIntensity);
-        return base.HeavyAttack();
+        if(SpendStamina(30.0f))
+        {
+            _camera.StartCameraShake(_attackShakeIntensity);
+            return base.HeavyAttack();
+        }
+        return false;
     }
 
     protected virtual void MidHeavyAttack()

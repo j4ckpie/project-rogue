@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://3ge6xu5jyc62"]
+[gd_scene load_steps=17 format=3 uid="uid://3ge6xu5jyc62"]
 
 [ext_resource type="Script" path="res://src/Player.cs" id="1_8cjk2"]
 [ext_resource type="Texture2D" uid="uid://df7hcg84ravtb" path="res://sprites/Soldier/Soldier.png" id="2_7kh3q"]
@@ -162,10 +162,16 @@ _data = {
 "walk": SubResource("Animation_r7c2s")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_playerSprite", "_animationPlayer")]
+[sub_resource type="CanvasTexture" id="CanvasTexture_aerji"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_gesml"]
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_playerSprite", "_animationPlayer")]
 script = ExtResource("1_8cjk2")
 _arrowSprite = ExtResource("2_w8j0u")
 _camera = NodePath("Camera2D")
+_staminaBar = NodePath("StaminaTextureProgressBar")
+_staminaRegenTimer = NodePath("StaminaTimer")
 _playerSprite = NodePath("Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
 
@@ -189,4 +195,23 @@ script = ExtResource("4_cudoe")
 _target = NodePath("../Sprite2D")
 _maxMouseOffset = 30.0
 
+[node name="StaminaTextureProgressBar" type="TextureProgressBar" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = -10.0
+offset_top = -15.0
+offset_right = 10.0
+offset_bottom = -14.0
+value = 50.0
+nine_patch_stretch = true
+texture_under = SubResource("CanvasTexture_aerji")
+texture_progress = SubResource("CanvasTexture_gesml")
+tint_under = Color(0.0365563, 0.0365563, 0.0365563, 0.498039)
+tint_progress = Color(0.860369, 0.860369, 0.860369, 1)
+
+[node name="StaminaTimer" type="Timer" parent="."]
+wait_time = 0.075
+one_shot = true
+autostart = true
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="StaminaTimer" to="." method="_on_stamina_timer_timeout"]
