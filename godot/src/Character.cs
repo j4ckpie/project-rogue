@@ -89,12 +89,13 @@ public abstract partial class Character : CharacterBody2D
     	}
 		else if(animName == _animHeavyAttackName)
 		{
+			AfterHeavyAttack();
 			_movementMode = MovementMode.IDLE;
 			_currentSpeedMultiplier = 1.0f;
 		}
 		else if(animName == _animShootName)
 		{
-			SpawnProjectile();
+			AfterShoot();
 			_movementMode = MovementMode.IDLE;
 			_currentSpeedMultiplier = 1.0f;
 		}
@@ -129,6 +130,8 @@ public abstract partial class Character : CharacterBody2D
 		return true;
 	}
 
+	protected abstract void AfterAttack();
+
 	protected virtual bool HeavyAttack()
 	{
 		if(_movementMode == MovementMode.HEAVY_ATTACK) return false;
@@ -138,7 +141,7 @@ public abstract partial class Character : CharacterBody2D
 		return true;
 	}
 
-	protected abstract void SpawnProjectile();
+	protected abstract void AfterHeavyAttack();
 
 	protected virtual bool Shoot()
 	{
@@ -149,4 +152,5 @@ public abstract partial class Character : CharacterBody2D
 		return true;
 	}
 
+	protected abstract void AfterShoot();
 }

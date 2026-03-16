@@ -9,8 +9,16 @@ public partial class Player : Character
 	protected PackedScene _arrowSprite;
 	[Export]
 	protected Control _crosshairSprite;
+    [Export]
+    protected Camera _camera;
 
     [ExportGroup("Base Variables")]
+    [Export]
+    protected float _attackShakeIntensity = 1.25f;
+    [Export]
+    protected float _heavyAttackShakeIntensity = 5.0f;
+    [Export]
+    protected float _shootShakeIntensity = 3.0f;
 	[Export]
     protected string _actionUpName = "up";
     [Export]
@@ -77,16 +85,39 @@ public partial class Player : Character
 
     protected override bool Attack()
     {
+        _camera.StartCameraShake(_attackShakeIntensity);
         return base.Attack();
     }
 
+    protected override void AfterAttack()
+    {
+    }
+
+
     protected override bool HeavyAttack()
     {
+        _camera.StartCameraShake(_attackShakeIntensity);
         return base.HeavyAttack();
     }
 
-    protected override void SpawnProjectile()
+    protected virtual void MidHeavyAttack()
     {
+        _camera.StartCameraShake(_heavyAttackShakeIntensity);
+    }
+
+    protected override void AfterHeavyAttack()
+    {
+    }
+
+    protected override bool Shoot()
+    {
+        return base.Shoot();
+    }
+
+    protected override void AfterShoot()
+    {
+        _camera.StartCameraShake(_shootShakeIntensity);
+        
         Arrow arrow = _arrowSprite.Instantiate<Arrow>();
 
         arrow.GlobalPosition = GlobalPosition;
@@ -97,10 +128,5 @@ public partial class Player : Character
         arrow.Rotation = direction.Angle();
 
         GetTree().CurrentScene.AddChild(arrow);
-    }
-
-    protected override bool Shoot()
-    {
-        return base.Shoot();
     }
 }
