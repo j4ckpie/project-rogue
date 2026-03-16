@@ -44,7 +44,6 @@ public partial class Player : Character
         base._Process(delta);
 
 		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps");	// TODO: PLACEHOLDER
-		_crosshairSprite.GlobalPosition = GetGlobalMousePosition();
 	}
 
     public override void _PhysicsProcess(double delta)

@@ -1,12 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvbqmlvyuyrtc"]
+[gd_scene load_steps=4 format=3 uid="uid://bvbqmlvyuyrtc"]
 
-[ext_resource type="PackedScene" uid="uid://3ge6xu5jyc62" path="res://scenes/player.tscn" id="1_gefx1"]
-[ext_resource type="PackedScene" uid="uid://bixj6o88fpnho" path="res://scenes/crosshair.tscn" id="2_pps8y"]
+[ext_resource type="PackedScene" uid="uid://3ge6xu5jyc62" path="res://scenes/Player.tscn" id="1_jast4"]
+[ext_resource type="PackedScene" uid="uid://bixj6o88fpnho" path="res://scenes/Crosshair.tscn" id="2_wkc02"]
+[ext_resource type="PackedScene" uid="uid://v1esu2c6ylsh" path="res://scenes/ReferenceNode.tscn" id="3_r20x5"]
 
 [node name="World" type="Node2D"]
 
-[node name="Player" parent="." node_paths=PackedStringArray("_crosshairSprite") instance=ExtResource("1_gefx1")]
+[node name="Player" parent="." node_paths=PackedStringArray("_crosshairSprite") instance=ExtResource("1_jast4")]
+z_index = 1
 position = Vector2(240, 135)
 _crosshairSprite = NodePath("../Crosshair")
 
-[node name="Crosshair" parent="." instance=ExtResource("2_pps8y")]
+[node name="Crosshair" parent="." instance=ExtResource("2_wkc02")]
+top_level = true
+z_index = 999
+
+[node name="ReferenceNode" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(120, 85)
+
+[node name="ReferenceNode2" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(121, 120)
+
+[node name="ReferenceNode3" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(120, 154)

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://v1esu2c6ylsh"]
+
+[ext_resource type="Texture2D" uid="uid://rw04p1gv3wbi" path="res://sprites/Orc/Orc.png" id="1_gx33n"]
+
+[node name="ReferenceNode" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_gx33n")
+hframes = 8
+vframes = 6

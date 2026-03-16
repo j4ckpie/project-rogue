@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://3ge6xu5jyc62"]
+[gd_scene load_steps=15 format=3 uid="uid://3ge6xu5jyc62"]
 
 [ext_resource type="Script" path="res://src/Player.cs" id="1_8cjk2"]
 [ext_resource type="Texture2D" uid="uid://df7hcg84ravtb" path="res://sprites/Soldier/Soldier.png" id="2_7kh3q"]
-[ext_resource type="PackedScene" uid="uid://baejn2du4r8qi" path="res://scenes/arrow.tscn" id="2_w8j0u"]
+[ext_resource type="PackedScene" uid="uid://baejn2du4r8qi" path="res://scenes/Arrow.tscn" id="2_w8j0u"]
+[ext_resource type="Script" path="res://src/Camera.cs" id="4_cudoe"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t2ic1"]
 height = 24.0
@@ -165,5 +166,14 @@ vframes = 7
 libraries = {
 "": SubResource("AnimationLibrary_5d00y")
 }
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("_target")]
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
+script = ExtResource("4_cudoe")
+_target = NodePath("../Sprite2D")
+_followSpeed = 3.0
+_mouseInfluence = 0.1
+_maxMouseOffset = 30.0
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

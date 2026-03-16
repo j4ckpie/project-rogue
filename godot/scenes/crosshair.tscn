@@ -3,17 +3,16 @@
 [ext_resource type="Script" path="res://src/Crosshair.cs" id="1_77qyb"]
 [ext_resource type="Texture2D" uid="uid://dgw6wenfbgrbe" path="res://sprites/Crosshair/crosshair.png" id="1_mhstw"]
 
-[node name="Crosshair" type="Control"]
+[node name="Crosshair" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 script = ExtResource("1_77qyb")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
 texture = ExtResource("1_mhstw")
 centered = false
 offset = Vector2(-8, -8)
