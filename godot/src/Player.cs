@@ -16,6 +16,8 @@ public partial class Player : Character
     private TextureProgressBar _staminaBar;
     [Export]
     private Timer _staminaRegenTimer;
+    [Export]
+    private Timer _heavyAttackDelayTimer;
 
     [ExportGroup("Base Variables")]
     [Export]
@@ -51,6 +53,7 @@ public partial class Player : Character
 
     private float _staminaCurrent = 100.0f;
     private bool _canRegenStamina = true;
+    private bool _canHeavyAttack = true;
     private Tween _fadeTween;
     
     public override void _Ready()
@@ -96,6 +99,11 @@ public partial class Player : Character
     {
         _canRegenStamina = true;
         FadeStaminaBar(0.0f, 1.5f);
+    }
+
+    public void _on_heavy_attack_timer_timeout()
+    {
+        _canHeavyAttack = true;
     }
 
     protected override void UpdateSpriteDirection()
@@ -150,10 +158,15 @@ public partial class Player : Character
 
     protected override bool HeavyAttack()
     {
-        if(SpendStamina(30.0f))
+        if(_canHeavyAttack)
         {
-            _camera.StartCameraShake(_attackShakeIntensity);
-            return base.HeavyAttack();
+            if(SpendStamina(30.0f))
+            {
+                _canHeavyAttack = false;
+                _heavyAttackDelayTimer.Start();
+                _camera.StartCameraShake(_attackShakeIntensity);
+                return base.HeavyAttack();
+            }
         }
         return false;
     }

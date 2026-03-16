@@ -166,12 +166,13 @@ _data = {
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_gesml"]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_playerSprite", "_animationPlayer")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_heavyAttackDelayTimer", "_playerSprite", "_animationPlayer")]
 script = ExtResource("1_8cjk2")
 _arrowSprite = ExtResource("2_w8j0u")
 _camera = NodePath("Camera2D")
 _staminaBar = NodePath("StaminaTextureProgressBar")
 _staminaRegenTimer = NodePath("StaminaTimer")
+_heavyAttackDelayTimer = NodePath("HeavyAttackTimer")
 _playerSprite = NodePath("Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
 
@@ -213,5 +214,9 @@ wait_time = 0.075
 one_shot = true
 autostart = true
 
+[node name="HeavyAttackTimer" type="Timer" parent="."]
+wait_time = 2.5
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_stamina_timer_timeout"]
+[connection signal="timeout" from="HeavyAttackTimer" to="." method="_on_heavy_attack_timer_timeout"]
