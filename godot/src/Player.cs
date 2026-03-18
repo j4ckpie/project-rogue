@@ -51,6 +51,7 @@ public partial class Player : Character
     [Export]
     private string _actionShootName = "shoot";
 
+    public static Vector2 currentPlayerPositionRef;
     private float _staminaCurrent = 100.0f;
     private bool _canRegenStamina = true;
     private bool _canHeavyAttack = true;
@@ -70,6 +71,8 @@ public partial class Player : Character
         base._Process(delta);
 
 		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps");	// TODO: PLACEHOLDER
+
+        currentPlayerPositionRef = GlobalPosition;
 
         if(_canRegenStamina && _staminaCurrent < _staminaMax)
         {

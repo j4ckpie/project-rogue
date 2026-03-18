@@ -167,6 +167,7 @@ _data = {
 [sub_resource type="CanvasTexture" id="CanvasTexture_gesml"]
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_heavyAttackDelayTimer", "_playerSprite", "_animationPlayer")]
+position = Vector2(0, -10)
 script = ExtResource("1_8cjk2")
 _arrowSprite = ExtResource("2_w8j0u")
 _camera = NodePath("Camera2D")
@@ -198,6 +199,7 @@ _maxMouseOffset = 30.0
 
 [node name="StaminaTextureProgressBar" type="TextureProgressBar" parent="."]
 modulate = Color(1, 1, 1, 0)
+y_sort_enabled = true
 offset_left = -10.0
 offset_top = -15.0
 offset_right = 10.0

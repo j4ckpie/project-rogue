@@ -5,15 +5,13 @@
 [ext_resource type="PackedScene" uid="uid://v1esu2c6ylsh" path="res://scenes/ReferenceNode.tscn" id="3_r20x5"]
 
 [node name="World" type="Node2D"]
+y_sort_enabled = true
 
 [node name="Player" parent="." node_paths=PackedStringArray("_crosshairSprite") instance=ExtResource("1_jast4")]
-z_index = 1
 position = Vector2(240, 135)
 _crosshairSprite = NodePath("../Crosshair")
 
 [node name="Crosshair" parent="." instance=ExtResource("2_wkc02")]
-top_level = true
-z_index = 999
 
 [node name="ReferenceNode" parent="." instance=ExtResource("3_r20x5")]
 position = Vector2(120, 85)
@@ -22,4 +20,4 @@ position = Vector2(120, 85)
 position = Vector2(121, 120)
 
 [node name="ReferenceNode3" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(120, 154)
+position = Vector2(120, 141)
