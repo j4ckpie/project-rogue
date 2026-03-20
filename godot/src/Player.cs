@@ -203,4 +203,10 @@ public partial class Player : Character
 
         GetTree().CurrentScene.AddChild(arrow);
     }
+
+    protected override void Death()
+    {
+        throw new NotImplementedException(); // TODO
+    }
+
 }

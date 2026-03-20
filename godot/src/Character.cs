@@ -1,8 +1,9 @@
 using Godot;
 using System;
+using System.Runtime.InteropServices;
 
 [GlobalClass]
-public abstract partial class Character : CharacterBody2D
+public abstract partial class Character : CharacterBody2D, IDamageable
 {
 	public enum MovementMode { IDLE, WALK, SPRINT, ATTACK, HEAVY_ATTACK, SHOOT }
 
@@ -101,6 +102,12 @@ public abstract partial class Character : CharacterBody2D
 		}
 	}
 
+	public void TakeDamage(float amount)
+    {
+        _health -= amount;
+		if(_health <= 0) Death();
+    }
+
 	private void UpdateMovementAnimation()
 	{
 		UpdateSpriteDirection();
@@ -148,9 +155,14 @@ public abstract partial class Character : CharacterBody2D
 		if(_movementMode == MovementMode.SHOOT) return false;
 		_movementMode = MovementMode.SHOOT;
 		_animationPlayer.Play(_animShootName);
-		_currentSpeedMultiplier = 0.25f;
+		_currentSpeedMultiplier = 0.25f;	
 		return true;
 	}
 
 	protected abstract void AfterShoot();
+
+	protected virtual void Death()
+	{
+		 //TODO: play death animation
+	}
 }

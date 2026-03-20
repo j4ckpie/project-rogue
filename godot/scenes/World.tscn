@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://3ge6xu5jyc62" path="res://scenes/Player.tscn" id="1_jast4"]
 [ext_resource type="PackedScene" uid="uid://bixj6o88fpnho" path="res://scenes/Crosshair.tscn" id="2_wkc02"]
-[ext_resource type="PackedScene" uid="uid://v1esu2c6ylsh" path="res://scenes/ReferenceNode.tscn" id="3_r20x5"]
+[ext_resource type="PackedScene" uid="uid://v1esu2c6ylsh" path="res://scenes/Enemy.tscn" id="3_r20x5"]
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true

@@ -24,7 +24,7 @@ public partial class Arrow : Area2D
     public void _on_body_entered(Node2D body)
     {
         if(body is Player) return;
-        // TODO: DEAL DAMAGE
+        if(body is IDamageable damageable) damageable.TakeDamage(_damage);
         QueueFree();
     }
 }

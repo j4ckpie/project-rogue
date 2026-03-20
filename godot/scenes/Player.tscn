@@ -168,6 +168,7 @@ _data = {
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_heavyAttackDelayTimer", "_playerSprite", "_animationPlayer")]
 position = Vector2(0, -10)
+collision_mask = 8
 script = ExtResource("1_8cjk2")
 _arrowSprite = ExtResource("2_w8j0u")
 _camera = NodePath("Camera2D")
