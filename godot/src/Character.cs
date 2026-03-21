@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 [GlobalClass]
 public abstract partial class Character : CharacterBody2D, IDamageable
 {
-	public enum MovementMode { IDLE, WALK, SPRINT, ATTACK, HEAVY_ATTACK, SHOOT }
+	public enum MovementMode { IDLE, WALK, SPRINT, ATTACK, HEAVY_ATTACK, SHOOT, TAKE_DAMAGE, DEATH}
 
 	[ExportGroup("Nodes")]
 	[Export]
-	protected Sprite2D _playerSprite;
+	protected Sprite2D _targetSprite;
 	[Export]
 	protected AnimationPlayer _animationPlayer;
 
@@ -42,12 +42,17 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	protected string _animHeavyAttackName = "heavy_attack";
 	[Export]
 	protected string _animShootName = "shoot";
+	[Export]
+	protected string _animDeathName = "death";
+	[Export]
+	protected string _animTakeDamageName = "take_damage";
 
 	protected Vector2 _direction = Vector2.Zero;
 	protected Vector2 _desiredVelocity = Vector2.Zero;
 	protected bool _isSprinting = false;
 	protected bool _isSneaking = false;
 	protected MovementMode _movementMode = MovementMode.IDLE;
+	protected Tween _fadeTween;
 
 	public override void _Ready()
 	{
@@ -61,6 +66,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
     public override void _PhysicsProcess(double delta)
     {
+		if (_movementMode == MovementMode.DEATH) return;
 		if(_isSprinting && _movementMode != MovementMode.SHOOT && _movementMode != MovementMode.HEAVY_ATTACK) _currentSpeedMultiplier = _sprintSpeedMultiplier;
 		else if(_isSneaking && _movementMode != MovementMode.SHOOT && _movementMode != MovementMode.HEAVY_ATTACK) _currentSpeedMultiplier = _sneakSpeedMultiplier;
 
@@ -86,7 +92,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		UpdateMovementAnimation();
     }
 
-	public void _on_animation_player_animation_finished(string animName)
+	public virtual void _on_animation_player_animation_finished(string animName)
 	{
     	if(animName == _animAttackName)
     	{
@@ -104,12 +110,26 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 			_movementMode = MovementMode.IDLE;
 			_currentSpeedMultiplier = 1.0f;
 		}
+		else if(animName == _animTakeDamageName)
+		{
+			_movementMode = MovementMode.IDLE;
+		}
+		else if(animName == _animDeathName)
+		{
+			PlayFadeAnimation(_targetSprite, 0.0f, 2.0f);
+		}
 	}
 
 	public virtual void TakeDamage(float amount)
     {
+		if(_movementMode == MovementMode.DEATH) return;
         _health -= amount;
 		if(_health <= 0) Death();
+		else
+		{
+			_movementMode = MovementMode.TAKE_DAMAGE;
+			_animationPlayer.Play(_animTakeDamageName);
+		}
     }
 
 	public virtual void ApplyKnockback(float amount, Vector2 direction)
@@ -140,6 +160,17 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 			}
 		}
 	}
+
+	protected void PlayFadeAnimation(Node targetBody, float targetAlpha, float duration)
+    {
+        if(_fadeTween != null && _fadeTween.IsRunning())
+        {
+            _fadeTween.Kill();
+        }
+        _fadeTween = CreateTween();
+        _fadeTween.TweenProperty(targetBody, "modulate:a", targetAlpha, duration)
+              .SetTrans(Tween.TransitionType.Cubic);
+    }
 
 	protected abstract void UpdateSpriteDirection();
 
@@ -177,6 +208,10 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
 	protected virtual void Death()
 	{
-		 //TODO: play death animation
+		_movementMode = MovementMode.DEATH;
+		_animationPlayer.Play(_animDeathName);
+		Velocity = Vector2.Zero;
+		SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, 0u);
+		SetDeferred(CollisionObject2D.PropertyName.CollisionMask, 0u);
 	}
 }

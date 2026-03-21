@@ -5,9 +5,9 @@ public partial class Enemy : Character
 {
 	[ExportGroup("Base Variables")]
 	[Export]
-	private float _knockbackDeceleration = 600.0f;
+	protected float _knockbackDeceleration = 600.0f;
 
-	private Vector2 _knockbackVelocity = Vector2.Zero;
+	protected Vector2 _knockbackVelocity = Vector2.Zero;
 	
 	public override void _PhysicsProcess(double delta)
 	{
@@ -21,7 +21,24 @@ public partial class Enemy : Character
 			Velocity = Vector2.Zero;
         	// TODO: AI MOVE
     	}
-    	MoveAndSlide();
+    	base._PhysicsProcess(delta);
+	}
+
+	public override void _on_animation_player_animation_finished(string animName)
+	{
+		base._on_animation_player_animation_finished(animName);
+		if(animName == _animDeathName)
+		{
+			Tween deleteTween = CreateTween();
+			deleteTween.TweenInterval(2.0f);
+			deleteTween.TweenCallback(Callable.From(QueueFree));
+		}
+	}
+
+	protected override void Death()
+	{
+		base.Death();
+
 	}
 
 	protected override void AfterAttack()
@@ -39,20 +56,15 @@ public partial class Enemy : Character
 		throw new NotImplementedException();
 	}
 
-    protected override void Death()
-    {
-        QueueFree();
-    }
-
     protected override void UpdateSpriteDirection()
 	{
 		if(GlobalPosition.X - Player.currentPlayerPositionRef.X > 0)
 		{
-			_playerSprite.FlipH = true;
+			_targetSprite.FlipH = true;
 		}
 		else if(GlobalPosition.X - Player.currentPlayerPositionRef.X < 0)
 		{
-			_playerSprite.FlipH = false;
+			_targetSprite.FlipH = false;
 		}
 	}
 	

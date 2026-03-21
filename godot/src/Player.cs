@@ -59,7 +59,6 @@ public partial class Player : Character
     private float _staminaCurrent = 100.0f;
     private bool _canRegenStamina = true;
     private bool _canHeavyAttack = true;
-    private Tween _fadeTween;
     
     public override void _Ready()
 	{
@@ -132,12 +131,12 @@ public partial class Player : Character
     {
         if(GlobalPosition.X - GetGlobalMousePosition().X > 0)
 		{
-			_playerSprite.FlipH = true;
+			_targetSprite.FlipH = true;
             _attackAreas.Scale = new Vector2(-1, 1);
 		}
 		else if(GlobalPosition.X - GetGlobalMousePosition().X < 0)
 		{
-			_playerSprite.FlipH = false;
+			_targetSprite.FlipH = false;
             _attackAreas.Scale = new Vector2(1, 1);
 		}
     }
@@ -148,7 +147,7 @@ public partial class Player : Character
         _staminaCurrent = _staminaCurrent - amount;
         _staminaBar.Value = _staminaCurrent;
         _canRegenStamina = false;
-        FadeStaminaBar(1.0f, 0.25f);
+        PlayFadeAnimation(_staminaBar, 1.0f, 0.25f);
         _staminaRegenTimer.Stop();
         _staminaRegenTimer.Start(2.0f);
         return true;
@@ -227,7 +226,7 @@ public partial class Player : Character
 
     protected override void Death()
     {
-        throw new NotImplementedException(); // TODO
+        throw new NotImplementedException(); // TODO: saving, ui animation etc
     }
 
 }

@@ -221,7 +221,7 @@ height = 34.0
 radius = 17.0
 height = 52.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_heavyAttackDelayTimer", "_attackAreas", "_playerSprite", "_animationPlayer")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_heavyAttackDelayTimer", "_attackAreas", "_targetSprite", "_animationPlayer")]
 position = Vector2(0, -10)
 collision_mask = 8
 script = ExtResource("1_8cjk2")
@@ -231,7 +231,7 @@ _staminaBar = NodePath("StaminaTextureProgressBar")
 _staminaRegenTimer = NodePath("StaminaTimer")
 _heavyAttackDelayTimer = NodePath("HeavyAttackTimer")
 _attackAreas = NodePath("AttackAreas")
-_playerSprite = NodePath("Sprite2D")
+_targetSprite = NodePath("Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
