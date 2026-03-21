@@ -9,6 +9,8 @@ public partial class Arrow : Area2D
     [Export]
     private float _damage = 20.0f;
     [Export]
+    private float _slownessIntensity = 1.5f;
+    [Export]
     private float _lifespan = 5.0f;
 
     public override void _Ready()

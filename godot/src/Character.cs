@@ -17,6 +17,10 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	[Export]
 	protected float _health = 100.0f;
 	[Export]
+    protected float _baseDamage = 25.0f;
+    [Export]
+    protected float _baseHeavyDamage = 40.0f;
+	[Export]
 	protected float _movementSpeed = 75.0f;
 	[Export]
 	protected float _currentSpeedMultiplier = 1.0f;
@@ -102,11 +106,21 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		}
 	}
 
-	public void TakeDamage(float amount)
+	public virtual void TakeDamage(float amount)
     {
         _health -= amount;
 		if(_health <= 0) Death();
     }
+
+	public virtual void ApplyKnockback(float amount, Vector2 direction)
+	{
+		
+	}
+
+	public virtual void ApplySlowness(float amount)
+	{
+		
+	}
 
 	private void UpdateMovementAnimation()
 	{
@@ -131,7 +145,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
 	protected virtual bool Attack()
 	{
-		if(_movementMode == MovementMode.ATTACK) return false;
+		if(_movementMode == MovementMode.ATTACK || _movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.SHOOT) return false;
 		_movementMode = MovementMode.ATTACK;
 		_animationPlayer.Play(_animAttackName);
 		return true;
@@ -141,7 +155,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
 	protected virtual bool HeavyAttack()
 	{
-		if(_movementMode == MovementMode.HEAVY_ATTACK) return false;
+		if(_movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.SHOOT) return false;
 		_movementMode = MovementMode.HEAVY_ATTACK;
 		_animationPlayer.Play(_animHeavyAttackName);
 		_currentSpeedMultiplier = 0.1f;
@@ -152,7 +166,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
 	protected virtual bool Shoot()
 	{
-		if(_movementMode == MovementMode.SHOOT) return false;
+		if(_movementMode == MovementMode.SHOOT || _movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.SHOOT) return false;
 		_movementMode = MovementMode.SHOOT;
 		_animationPlayer.Play(_animShootName);
 		_currentSpeedMultiplier = 0.25f;	

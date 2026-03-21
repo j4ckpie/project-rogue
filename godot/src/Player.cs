@@ -18,6 +18,8 @@ public partial class Player : Character
     private Timer _staminaRegenTimer;
     [Export]
     private Timer _heavyAttackDelayTimer;
+    [Export]
+    private Node2D _attackAreas;
 
     [ExportGroup("Base Variables")]
     [Export]
@@ -26,6 +28,8 @@ public partial class Player : Character
     private float _staminaRate = 25.0f;
     [Export]
     private float _staminaDelay = 1.0f;
+    [Export]
+	private float _knockbackForce = 175.0f;
     [Export]
     private float _attackShakeIntensity = 1.25f;
     [Export]
@@ -109,15 +113,32 @@ public partial class Player : Character
         _canHeavyAttack = true;
     }
 
+    public void _on_light_attack_area_body_entered(Node2D body)
+    {
+        if(body is IDamageable damageable) damageable.TakeDamage(_baseDamage);
+    }
+
+    public void _on_heavy_attack_area_body_entered(Node2D body)
+    {
+        if(body is IDamageable damageable)
+        {
+            damageable.TakeDamage(_baseHeavyDamage);
+            Vector2 knockbackDirection = (body.GlobalPosition - GlobalPosition).Normalized();
+            damageable.ApplyKnockback(_knockbackForce, knockbackDirection);
+        }
+    }
+
     protected override void UpdateSpriteDirection()
     {
         if(GlobalPosition.X - GetGlobalMousePosition().X > 0)
 		{
 			_playerSprite.FlipH = true;
+            _attackAreas.Scale = new Vector2(-1, 1);
 		}
 		else if(GlobalPosition.X - GetGlobalMousePosition().X < 0)
 		{
 			_playerSprite.FlipH = false;
+            _attackAreas.Scale = new Vector2(1, 1);
 		}
     }
 
