@@ -61,10 +61,12 @@ public partial class Enemy : Character
 		if(GlobalPosition.X - Player.currentPlayerPositionRef.X > 0)
 		{
 			_targetSprite.FlipH = true;
+			_attackAreas.Scale = new Vector2(-1, 1);
 		}
 		else if(GlobalPosition.X - Player.currentPlayerPositionRef.X < 0)
 		{
 			_targetSprite.FlipH = false;
+			_attackAreas.Scale = new Vector2(1, 1);
 		}
 	}
 	

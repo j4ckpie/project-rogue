@@ -18,8 +18,6 @@ public partial class Player : Character
     private Timer _staminaRegenTimer;
     [Export]
     private Timer _heavyAttackDelayTimer;
-    [Export]
-    private Node2D _attackAreas;
 
     [ExportGroup("Base Variables")]
     [Export]

@@ -12,6 +12,8 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	protected Sprite2D _targetSprite;
 	[Export]
 	protected AnimationPlayer _animationPlayer;
+	[Export]
+    protected Node2D _attackAreas;
 
 	[ExportGroup("Base Variables")]
 	[Export]

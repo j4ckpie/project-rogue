@@ -219,9 +219,9 @@ height = 34.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7r8qq"]
 radius = 17.0
-height = 52.0
+height = 66.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_heavyAttackDelayTimer", "_attackAreas", "_targetSprite", "_animationPlayer")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_heavyAttackDelayTimer", "_targetSprite", "_animationPlayer", "_attackAreas")]
 position = Vector2(0, -10)
 collision_mask = 8
 script = ExtResource("1_8cjk2")
@@ -230,9 +230,9 @@ _camera = NodePath("Camera2D")
 _staminaBar = NodePath("StaminaTextureProgressBar")
 _staminaRegenTimer = NodePath("StaminaTimer")
 _heavyAttackDelayTimer = NodePath("HeavyAttackTimer")
-_attackAreas = NodePath("AttackAreas")
 _targetSprite = NodePath("Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
+_attackAreas = NodePath("AttackAreas")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_t2ic1")
