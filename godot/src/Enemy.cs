@@ -8,7 +8,20 @@ public partial class Enemy : Character
 	protected float _knockbackDeceleration = 600.0f;
 
 	protected Vector2 _knockbackVelocity = Vector2.Zero;
-	
+
+    public override void _Ready()
+    {
+		_baseDamage = 10.0f;
+		_baseHeavyDamage = 10.0f;
+        base._Ready();
+    }
+
+	// public override void _Input(InputEvent @event)
+    // {
+    //     if(@event.IsActionPressed("debug0")) Attack();
+	// 	if(@event.IsActionPressed("debug1")) HeavyAttack();
+    // }
+
 	public override void _PhysicsProcess(double delta)
 	{
 		if(_knockbackVelocity != Vector2.Zero)
@@ -35,6 +48,19 @@ public partial class Enemy : Character
 		}
 	}
 
+	public void _on_light_attack_area_body_entered(Node2D body)
+    {
+        if(body is IDamageable damageable) damageable.TakeDamage(_baseDamage);
+    }
+
+    public void _on_heavy_attack_area_body_entered(Node2D body)
+    {
+        if(body is IDamageable damageable)
+        {
+            damageable.TakeDamage(_baseHeavyDamage);
+        }
+    }
+
 	protected override void Death()
 	{
 		base.Death();
@@ -43,17 +69,14 @@ public partial class Enemy : Character
 
 	protected override void AfterAttack()
 	{
-		throw new NotImplementedException();
 	}
 
 	protected override void AfterHeavyAttack()
 	{
-		throw new NotImplementedException();
 	}
 
 	protected override void AfterShoot()
 	{
-		throw new NotImplementedException();
 	}
 
     protected override void UpdateSpriteDirection()
