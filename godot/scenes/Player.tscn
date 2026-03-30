@@ -239,7 +239,8 @@ _data = {
 [sub_resource type="CanvasTexture" id="CanvasTexture_gesml"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i75kn"]
-height = 34.0
+radius = 12.0
+height = 40.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7r8qq"]
 radius = 17.0
@@ -310,7 +311,7 @@ position = Vector2(0, -10)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackAreas/LightAttackArea"]
-position = Vector2(3, 9)
+position = Vector2(9, 10)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_i75kn")
 disabled = true

@@ -83,12 +83,15 @@ public partial class Enemy : Character
     public override void ApplySlowness(float amount)
     {
         _statusSpeedMultiplier = amount;
+		_isStunned = true;
+		_currentCooldown = _attackCooldown;
 		_slownessTimer.Start();
     }
 
 	public void _on_slowness_timer_timeout()
 	{
 		_statusSpeedMultiplier = _baseStatusSpeedMultiplier;
+		_isStunned = false;
 	}
 
 	protected override void Death()
@@ -133,7 +136,7 @@ public partial class Enemy : Character
 			Func<bool> attackMethod;
 			if(GD.RandRange(0, 1) < 0.5) attackMethod = HeavyAttack;
 			else attackMethod = Attack;
-			if(_currentCooldown <= 0)
+			if(_currentCooldown <= 0 && !_isStunned)
 			{
 				if(attackMethod())
 				{

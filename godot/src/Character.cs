@@ -55,6 +55,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	protected float _baseStatusSpeedMultiplier = 1.0f;
 	protected bool _isSprinting = false;
 	protected bool _isSneaking = false;
+	protected bool _isStunned = false;
 	protected MovementMode _movementMode = MovementMode.IDLE;
 	protected Tween _fadeTween;
 
