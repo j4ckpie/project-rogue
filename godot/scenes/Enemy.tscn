@@ -4,7 +4,6 @@
 [ext_resource type="Script" path="res://src/Enemy.cs" id="1_rt4g0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6tpc6"]
-resource_local_to_scene = true
 radius = 8.0
 height = 20.0
 
@@ -185,12 +184,13 @@ height = 34.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aqqwx"]
 radius = 15.0
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("_targetSprite", "_animationPlayer", "_attackAreas")]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("_slownessTimer", "_targetSprite", "_animationPlayer", "_attackAreas")]
 y_sort_enabled = true
 position = Vector2(0, -10)
 collision_layer = 2
 collision_mask = 14
 script = ExtResource("1_rt4g0")
+_slownessTimer = NodePath("SlownessTimer")
 _targetSprite = NodePath("Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
 _attackAreas = NodePath("AttackAreas")
@@ -229,6 +229,9 @@ position = Vector2(12, 9)
 shape = SubResource("CapsuleShape2D_aqqwx")
 disabled = true
 
+[node name="SlownessTimer" type="Timer" parent="."]
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="AttackAreas/LightAttackArea" to="." method="_on_light_attack_area_body_entered"]
 [connection signal="body_entered" from="AttackAreas/HeavyAttackArea" to="." method="_on_heavy_attack_area_body_entered"]
+[connection signal="timeout" from="SlownessTimer" to="." method="_on_slowness_timer_timeout"]

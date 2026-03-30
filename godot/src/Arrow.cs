@@ -9,7 +9,7 @@ public partial class Arrow : Area2D
     [Export]
     private float _damage = 20.0f;
     [Export]
-    private float _slownessIntensity = 1.5f;
+    private float _slownessIntensity = 1.7f;
     [Export]
     private float _lifespan = 5.0f;
 
@@ -26,7 +26,11 @@ public partial class Arrow : Area2D
     public void _on_body_entered(Node2D body)
     {
         if(body is Player) return;
-        if(body is IDamageable damageable) damageable.TakeDamage(_damage);
+        if(body is IDamageable damageable)
+        {
+            damageable.TakeDamage(_damage);
+            damageable.ApplySlowness(1.0f / (1.0f + _slownessIntensity));
+        }
         QueueFree();
     }
 }

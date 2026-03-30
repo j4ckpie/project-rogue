@@ -51,6 +51,8 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
 	protected Vector2 _direction = Vector2.Zero;
 	protected Vector2 _desiredVelocity = Vector2.Zero;
+	protected float _statusSpeedMultiplier = 1.0f;
+	protected float _baseStatusSpeedMultiplier = 1.0f;
 	protected bool _isSprinting = false;
 	protected bool _isSneaking = false;
 	protected MovementMode _movementMode = MovementMode.IDLE;
@@ -78,7 +80,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 			if(!_isSprinting && !_isSneaking) _currentSpeedMultiplier = 1.0f;
     	}
 
-		_desiredVelocity = _direction.Normalized() * _movementSpeed * _currentSpeedMultiplier;
+		_desiredVelocity = _direction.Normalized() * _movementSpeed * _currentSpeedMultiplier * _statusSpeedMultiplier;
 
 		if(_direction.Length() > 0)
 		{

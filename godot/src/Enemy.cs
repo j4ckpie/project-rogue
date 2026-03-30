@@ -11,6 +11,10 @@ public partial class Enemy : Character
 	[Export]
 	protected float _attackCooldown = 2.0f;
 
+	[ExportGroup("Nodes")]
+	[Export]
+	protected Timer _slownessTimer;
+
 	[ExportGroup("Base Variables")]
 	[Export]
 	protected float _knockbackDeceleration = 600.0f;
@@ -21,8 +25,8 @@ public partial class Enemy : Character
     public override void _Ready()
     {
 		_baseDamage = 10.0f;
-		_baseHeavyDamage = 10.0f;
-		_currentSpeedMultiplier = 1.25f;
+		_baseHeavyDamage = 15.0f;
+		_movementSpeed = 100.0f;
         base._Ready();
     }
 
@@ -74,6 +78,17 @@ public partial class Enemy : Character
 	public override void ApplyKnockback(float amount, Vector2 direction)
 	{
 		_knockbackVelocity = direction * amount;
+	}
+
+    public override void ApplySlowness(float amount)
+    {
+        _statusSpeedMultiplier = amount;
+		_slownessTimer.Start();
+    }
+
+	public void _on_slowness_timer_timeout()
+	{
+		_statusSpeedMultiplier = _baseStatusSpeedMultiplier;
 	}
 
 	protected override void Death()
