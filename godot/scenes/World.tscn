@@ -21,3 +21,75 @@ position = Vector2(121, 120)
 
 [node name="ReferenceNode3" parent="." instance=ExtResource("3_r20x5")]
 position = Vector2(120, 141)
+
+[node name="ReferenceNode4" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(735, 0)
+
+[node name="ReferenceNode5" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(738, 34)
+
+[node name="ReferenceNode6" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(736, 69)
+
+[node name="ReferenceNode7" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(735, 107)
+
+[node name="ReferenceNode8" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(734, 144)
+
+[node name="ReferenceNode9" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(736, 180)
+
+[node name="ReferenceNode10" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(732, 216)
+
+[node name="ReferenceNode11" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(734, 252)
+
+[node name="ReferenceNode12" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(776, 1)
+
+[node name="ReferenceNode13" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(779, 35)
+
+[node name="ReferenceNode14" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(777, 70)
+
+[node name="ReferenceNode15" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(776, 108)
+
+[node name="ReferenceNode16" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(775, 145)
+
+[node name="ReferenceNode17" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(777, 181)
+
+[node name="ReferenceNode18" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(773, 217)
+
+[node name="ReferenceNode19" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(775, 253)
+
+[node name="ReferenceNode20" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(814, 5)
+
+[node name="ReferenceNode21" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(817, 39)
+
+[node name="ReferenceNode22" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(815, 74)
+
+[node name="ReferenceNode23" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(814, 112)
+
+[node name="ReferenceNode24" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(813, 149)
+
+[node name="ReferenceNode25" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(815, 185)
+
+[node name="ReferenceNode26" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(811, 221)
+
+[node name="ReferenceNode27" parent="." instance=ExtResource("3_r20x5")]
+position = Vector2(813, 257)
