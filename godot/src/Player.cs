@@ -27,6 +27,8 @@ public partial class Player : Character
     [Export]
     private float _staminaDelay = 1.0f;
     [Export]
+	private float _knockbackForce = 175.0f;
+    [Export]
     private float _attackShakeIntensity = 1.25f;
     [Export]
     private float _heavyAttackShakeIntensity = 5.0f;
@@ -55,7 +57,6 @@ public partial class Player : Character
     private float _staminaCurrent = 100.0f;
     private bool _canRegenStamina = true;
     private bool _canHeavyAttack = true;
-    private Tween _fadeTween;
     
     public override void _Ready()
 	{
@@ -109,15 +110,39 @@ public partial class Player : Character
         _canHeavyAttack = true;
     }
 
+    public void _on_light_attack_area_body_entered(Node2D body)
+    {
+        if(body is IDamageable damageable) damageable.TakeDamage(_baseDamage);
+    }
+
+    public void _on_heavy_attack_area_body_entered(Node2D body)
+    {
+        if(body is IDamageable damageable)
+        {
+            damageable.TakeDamage(_baseHeavyDamage);
+        }
+    }
+
+    public void _on_knockback_area_body_entered(Node2D body)
+    {
+        if(body is IDamageable damageable)
+        {
+            Vector2 knockbackDirection = (body.GlobalPosition - GlobalPosition).Normalized();
+            damageable.ApplyKnockback(_knockbackForce, knockbackDirection);
+        }
+    }
+
     protected override void UpdateSpriteDirection()
     {
         if(GlobalPosition.X - GetGlobalMousePosition().X > 0)
 		{
-			_playerSprite.FlipH = true;
+			_targetSprite.FlipH = true;
+            _attackAreas.Scale = new Vector2(-1, 1);
 		}
 		else if(GlobalPosition.X - GetGlobalMousePosition().X < 0)
 		{
-			_playerSprite.FlipH = false;
+			_targetSprite.FlipH = false;
+            _attackAreas.Scale = new Vector2(1, 1);
 		}
     }
 
@@ -127,7 +152,7 @@ public partial class Player : Character
         _staminaCurrent = _staminaCurrent - amount;
         _staminaBar.Value = _staminaCurrent;
         _canRegenStamina = false;
-        FadeStaminaBar(1.0f, 0.25f);
+        PlayFadeAnimation(_staminaBar, 1.0f, 0.25f);
         _staminaRegenTimer.Stop();
         _staminaRegenTimer.Start(2.0f);
         return true;
@@ -203,4 +228,11 @@ public partial class Player : Character
 
         GetTree().CurrentScene.AddChild(arrow);
     }
+
+    protected override void Death()
+    {
+        // TODO: saving, ui animation etc
+        base.Death();
+    }
+
 }
