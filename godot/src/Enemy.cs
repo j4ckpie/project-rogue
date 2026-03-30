@@ -3,16 +3,26 @@ using System;
 
 public partial class Enemy : Character
 {
+	[ExportGroup("AI Settings")]
+	[Export]
+	protected float _chaseRange = 200.0f;
+	[Export]
+	protected float _attackRange = 45.0f;
+	[Export]
+	protected float _attackCooldown = 2.0f;
+
 	[ExportGroup("Base Variables")]
 	[Export]
 	protected float _knockbackDeceleration = 600.0f;
 
 	protected Vector2 _knockbackVelocity = Vector2.Zero;
+	protected float _currentCooldown = 0.0f;
 
     public override void _Ready()
     {
 		_baseDamage = 10.0f;
 		_baseHeavyDamage = 10.0f;
+		_currentSpeedMultiplier = 1.25f;
         base._Ready();
     }
 
@@ -32,12 +42,15 @@ public partial class Enemy : Character
     	else
     	{
 			Velocity = Vector2.Zero;
-        	// TODO: AI MOVE
+        	if (_movementMode == MovementMode.IDLE || _movementMode == MovementMode.WALK)
+        	{
+            	ThinkAndAct(delta);
+        	}
     	}
     	base._PhysicsProcess(delta);
 	}
 
-	public override void _on_animation_player_animation_finished(string animName)
+    public override void _on_animation_player_animation_finished(string animName)
 	{
 		base._on_animation_player_animation_finished(animName);
 		if(animName == _animDeathName)
@@ -55,11 +68,13 @@ public partial class Enemy : Character
 
     public void _on_heavy_attack_area_body_entered(Node2D body)
     {
-        if(body is IDamageable damageable)
-        {
-            damageable.TakeDamage(_baseHeavyDamage);
-        }
+        if(body is IDamageable damageable) damageable.TakeDamage(_baseHeavyDamage);
     }
+
+	public override void ApplyKnockback(float amount, Vector2 direction)
+	{
+		_knockbackVelocity = direction * amount;
+	}
 
 	protected override void Death()
 	{
@@ -92,9 +107,32 @@ public partial class Enemy : Character
 			_attackAreas.Scale = new Vector2(1, 1);
 		}
 	}
-	
-	public override void ApplyKnockback(float amount, Vector2 direction)
-	{
-		_knockbackVelocity = direction * amount;
-	}
+
+	protected void ThinkAndAct(double delta)
+    {
+        if(_currentCooldown > 0) _currentCooldown -= (float)delta;
+		float distanceToPlayer = (Player.currentPlayerPositionRef - GlobalPosition).Length();
+		if(distanceToPlayer <= _attackRange)
+		{
+			//_direction = Vector2.Zero;
+			Func<bool> attackMethod;
+			if(GD.RandRange(0, 1) < 0.5) attackMethod = HeavyAttack;
+			else attackMethod = Attack;
+			if(_currentCooldown <= 0)
+			{
+				if(attackMethod())
+				{
+					_currentCooldown = _attackCooldown;
+				}
+			}
+		}
+		else if(distanceToPlayer <= _chaseRange)
+		{
+			_direction = (Player.currentPlayerPositionRef - GlobalPosition).Normalized();
+		}
+		else
+		{
+			_direction = Vector2.Zero;
+		}
+    }
 }

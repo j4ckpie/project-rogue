@@ -224,7 +224,8 @@ public partial class Player : Character
 
     protected override void Death()
     {
-        throw new NotImplementedException(); // TODO: saving, ui animation etc
+        // TODO: saving, ui animation etc
+        base.Death();
     }
 
 }
