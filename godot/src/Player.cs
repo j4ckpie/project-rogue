@@ -120,6 +120,13 @@ public partial class Player : Character
         if(body is IDamageable damageable)
         {
             damageable.TakeDamage(_baseHeavyDamage);
+        }
+    }
+
+    public void _on_knockback_area_body_entered(Node2D body)
+    {
+        if(body is IDamageable damageable)
+        {
             Vector2 knockbackDirection = (body.GlobalPosition - GlobalPosition).Normalized();
             damageable.ApplyKnockback(_knockbackForce, knockbackDirection);
         }

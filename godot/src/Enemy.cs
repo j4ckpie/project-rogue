@@ -5,7 +5,7 @@ public partial class Enemy : Character
 {
 	[ExportGroup("AI Settings")]
 	[Export]
-	protected float _chaseRange = 200.0f;
+	protected float _chaseRange = 250.0f;
 	[Export]
 	protected float _attackRange = 45.0f;
 	[Export]

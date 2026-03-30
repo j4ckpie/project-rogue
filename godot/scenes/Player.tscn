@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://3ge6xu5jyc62"]
+[gd_scene load_steps=20 format=3 uid="uid://3ge6xu5jyc62"]
 
 [ext_resource type="Script" path="res://src/Player.cs" id="1_8cjk2"]
 [ext_resource type="Texture2D" uid="uid://df7hcg84ravtb" path="res://sprites/Soldier/Soldier.png" id="2_7kh3q"]
@@ -41,6 +41,18 @@ tracks/2/path = NodePath("AttackAreas/LightAttackArea/CollisionShape2D:disabled"
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackAreas/KnockbackArea/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -127,6 +139,18 @@ tracks/2/path = NodePath("AttackAreas/HeavyAttackArea/CollisionShape2D:disabled"
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.333333, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackAreas/KnockbackArea/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.266667, 0.333333, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
@@ -221,6 +245,9 @@ height = 34.0
 radius = 17.0
 height = 66.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7wkq"]
+size = Vector2(87, 66)
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_heavyAttackDelayTimer", "_targetSprite", "_animationPlayer", "_attackAreas")]
 position = Vector2(0, -10)
 collision_mask = 8
@@ -297,8 +324,17 @@ position = Vector2(22, 10)
 shape = SubResource("CapsuleShape2D_7r8qq")
 disabled = true
 
+[node name="KnockbackArea" type="Area2D" parent="AttackAreas"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackAreas/KnockbackArea"]
+position = Vector2(48.5, 0)
+shape = SubResource("RectangleShape2D_p7wkq")
+disabled = true
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_stamina_timer_timeout"]
 [connection signal="timeout" from="HeavyAttackTimer" to="." method="_on_heavy_attack_timer_timeout"]
 [connection signal="body_entered" from="AttackAreas/LightAttackArea" to="." method="_on_light_attack_area_body_entered"]
 [connection signal="body_entered" from="AttackAreas/HeavyAttackArea" to="." method="_on_heavy_attack_area_body_entered"]
+[connection signal="body_entered" from="AttackAreas/KnockbackArea" to="." method="_on_knockback_area_body_entered"]
