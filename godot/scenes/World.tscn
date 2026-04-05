@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvbqmlvyuyrtc"]
+[gd_scene load_steps=5 format=3 uid="uid://bvbqmlvyuyrtc"]
 
 [ext_resource type="PackedScene" uid="uid://3ge6xu5jyc62" path="res://scenes/Player.tscn" id="1_jast4"]
 [ext_resource type="PackedScene" uid="uid://bixj6o88fpnho" path="res://scenes/Crosshair.tscn" id="2_wkc02"]
 [ext_resource type="PackedScene" uid="uid://v1esu2c6ylsh" path="res://scenes/Enemy.tscn" id="3_r20x5"]
+[ext_resource type="PackedScene" uid="uid://brg5q45d53ea4" path="res://scenes/DarkOrc.tscn" id="4_ovo77"]
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
@@ -93,3 +94,6 @@ position = Vector2(811, 221)
 
 [node name="ReferenceNode27" parent="." instance=ExtResource("3_r20x5")]
 position = Vector2(813, 257)
+
+[node name="DarkOrc" parent="." instance=ExtResource("4_ovo77")]
+position = Vector2(386, 118)

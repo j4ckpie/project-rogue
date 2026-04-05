@@ -24,9 +24,6 @@ public partial class Enemy : Character
 
     public override void _Ready()
     {
-		_baseDamage = 10.0f;
-		_baseHeavyDamage = 15.0f;
-		_movementSpeed = 100.0f;
         base._Ready();
     }
 
