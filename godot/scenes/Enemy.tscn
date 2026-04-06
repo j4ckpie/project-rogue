@@ -23,6 +23,7 @@ script = ExtResource("1_rt4g0")
 _slownessTimer = NodePath("SlownessTimer")
 _targetSprite = NodePath("Sprite2D")
 _attackAreas = NodePath("AttackAreas")
+test = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_6tpc6")

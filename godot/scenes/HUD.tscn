@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://cobs305pcfo7m"]
+
+[ext_resource type="Shader" path="res://shaders/Sheer.gdshader" id="1_7ue8v"]
+[ext_resource type="Script" path="res://scenes/HUD.cs" id="1_qpxwr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4e5y7"]
+shader = ExtResource("1_7ue8v")
+
+[sub_resource type="Gradient" id="Gradient_dstqu"]
+colors = PackedColorArray(0, 0.42446, 0.831782, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_em67s"]
+gradient = SubResource("Gradient_dstqu")
+width = 4
+height = 4
+fill_from = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dom7q"]
+shader = ExtResource("1_7ue8v")
+
+[sub_resource type="Gradient" id="Gradient_onwyg"]
+colors = PackedColorArray(0.817824, 0.354966, 1.92523e-07, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5761n"]
+gradient = SubResource("Gradient_onwyg")
+width = 4
+height = 4
+fill_from = Vector2(1, 1)
+
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("_healthBar", "_xpBar")]
+script = ExtResource("1_qpxwr")
+_healthBar = NodePath("VBoxContainer/MarginContainer/HealthProgressBar")
+_xpBar = NodePath("VBoxContainer/XpProgressBar")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -18.0
+offset_right = 142.0
+offset_bottom = -10.0
+grow_vertical = 0
+theme_override_constants/separation = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+
+[node name="HealthProgressBar" type="TextureProgressBar" parent="VBoxContainer/MarginContainer"]
+material = SubResource("ShaderMaterial_4e5y7")
+custom_minimum_size = Vector2(130, 4)
+layout_mode = 2
+size_flags_horizontal = 0
+value = 100.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_em67s")
+texture_progress = SubResource("GradientTexture2D_em67s")
+tint_under = Color(3.60981e-08, 0.301178, 0.0666931, 0.776471)
+tint_progress = Color(0, 1, 0.305882, 1)
+
+[node name="XpProgressBar" type="TextureProgressBar" parent="VBoxContainer"]
+material = SubResource("ShaderMaterial_dom7q")
+custom_minimum_size = Vector2(110, 2)
+layout_mode = 2
+size_flags_horizontal = 0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_5761n")
+texture_progress = SubResource("GradientTexture2D_5761n")
+tint_under = Color(0.431373, 0.380392, 0, 0.776471)
+tint_progress = Color(0.876253, 0.77144, 1.54018e-06, 1)

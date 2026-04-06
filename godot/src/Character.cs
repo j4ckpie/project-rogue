@@ -19,9 +19,13 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	[Export]
 	protected float _health = 100.0f;
 	[Export]
+	protected float _maxHealth = 100.0f;
+	[Export]
     protected float _baseDamage = 25.0f;
     [Export]
     protected float _baseHeavyDamage = 40.0f;
+	[Export]
+	protected float _xpAmountDropped = 25.0f;
 	[Export]
 	protected float _movementSpeed = 75.0f;
 	[Export]
@@ -125,15 +129,20 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		}
 	}
 
-	public virtual void TakeDamage(float amount)
+	public virtual float TakeDamage(float amount)
     {
-		if(_movementMode == MovementMode.DEATH) return;
+		if(_movementMode == MovementMode.DEATH) return 0;
         _health -= amount;
-		if(_health <= 0) Death();
+		if(_health <= 0)
+		{
+			Death();
+			return _xpAmountDropped;
+		}
 		else
 		{
 			_movementMode = MovementMode.TAKE_DAMAGE;
 			_animationPlayer.Play(_animTakeDamageName);
+			return 0;
 		}
     }
 

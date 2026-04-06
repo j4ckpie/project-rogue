@@ -53,8 +53,14 @@ public partial class Player : Character
     [Export]
     private string _actionShootName = "shoot";
 
+    [Signal]
+    public delegate void HpChangedEventHandler(float amount);
+    [Signal]
+    public delegate void XpChangedEventHandler(float amount);
+
     public static Vector2 currentPlayerPositionRef;
     private float _staminaCurrent = 100.0f;
+    private float _xp = 0.0f;
     private bool _canRegenStamina = true;
     private bool _canHeavyAttack = true;
     
@@ -71,7 +77,7 @@ public partial class Player : Character
 	{
         base._Process(delta);
 
-		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps");	// TODO: PLACEHOLDER
+		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps | " + _xp);	// TODO: PLACEHOLDER
 
         currentPlayerPositionRef = GlobalPosition;
 
@@ -112,15 +118,12 @@ public partial class Player : Character
 
     public void _on_light_attack_area_body_entered(Node2D body)
     {
-        if(body is IDamageable damageable) damageable.TakeDamage(_baseDamage);
+        if(body is IDamageable damageable) CheckUpdateXp(damageable.TakeDamage(_baseDamage));
     }
 
     public void _on_heavy_attack_area_body_entered(Node2D body)
     {
-        if(body is IDamageable damageable)
-        {
-            damageable.TakeDamage(_baseHeavyDamage);
-        }
+        if(body is IDamageable damageable) CheckUpdateXp(damageable.TakeDamage(_baseHeavyDamage));
     }
 
     public void _on_knockback_area_body_entered(Node2D body)
@@ -129,6 +132,29 @@ public partial class Player : Character
         {
             Vector2 knockbackDirection = (body.GlobalPosition - GlobalPosition).Normalized();
             damageable.ApplyKnockback(_knockbackForce, knockbackDirection);
+        }
+    }
+
+    public override float TakeDamage(float amount)
+    {
+        base.TakeDamage(amount);
+        EmitSignal(SignalName.HpChanged, _health);
+        return 0;
+    }
+
+    public void CheckUpdateXp(float amount)
+    {
+        if(amount != 0)
+        {
+            _xp += amount;
+            EmitSignal(SignalName.XpChanged, _xp);
+            if(_xp >= 100.0f)
+            {
+                // todo: upgrades etc
+                float xpDiff = _xp - 100.0f; // todo change 100.0f to xp stages
+                _xp = xpDiff;
+                EmitSignal(SignalName.XpChanged, _xp);
+            }
         }
     }
 
