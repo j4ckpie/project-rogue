@@ -25,7 +25,7 @@ public partial class HUD : CanvasLayer
     public void _on_player_xp_changed(float amount)
     {
         _newXpBar.Value = amount;
-        PlayFillProgressBarAnimation(_newXpTween, _xpBar, amount, 0.25f, 0.25f);
+        PlayFillProgressBarAnimation(_newXpTween, _xpBar, amount, 0.5f, 0.5f);
     }
 
     private void PlayFillProgressBarAnimation(Tween tween, Node target, float amount, float duration, float pause)
