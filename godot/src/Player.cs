@@ -160,6 +160,7 @@ public partial class Player : Character
         _canRegenHealth = false;
         _healthRegenTimer.Stop();
         _healthRegenTimer.Start(_healthDelay);
+        _camera.StartCameraShake(_heavyAttackShakeIntensity);
         return 0;
     }
 

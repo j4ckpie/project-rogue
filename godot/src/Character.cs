@@ -25,7 +25,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
     [Export]
     protected float _baseHeavyDamage = 40.0f;
 	[Export]
-	protected float _xpAmountDropped = 25.0f;
+	protected float _baseXpAmountDropped = 25.0f;
 	[Export]
 	protected float _movementSpeed = 75.0f;
 	[Export]
@@ -136,7 +136,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		if(_health <= 0)
 		{
 			Death();
-			return _xpAmountDropped;
+			return CalculateDroppedXp();
 		}
 		else
 		{
@@ -227,5 +227,13 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		Velocity = Vector2.Zero;
 		SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, 0u);
 		SetDeferred(CollisionObject2D.PropertyName.CollisionMask, 0u);
+	}
+
+	private float CalculateDroppedXp()
+	{
+		RandomNumberGenerator rand = new RandomNumberGenerator();
+		float low = _baseXpAmountDropped - 5.0f;
+		float high = _baseXpAmountDropped + 5.0f;
+		return rand.RandfRange(low, high);
 	}
 }

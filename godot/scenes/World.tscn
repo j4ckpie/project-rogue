@@ -22,9 +22,11 @@ position = Vector2(386, 118)
 
 [node name="Orc" parent="." instance=ExtResource("5_t45rs")]
 position = Vector2(391, 68)
+_xpAmountDropped = null
 
 [node name="Orc2" parent="." instance=ExtResource("5_t45rs")]
 position = Vector2(391, 152)
+_xpAmountDropped = null
 
 [connection signal="HpChanged" from="Player" to="HUD" method="_on_player_hp_changed"]
 [connection signal="XpChanged" from="Player" to="HUD" method="_on_player_xp_changed"]

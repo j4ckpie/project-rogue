@@ -181,7 +181,7 @@ _animationPlayer = NodePath("AnimationPlayer")
 _health = 175.0
 _baseDamage = 20.0
 _baseHeavyDamage = 35.0
-_xpAmountDropped = 50.0
+_xpAmountDropped = 53.0
 _movementSpeed = 66.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
