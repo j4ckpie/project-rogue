@@ -17,6 +17,8 @@ public partial class Player : Character
     [Export]
     private Timer _staminaRegenTimer;
     [Export]
+    private Timer _healthRegenTimer;
+    [Export]
     private Timer _heavyAttackDelayTimer;
 
     [ExportGroup("Base Variables")]
@@ -25,7 +27,11 @@ public partial class Player : Character
     [Export]
     private float _staminaRate = 25.0f;
     [Export]
-    private float _staminaDelay = 1.0f;
+    private float _staminaDelay = 2.0f;
+    [Export]
+    private float _healthRate = 1.0f;
+    [Export]
+    private float _healthDelay = 5.0f;
     [Export]
 	private float _knockbackForce = 175.0f;
     [Export]
@@ -62,6 +68,7 @@ public partial class Player : Character
     private float _staminaCurrent = 100.0f;
     private float _xp = 0.0f;
     private bool _canRegenStamina = true;
+    private bool _canRegenHealth = true;
     private bool _canHeavyAttack = true;
     
     public override void _Ready()
@@ -77,7 +84,7 @@ public partial class Player : Character
 	{
         base._Process(delta);
 
-		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps | " + _xp);	// TODO: PLACEHOLDER
+		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps");	// TODO: PLACEHOLDER
 
         currentPlayerPositionRef = GlobalPosition;
 
@@ -85,6 +92,12 @@ public partial class Player : Character
         {
             _staminaCurrent = Mathf.MoveToward(_staminaCurrent, _staminaMax, _staminaRate * (float)delta);
             _staminaBar.Value = _staminaCurrent;
+        }
+
+        if(_canRegenHealth && _health < _maxHealth)
+        {
+            _health = Mathf.MoveToward(_health, _maxHealth, _healthRate * (float)delta);
+            EmitSignal(SignalName.HpChanged, _health);
         }
 	}
 
@@ -109,6 +122,11 @@ public partial class Player : Character
     {
         _canRegenStamina = true;
         FadeStaminaBar(0.0f, 1.5f);
+    }
+
+    public void _on_health_timer_timeout()
+    {
+        _canRegenHealth = true;
     }
 
     public void _on_heavy_attack_timer_timeout()
@@ -139,6 +157,9 @@ public partial class Player : Character
     {
         base.TakeDamage(amount);
         EmitSignal(SignalName.HpChanged, _health);
+        _canRegenHealth = false;
+        _healthRegenTimer.Stop();
+        _healthRegenTimer.Start(_healthDelay);
         return 0;
     }
 
@@ -180,7 +201,7 @@ public partial class Player : Character
         _canRegenStamina = false;
         PlayFadeAnimation(_staminaBar, 1.0f, 0.25f);
         _staminaRegenTimer.Stop();
-        _staminaRegenTimer.Start(2.0f);
+        _staminaRegenTimer.Start(_staminaDelay);
         return true;
     }
 

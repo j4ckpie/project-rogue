@@ -249,7 +249,7 @@ height = 66.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p7wkq"]
 size = Vector2(87, 66)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_heavyAttackDelayTimer", "_targetSprite", "_animationPlayer", "_attackAreas")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_camera", "_staminaBar", "_staminaRegenTimer", "_healthRegenTimer", "_heavyAttackDelayTimer", "_targetSprite", "_animationPlayer", "_attackAreas")]
 position = Vector2(0, -10)
 collision_mask = 8
 script = ExtResource("1_8cjk2")
@@ -257,6 +257,7 @@ _arrowSprite = ExtResource("2_w8j0u")
 _camera = NodePath("Camera2D")
 _staminaBar = NodePath("StaminaTextureProgressBar")
 _staminaRegenTimer = NodePath("StaminaTimer")
+_healthRegenTimer = NodePath("HealthTimer")
 _heavyAttackDelayTimer = NodePath("HeavyAttackTimer")
 _targetSprite = NodePath("Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
@@ -289,6 +290,7 @@ offset_left = -10.0
 offset_top = -15.0
 offset_right = 10.0
 offset_bottom = -14.0
+step = 0.001
 value = 50.0
 nine_patch_stretch = true
 texture_under = SubResource("CanvasTexture_aerji")
@@ -297,6 +299,11 @@ tint_under = Color(0.0365563, 0.0365563, 0.0365563, 0.498039)
 tint_progress = Color(0.860369, 0.860369, 0.860369, 1)
 
 [node name="StaminaTimer" type="Timer" parent="."]
+wait_time = 0.075
+one_shot = true
+autostart = true
+
+[node name="HealthTimer" type="Timer" parent="."]
 wait_time = 0.075
 one_shot = true
 autostart = true
@@ -335,6 +342,7 @@ disabled = true
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_stamina_timer_timeout"]
+[connection signal="timeout" from="HealthTimer" to="." method="_on_health_timer_timeout"]
 [connection signal="timeout" from="HeavyAttackTimer" to="." method="_on_heavy_attack_timer_timeout"]
 [connection signal="body_entered" from="AttackAreas/LightAttackArea" to="." method="_on_light_attack_area_body_entered"]
 [connection signal="body_entered" from="AttackAreas/HeavyAttackArea" to="." method="_on_heavy_attack_area_body_entered"]
