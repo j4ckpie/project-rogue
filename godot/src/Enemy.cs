@@ -76,7 +76,7 @@ public partial class Enemy : Character
 
 	public void _on_leveled_up(int amount)
 	{
-		_displayedLvl.Text = amount.ToString() + " lvl";
+		_displayedLvl.Text = $"{amount.ToString()} lvl";
 	}
 
 	public override void ApplyKnockback(float amount, Vector2 direction)

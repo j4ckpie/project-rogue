@@ -8,6 +8,8 @@ public partial class Player : Character
     [ExportGroup("Nodes")]
     [Export]
 	private PackedScene _arrowSprite;
+    [Export]
+	private PackedScene _xpPopUpScene;
 	[Export]
 	private Control _crosshairSprite;
     [Export]
@@ -166,6 +168,7 @@ public partial class Player : Character
         if(amount != 0)
         {
             _xp += amount;
+            SpawnXpPopup(amount);
             EmitSignal(SignalName.XpChanged, _xp);
             if(_xp >= 100.0f)
             {
@@ -282,4 +285,13 @@ public partial class Player : Character
         base.Death();
     }
 
+    private void SpawnXpPopup(float amount)
+    {
+        XpPopUp popup = _xpPopUpScene.Instantiate<XpPopUp>();
+    
+        GetTree().CurrentScene.AddChild(popup);
+    
+        popup.GlobalPosition = GlobalPosition + new Vector2((float)GD.RandRange(-30, 15), (float)GD.RandRange(-30, 0));
+        popup.Start(amount);
+    }
 }
