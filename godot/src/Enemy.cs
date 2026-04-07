@@ -118,7 +118,6 @@ public partial class Enemy : Character
 	protected override void Death()
 	{
 		base.Death();
-
 	}
 
 	protected override void AfterAttack()

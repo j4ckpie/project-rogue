@@ -16,7 +16,7 @@ public partial class XpPopUp : Marker2D
         Tween tween = CreateTween();
         tween.SetParallel(true);
         tween.TweenProperty(_light, "texture_scale", 1.2f, 0.1f);
-        tween.TweenProperty(_light, "energy", 2.5f, 0.1f);
+        tween.TweenProperty(_light, "energy", 5.0f, 0.1f);
         
         tween.Chain().SetParallel(true);
 

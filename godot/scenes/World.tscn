@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://bvbqmlvyuyrtc"]
+[gd_scene load_steps=8 format=3 uid="uid://bvbqmlvyuyrtc"]
 
 [ext_resource type="PackedScene" uid="uid://3ge6xu5jyc62" path="res://scenes/Player.tscn" id="1_jast4"]
 [ext_resource type="PackedScene" uid="uid://bixj6o88fpnho" path="res://scenes/Crosshair.tscn" id="2_wkc02"]
 [ext_resource type="PackedScene" uid="uid://brg5q45d53ea4" path="res://scenes/DarkOrc.tscn" id="4_ovo77"]
 [ext_resource type="PackedScene" uid="uid://cobs305pcfo7m" path="res://scenes/HUD.tscn" id="5_5q6ae"]
 [ext_resource type="PackedScene" uid="uid://brgjr1drfyi84" path="res://scenes/Orc.tscn" id="5_t45rs"]
+[ext_resource type="Texture2D" uid="uid://bbx5u0caoq006" path="res://icon.svg" id="6_fxygb"]
+
+[sub_resource type="Environment" id="Environment_fgqf5"]
+background_mode = 3
+glow_enabled = true
+glow_blend_mode = 1
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
@@ -34,6 +40,13 @@ position = Vector2(439, 68)
 
 [node name="Orc4" parent="." instance=ExtResource("5_t45rs")]
 position = Vector2(439, 152)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fgqf5")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(73, 133)
+texture = ExtResource("6_fxygb")
 
 [connection signal="HpChanged" from="Player" to="HUD" method="_on_player_hp_changed"]
 [connection signal="LeveledUp" from="Player" to="HUD" method="_on_player_leveled_up"]
