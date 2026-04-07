@@ -26,5 +26,15 @@ position = Vector2(391, 68)
 [node name="Orc2" parent="." instance=ExtResource("5_t45rs")]
 position = Vector2(391, 152)
 
+[node name="DarkOrc2" parent="." instance=ExtResource("4_ovo77")]
+position = Vector2(434, 118)
+
+[node name="Orc3" parent="." instance=ExtResource("5_t45rs")]
+position = Vector2(439, 68)
+
+[node name="Orc4" parent="." instance=ExtResource("5_t45rs")]
+position = Vector2(439, 152)
+
 [connection signal="HpChanged" from="Player" to="HUD" method="_on_player_hp_changed"]
+[connection signal="LeveledUp" from="Player" to="HUD" method="_on_player_leveled_up"]
 [connection signal="XpChanged" from="Player" to="HUD" method="_on_player_xp_changed"]

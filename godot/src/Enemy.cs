@@ -14,6 +14,8 @@ public partial class Enemy : Character
 	[ExportGroup("Nodes")]
 	[Export]
 	protected Timer _slownessTimer;
+	[Export]
+	protected Label _displayedLvl;
 
 	[ExportGroup("Base Variables")]
 	[Export]
@@ -64,13 +66,18 @@ public partial class Enemy : Character
 
 	public void _on_light_attack_area_body_entered(Node2D body)
     {
-        if(body is IDamageable damageable) damageable.TakeDamage(_baseDamage);
+        if(body is IDamageable damageable) CheckUpdateXp(damageable.TakeDamage(_baseDamage));
     }
 
     public void _on_heavy_attack_area_body_entered(Node2D body)
     {
-        if(body is IDamageable damageable) damageable.TakeDamage(_baseHeavyDamage);
+        if(body is IDamageable damageable) CheckUpdateXp(damageable.TakeDamage(_baseHeavyDamage));
     }
+
+	public void _on_leveled_up(int amount)
+	{
+		_displayedLvl.Text = amount.ToString() + " lvl";
+	}
 
 	public override void ApplyKnockback(float amount, Vector2 direction)
 	{
@@ -90,6 +97,23 @@ public partial class Enemy : Character
 		_statusSpeedMultiplier = _baseStatusSpeedMultiplier;
 		_isStunned = false;
 	}
+
+	protected override void CheckUpdateXp(float amount)
+    {
+        _xp += amount;
+        if(_xp >= 25.0f)
+        {
+            // todo: upgrades etc
+			_health *= 1.25f;
+			_baseDamage *= 1.25f;
+			_baseHeavyDamage *= 1.25f;
+			_movementSpeed *= 1.025f;
+            float xpDiff = _xp - 100.0f; // todo change 100.0f to xp stages
+            _xp = xpDiff;
+            _lvl++;
+            EmitSignal(SignalName.LeveledUp, _lvl);
+        }
+    }
 
 	protected override void Death()
 	{

@@ -12,6 +12,8 @@ public partial class HUD : CanvasLayer
 	private TextureProgressBar _xpBar;
     [Export]
 	private TextureProgressBar _newXpBar;
+    [Export]
+	private Label _displayedLvl;
 
     private Tween _damageTween;
     private Tween _newXpTween;
@@ -26,6 +28,11 @@ public partial class HUD : CanvasLayer
     {
         _newXpBar.Value = amount;
         PlayFillProgressBarAnimation(_newXpTween, _xpBar, amount, 0.5f, 0.5f);
+    }
+
+    public void _on_player_leveled_up(int amount)
+    {
+        _displayedLvl.Text = amount.ToString();
     }
 
     private void PlayFillProgressBarAnimation(Tween tween, Node target, float amount, float duration, float pause)

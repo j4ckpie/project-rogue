@@ -262,6 +262,7 @@ _heavyAttackDelayTimer = NodePath("HeavyAttackTimer")
 _targetSprite = NodePath("Sprite2D")
 _animationPlayer = NodePath("AnimationPlayer")
 _attackAreas = NodePath("AttackAreas")
+_baseXpAmountDropped = 15.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_t2ic1")

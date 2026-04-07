@@ -57,11 +57,18 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	protected Vector2 _desiredVelocity = Vector2.Zero;
 	protected float _statusSpeedMultiplier = 1.0f;
 	protected float _baseStatusSpeedMultiplier = 1.0f;
+	protected int _lvl = 1;
+	protected float _xp = 0.0f;
 	protected bool _isSprinting = false;
 	protected bool _isSneaking = false;
 	protected bool _isStunned = false;
 	protected MovementMode _movementMode = MovementMode.IDLE;
 	protected Tween _fadeTween;
+
+	[Signal]
+    public delegate void XpChangedEventHandler(float amount);
+	[Signal]
+    public delegate void LeveledUpEventHandler(int amount);
 
 	public override void _Ready()
 	{
@@ -146,6 +153,8 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		}
     }
 
+	protected abstract void CheckUpdateXp(float amount);
+
 	public virtual void ApplyKnockback(float amount, Vector2 direction)
 	{
 		
@@ -229,11 +238,12 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		SetDeferred(CollisionObject2D.PropertyName.CollisionMask, 0u);
 	}
 
-	private float CalculateDroppedXp()
+	protected float CalculateDroppedXp()
 	{
 		RandomNumberGenerator rand = new RandomNumberGenerator();
 		float low = _baseXpAmountDropped - 5.0f;
 		float high = _baseXpAmountDropped + 5.0f;
-		return rand.RandfRange(low, high);
+		float mulitplier = 1 + (1 - 1/_lvl);
+		return rand.RandfRange(low, high) * mulitplier;
 	}
 }

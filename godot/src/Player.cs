@@ -61,12 +61,9 @@ public partial class Player : Character
 
     [Signal]
     public delegate void HpChangedEventHandler(float amount);
-    [Signal]
-    public delegate void XpChangedEventHandler(float amount);
 
     public static Vector2 currentPlayerPositionRef;
     private float _staminaCurrent = 100.0f;
-    private float _xp = 0.0f;
     private bool _canRegenStamina = true;
     private bool _canRegenHealth = true;
     private bool _canHeavyAttack = true;
@@ -161,10 +158,10 @@ public partial class Player : Character
         _healthRegenTimer.Stop();
         _healthRegenTimer.Start(_healthDelay);
         _camera.StartCameraShake(_heavyAttackShakeIntensity);
-        return 0;
+        return CalculateDroppedXp();
     }
 
-    public void CheckUpdateXp(float amount)
+    protected override void CheckUpdateXp(float amount)
     {
         if(amount != 0)
         {
@@ -175,7 +172,9 @@ public partial class Player : Character
                 // todo: upgrades etc
                 float xpDiff = _xp - 100.0f; // todo change 100.0f to xp stages
                 _xp = xpDiff;
+                _lvl++;
                 EmitSignal(SignalName.XpChanged, _xp);
+                EmitSignal(SignalName.LeveledUp, _lvl);
             }
         }
     }
