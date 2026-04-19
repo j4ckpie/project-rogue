@@ -19,9 +19,13 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	[Export]
 	protected float _health = 100.0f;
 	[Export]
+	protected float _maxHealth = 100.0f;
+	[Export]
     protected float _baseDamage = 25.0f;
     [Export]
     protected float _baseHeavyDamage = 40.0f;
+	[Export]
+	protected float _baseXpAmountDropped = 25.0f;
 	[Export]
 	protected float _movementSpeed = 75.0f;
 	[Export]
@@ -53,11 +57,18 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	protected Vector2 _desiredVelocity = Vector2.Zero;
 	protected float _statusSpeedMultiplier = 1.0f;
 	protected float _baseStatusSpeedMultiplier = 1.0f;
+	protected int _lvl = 1;
+	protected float _xp = 0.0f;
 	protected bool _isSprinting = false;
 	protected bool _isSneaking = false;
 	protected bool _isStunned = false;
 	protected MovementMode _movementMode = MovementMode.IDLE;
 	protected Tween _fadeTween;
+
+	[Signal]
+    public delegate void XpChangedEventHandler(float amount);
+	[Signal]
+    public delegate void LeveledUpEventHandler(int amount);
 
 	public override void _Ready()
 	{
@@ -125,17 +136,24 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		}
 	}
 
-	public virtual void TakeDamage(float amount)
+	public virtual float TakeDamage(float amount)
     {
-		if(_movementMode == MovementMode.DEATH) return;
+		if(_movementMode == MovementMode.DEATH) return 0;
         _health -= amount;
-		if(_health <= 0) Death();
+		if(_health <= 0)
+		{
+			Death();
+			return CalculateDroppedXp();
+		}
 		else
 		{
 			_movementMode = MovementMode.TAKE_DAMAGE;
 			_animationPlayer.Play(_animTakeDamageName);
+			return 0;
 		}
     }
+
+	protected abstract void CheckUpdateXp(float amount);
 
 	public virtual void ApplyKnockback(float amount, Vector2 direction)
 	{
@@ -218,5 +236,14 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		Velocity = Vector2.Zero;
 		SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, 0u);
 		SetDeferred(CollisionObject2D.PropertyName.CollisionMask, 0u);
+	}
+
+	protected float CalculateDroppedXp()
+	{
+		RandomNumberGenerator rand = new RandomNumberGenerator();
+		float low = _baseXpAmountDropped - 5.0f;
+		float high = _baseXpAmountDropped + 5.0f;
+		float mulitplier = 1 + (1 - 1/_lvl);
+		return rand.RandfRange(low, high) * mulitplier;
 	}
 }

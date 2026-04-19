@@ -8,6 +8,8 @@ public partial class Player : Character
     [ExportGroup("Nodes")]
     [Export]
 	private PackedScene _arrowSprite;
+    [Export]
+	private PackedScene _xpPopUpScene;
 	[Export]
 	private Control _crosshairSprite;
     [Export]
@@ -17,6 +19,8 @@ public partial class Player : Character
     [Export]
     private Timer _staminaRegenTimer;
     [Export]
+    private Timer _healthRegenTimer;
+    [Export]
     private Timer _heavyAttackDelayTimer;
 
     [ExportGroup("Base Variables")]
@@ -25,7 +29,11 @@ public partial class Player : Character
     [Export]
     private float _staminaRate = 25.0f;
     [Export]
-    private float _staminaDelay = 1.0f;
+    private float _staminaDelay = 2.0f;
+    [Export]
+    private float _healthRate = 1.0f;
+    [Export]
+    private float _healthDelay = 5.0f;
     [Export]
 	private float _knockbackForce = 175.0f;
     [Export]
@@ -53,9 +61,13 @@ public partial class Player : Character
     [Export]
     private string _actionShootName = "shoot";
 
+    [Signal]
+    public delegate void HpChangedEventHandler(float amount);
+
     public static Vector2 currentPlayerPositionRef;
     private float _staminaCurrent = 100.0f;
     private bool _canRegenStamina = true;
+    private bool _canRegenHealth = true;
     private bool _canHeavyAttack = true;
     
     public override void _Ready()
@@ -79,6 +91,12 @@ public partial class Player : Character
         {
             _staminaCurrent = Mathf.MoveToward(_staminaCurrent, _staminaMax, _staminaRate * (float)delta);
             _staminaBar.Value = _staminaCurrent;
+        }
+
+        if(_canRegenHealth && _health < _maxHealth)
+        {
+            _health = Mathf.MoveToward(_health, _maxHealth, _healthRate * (float)delta);
+            EmitSignal(SignalName.HpChanged, _health);
         }
 	}
 
@@ -105,6 +123,11 @@ public partial class Player : Character
         FadeStaminaBar(0.0f, 1.5f);
     }
 
+    public void _on_health_timer_timeout()
+    {
+        _canRegenHealth = true;
+    }
+
     public void _on_heavy_attack_timer_timeout()
     {
         _canHeavyAttack = true;
@@ -112,15 +135,12 @@ public partial class Player : Character
 
     public void _on_light_attack_area_body_entered(Node2D body)
     {
-        if(body is IDamageable damageable) damageable.TakeDamage(_baseDamage);
+        if(body is IDamageable damageable) CheckUpdateXp(damageable.TakeDamage(_baseDamage));
     }
 
     public void _on_heavy_attack_area_body_entered(Node2D body)
     {
-        if(body is IDamageable damageable)
-        {
-            damageable.TakeDamage(_baseHeavyDamage);
-        }
+        if(body is IDamageable damageable) CheckUpdateXp(damageable.TakeDamage(_baseHeavyDamage));
     }
 
     public void _on_knockback_area_body_entered(Node2D body)
@@ -129,6 +149,36 @@ public partial class Player : Character
         {
             Vector2 knockbackDirection = (body.GlobalPosition - GlobalPosition).Normalized();
             damageable.ApplyKnockback(_knockbackForce, knockbackDirection);
+        }
+    }
+
+    public override float TakeDamage(float amount)
+    {
+        base.TakeDamage(amount);
+        EmitSignal(SignalName.HpChanged, _health);
+        _canRegenHealth = false;
+        _healthRegenTimer.Stop();
+        _healthRegenTimer.Start(_healthDelay);
+        _camera.StartCameraShake(_heavyAttackShakeIntensity);
+        return CalculateDroppedXp();
+    }
+
+    protected override void CheckUpdateXp(float amount)
+    {
+        if(amount != 0)
+        {
+            _xp += amount;
+            SpawnXpPopup(amount);
+            EmitSignal(SignalName.XpChanged, _xp);
+            if(_xp >= 100.0f)
+            {
+                // todo: upgrades etc
+                float xpDiff = _xp - 100.0f; // todo change 100.0f to xp stages
+                _xp = xpDiff;
+                _lvl++;
+                EmitSignal(SignalName.XpChanged, _xp);
+                EmitSignal(SignalName.LeveledUp, _lvl);
+            }
         }
     }
 
@@ -154,7 +204,7 @@ public partial class Player : Character
         _canRegenStamina = false;
         PlayFadeAnimation(_staminaBar, 1.0f, 0.25f);
         _staminaRegenTimer.Stop();
-        _staminaRegenTimer.Start(2.0f);
+        _staminaRegenTimer.Start(_staminaDelay);
         return true;
     }
 
@@ -235,4 +285,13 @@ public partial class Player : Character
         base.Death();
     }
 
+    private void SpawnXpPopup(float amount)
+    {
+        XpPopUp popup = _xpPopUpScene.Instantiate<XpPopUp>();
+    
+        GetTree().CurrentScene.AddChild(popup);
+    
+        popup.GlobalPosition = GlobalPosition + new Vector2((float)GD.RandRange(-30, 15), (float)GD.RandRange(-30, 0));
+        popup.Start(amount);
+    }
 }

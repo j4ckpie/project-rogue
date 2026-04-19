@@ -1,8 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvbqmlvyuyrtc"]
+[gd_scene load_steps=8 format=3 uid="uid://bvbqmlvyuyrtc"]
 
 [ext_resource type="PackedScene" uid="uid://3ge6xu5jyc62" path="res://scenes/Player.tscn" id="1_jast4"]
 [ext_resource type="PackedScene" uid="uid://bixj6o88fpnho" path="res://scenes/Crosshair.tscn" id="2_wkc02"]
-[ext_resource type="PackedScene" uid="uid://v1esu2c6ylsh" path="res://scenes/Enemy.tscn" id="3_r20x5"]
+[ext_resource type="PackedScene" uid="uid://brg5q45d53ea4" path="res://scenes/DarkOrc.tscn" id="4_ovo77"]
+[ext_resource type="PackedScene" uid="uid://cobs305pcfo7m" path="res://scenes/HUD.tscn" id="5_5q6ae"]
+[ext_resource type="PackedScene" uid="uid://brgjr1drfyi84" path="res://scenes/Orc.tscn" id="5_t45rs"]
+[ext_resource type="Texture2D" uid="uid://bbx5u0caoq006" path="res://icon.svg" id="6_fxygb"]
+
+[sub_resource type="Environment" id="Environment_fgqf5"]
+background_mode = 3
+background_canvas_max_layer = 2
+glow_enabled = true
+glow_strength = 1.25
+glow_bloom = 0.02
+glow_blend_mode = 1
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
@@ -13,83 +24,33 @@ _crosshairSprite = NodePath("../Crosshair")
 
 [node name="Crosshair" parent="." instance=ExtResource("2_wkc02")]
 
-[node name="ReferenceNode" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(120, 85)
+[node name="HUD" parent="." instance=ExtResource("5_5q6ae")]
 
-[node name="ReferenceNode2" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(121, 120)
+[node name="DarkOrc" parent="." instance=ExtResource("4_ovo77")]
+position = Vector2(386, 118)
 
-[node name="ReferenceNode3" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(120, 141)
+[node name="Orc" parent="." instance=ExtResource("5_t45rs")]
+position = Vector2(391, 68)
 
-[node name="ReferenceNode4" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(735, 0)
+[node name="Orc2" parent="." instance=ExtResource("5_t45rs")]
+position = Vector2(391, 152)
 
-[node name="ReferenceNode5" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(738, 34)
+[node name="DarkOrc2" parent="." instance=ExtResource("4_ovo77")]
+position = Vector2(434, 118)
 
-[node name="ReferenceNode6" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(736, 69)
+[node name="Orc3" parent="." instance=ExtResource("5_t45rs")]
+position = Vector2(439, 68)
 
-[node name="ReferenceNode7" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(735, 107)
+[node name="Orc4" parent="." instance=ExtResource("5_t45rs")]
+position = Vector2(439, 152)
 
-[node name="ReferenceNode8" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(734, 144)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fgqf5")
 
-[node name="ReferenceNode9" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(736, 180)
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(73, 133)
+texture = ExtResource("6_fxygb")
 
-[node name="ReferenceNode10" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(732, 216)
-
-[node name="ReferenceNode11" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(734, 252)
-
-[node name="ReferenceNode12" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(776, 1)
-
-[node name="ReferenceNode13" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(779, 35)
-
-[node name="ReferenceNode14" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(777, 70)
-
-[node name="ReferenceNode15" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(776, 108)
-
-[node name="ReferenceNode16" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(775, 145)
-
-[node name="ReferenceNode17" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(777, 181)
-
-[node name="ReferenceNode18" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(773, 217)
-
-[node name="ReferenceNode19" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(775, 253)
-
-[node name="ReferenceNode20" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(814, 5)
-
-[node name="ReferenceNode21" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(817, 39)
-
-[node name="ReferenceNode22" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(815, 74)
-
-[node name="ReferenceNode23" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(814, 112)
-
-[node name="ReferenceNode24" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(813, 149)
-
-[node name="ReferenceNode25" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(815, 185)
-
-[node name="ReferenceNode26" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(811, 221)
-
-[node name="ReferenceNode27" parent="." instance=ExtResource("3_r20x5")]
-position = Vector2(813, 257)
+[connection signal="HpChanged" from="Player" to="HUD" method="_on_player_hp_changed"]
+[connection signal="LeveledUp" from="Player" to="HUD" method="_on_player_leveled_up"]
+[connection signal="XpChanged" from="Player" to="HUD" method="_on_player_xp_changed"]

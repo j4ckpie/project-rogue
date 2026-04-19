@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://n7r1wmfy7uxv"
-path="res://.godot/imported/lightmask_medium.png-f4c6dd1c53e7ad966f1eca887af8894a.ctex"
+uid="uid://bixphlqjjsqn"
+path="res://.godot/imported/DarkOrc.png-22e400b29204377a0374721531a7c85f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/LightMasks/lightmask_medium.png"
-dest_files=["res://.godot/imported/lightmask_medium.png-f4c6dd1c53e7ad966f1eca887af8894a.ctex"]
+source_file="res://sprites/DarkOrc/DarkOrc.png"
+dest_files=["res://.godot/imported/DarkOrc.png-22e400b29204377a0374721531a7c85f.ctex"]
 
 [params]
 
