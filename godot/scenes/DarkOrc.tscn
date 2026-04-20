@@ -173,7 +173,9 @@ _data = {
 "walk": SubResource("Animation_lttbr")
 }
 
-[node name="DarkOrc" node_paths=PackedStringArray("TargetSprite", "AnimPlayer", "AttackAreas") instance=ExtResource("1_3u38n")]
+[node name="DarkOrc" node_paths=PackedStringArray("SlownessTimer", "DisplayedLvl", "TargetSprite", "AnimPlayer", "AttackAreas") instance=ExtResource("1_3u38n")]
+SlownessTimer = NodePath("SlownessTimer")
+DisplayedLvl = NodePath("DisplayedLevel")
 TargetSprite = NodePath("Sprite2D")
 AnimPlayer = NodePath("AnimationPlayer")
 AttackAreas = NodePath("AttackAreas")

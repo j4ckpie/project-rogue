@@ -47,7 +47,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	public bool IsSneaking { get; protected set; } = false;
 	public bool IsStunned { get; protected set; } = false;
 	public float FinalSpeed => MovementSpeed * CurrentSpeedMultiplier * _statusSpeedMultiplier;
-	protected State _currentState;
+	// protected State _currentState;
 	public Vector2 Direction { get; protected set; } = Vector2.Zero;
 	protected Vector2 _desiredVelocity = Vector2.Zero;
 	public float CurrentSpeedMultiplier { get; set; } = 1.0f;
@@ -68,7 +68,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
 	public override void _Ready()
 	{
-		ChangeState(new IdleState(this));
+		//ChangeState(new IdleState(this));
 	}
 
 	public override void _Process(double delta)
@@ -149,12 +149,12 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		}
     }
 
-	public void ChangeState(State state)
-	{
-		_currentState.Exit();
-		_currentState = state;
-		_currentState.Enter();
-	}
+	// public void ChangeState(State state)
+	// {
+	// 	_currentState.Exit();
+	// 	_currentState = state;
+	// 	_currentState.Enter();
+	// }
 
 	public virtual void ApplyKnockback(float amount, Vector2 direction)
 	{
