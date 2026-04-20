@@ -42,13 +42,13 @@ width = 4
 height = 4
 fill_from = Vector2(1, 1)
 
-[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("_healthBar", "_damageBar", "_xpBar", "_newXpBar", "_displayedLvl")]
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("HealthBar", "DamageBar", "XpBar", "NewXpBar", "DisplayedLvl")]
 script = ExtResource("1_cbt4a")
-_healthBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/HealthProgressBar")
-_damageBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/DamageProgressBar")
-_xpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/XpProgressBar")
-_newXpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/NewXpProgressBar")
-_displayedLvl = NodePath("HBoxContainer/LevelFrame/VBoxContainer2/Level")
+HealthBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/HealthProgressBar")
+DamageBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/DamageProgressBar")
+XpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/XpProgressBar")
+NewXpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/NewXpProgressBar")
+DisplayedLvl = NodePath("HBoxContainer/LevelFrame/VBoxContainer2/Level")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_left = 10.0

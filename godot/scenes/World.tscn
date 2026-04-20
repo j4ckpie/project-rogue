@@ -18,9 +18,8 @@ glow_blend_mode = 1
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 
-[node name="Player" parent="." node_paths=PackedStringArray("_crosshairSprite") instance=ExtResource("1_jast4")]
+[node name="Player" parent="." instance=ExtResource("1_jast4")]
 position = Vector2(240, 135)
-_crosshairSprite = NodePath("../Crosshair")
 
 [node name="Crosshair" parent="." instance=ExtResource("2_wkc02")]
 

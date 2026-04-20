@@ -15,16 +15,12 @@ height = 34.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aqqwx"]
 radius = 15.0
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("_slownessTimer", "_displayedLvl", "_targetSprite", "_attackAreas")]
+[node name="Enemy" type="CharacterBody2D"]
 y_sort_enabled = true
 position = Vector2(0, -10)
 collision_layer = 2
 collision_mask = 14
 script = ExtResource("1_rt4g0")
-_slownessTimer = NodePath("SlownessTimer")
-_displayedLvl = NodePath("DisplayedLevel")
-_targetSprite = NodePath("Sprite2D")
-_attackAreas = NodePath("AttackAreas")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_6tpc6")

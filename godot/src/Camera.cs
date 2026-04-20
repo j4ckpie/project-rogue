@@ -3,15 +3,13 @@ using Godot;
 
 public partial class Camera : Camera2D
 {
+    [ExportGroup("Nodes")]
     [Export]
-    protected Node2D _target;
-    [Export]
-    protected float _followSpeed = 3.0f;
-    [Export]
-    protected float _mouseInfluence = 0.1f; 
-    [Export]
-    protected float _maxMouseOffset = 75.0f;
+    public Node2D Target { get; private set; }
 
+    protected float _followSpeed = 3.0f;
+    protected float _mouseInfluence = 0.1f; 
+    protected float _maxMouseOffset = 75.0f;
     protected float _shakeIntensity = 0.0f;
     protected RandomNumberGenerator _rand;
 
@@ -22,9 +20,9 @@ public partial class Camera : Camera2D
 
     public override void _Process(double delta)
     {
-        if(_target != null)
+        if(Target != null)
         {
-            Vector2 playerPos = _target.GlobalPosition;
+            Vector2 playerPos = Target.GlobalPosition;
             Vector2 mousePos = GetGlobalMousePosition();
             Vector2 mouseOffset = (mousePos - playerPos) * _mouseInfluence;
             mouseOffset = mouseOffset.LimitLength(_maxMouseOffset);

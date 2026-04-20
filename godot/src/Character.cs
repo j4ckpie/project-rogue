@@ -5,63 +5,59 @@ using System.Runtime.InteropServices;
 [GlobalClass]
 public abstract partial class Character : CharacterBody2D, IDamageable
 {
-	public enum MovementMode { IDLE, WALK, SPRINT, ATTACK, HEAVY_ATTACK, SHOOT, TAKE_DAMAGE, DEATH}
+	public enum MovementMode { IDLE, WALK, SPRINT, ATTACK, HEAVY_ATTACK, SHOOT, TAKE_DAMAGE, DEATH}	
 
 	[ExportGroup("Nodes")]
 	[Export]
-	protected Sprite2D _targetSprite;
+	public Sprite2D TargetSprite { get; private set; }
 	[Export]
-	protected AnimationPlayer _animationPlayer;
+	public AnimationPlayer AnimPlayer { get; private set; }
 	[Export]
-    protected Node2D _attackAreas;
+    public Node2D AttackAreas { get; private set; }
 
 	[ExportGroup("Base Variables")]
 	[Export]
-	protected float _health = 100.0f;
+	public float Health { get; protected set; } = 100.0f;
 	[Export]
-	protected float _maxHealth = 100.0f;
-	[Export]
-    protected float _baseDamage = 25.0f;
+    public float BaseDamage { get; protected set; } = 25.0f;
     [Export]
-    protected float _baseHeavyDamage = 40.0f;
+    public float BaseHeavyDamage { get; protected set; } = 40.0f;
 	[Export]
-	protected float _baseXpAmountDropped = 25.0f;
+	public float BaseXpAmountDropped { get; protected set; } = 25.0f;
 	[Export]
-	protected float _movementSpeed = 75.0f;
+	public float MovementSpeed { get; protected set; } = 75.0f;
 	[Export]
-	protected float _currentSpeedMultiplier = 1.0f;
+	public string AnimIdleName { get; private set; } = "idle";
 	[Export]
-	protected float _sprintSpeedMultiplier = 1.75f;
+	public string AnimWalkName { get; private set; } = "walk";
 	[Export]
-	protected float _sneakSpeedMultiplier = 0.5f;
+	public string AnimAttackName { get; private set; } = "attack";
 	[Export]
-	protected float _acceleration = 12.0f;
+	public string AnimHeavyAttackName { get; private set; } = "heavy_attack";
 	[Export]
-	protected float _friction = 7.0f;
+	public string AnimShootName { get; private set; } = "shoot";
 	[Export]
-	protected string _animIdleName = "idle";
+	public string AnimDeathName { get; private set; } = "death";
 	[Export]
-	protected string _animWalkName = "walk";
-	[Export]
-	protected string _animAttackName = "attack";
-	[Export]
-	protected string _animHeavyAttackName = "heavy_attack";
-	[Export]
-	protected string _animShootName = "shoot";
-	[Export]
-	protected string _animDeathName = "death";
-	[Export]
-	protected string _animTakeDamageName = "take_damage";
+	public string AnimTakeDamageName { get; private set; } = "take_damage";
 
-	protected Vector2 _direction = Vector2.Zero;
+	public int Lvl { get; protected set; } = 1;
+	public float Xp { get; protected set; } = 0.0f;
+	public bool IsSprinting { get; protected set; } = false;
+	public bool IsSneaking { get; protected set; } = false;
+	public bool IsStunned { get; protected set; } = false;
+	public float FinalSpeed => MovementSpeed * CurrentSpeedMultiplier * _statusSpeedMultiplier;
+	protected State _currentState;
+	public Vector2 Direction { get; protected set; } = Vector2.Zero;
 	protected Vector2 _desiredVelocity = Vector2.Zero;
+	public float CurrentSpeedMultiplier { get; set; } = 1.0f;
+	protected float _sprintSpeedMultiplier = 1.75f;
+	protected float _sneakSpeedMultiplier = 0.5f;
+	protected float _acceleration = 12.0f;
+	protected float _friction = 7.0f;
+	protected float _maxHealth = 100.0f;
 	protected float _statusSpeedMultiplier = 1.0f;
 	protected float _baseStatusSpeedMultiplier = 1.0f;
-	protected int _lvl = 1;
-	protected float _xp = 0.0f;
-	protected bool _isSprinting = false;
-	protected bool _isSneaking = false;
-	protected bool _isStunned = false;
 	protected MovementMode _movementMode = MovementMode.IDLE;
 	protected Tween _fadeTween;
 
@@ -72,7 +68,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
 	public override void _Ready()
 	{
-		
+		ChangeState(new IdleState(this));
 	}
 
 	public override void _Process(double delta)
@@ -83,18 +79,18 @@ public abstract partial class Character : CharacterBody2D, IDamageable
     public override void _PhysicsProcess(double delta)
     {
 		if (_movementMode == MovementMode.DEATH) return;
-		if(_isSprinting && _movementMode != MovementMode.SHOOT && _movementMode != MovementMode.HEAVY_ATTACK) _currentSpeedMultiplier = _sprintSpeedMultiplier;
-		else if(_isSneaking && _movementMode != MovementMode.SHOOT && _movementMode != MovementMode.HEAVY_ATTACK) _currentSpeedMultiplier = _sneakSpeedMultiplier;
+		if(IsSprinting && _movementMode != MovementMode.SHOOT && _movementMode != MovementMode.HEAVY_ATTACK) CurrentSpeedMultiplier = _sprintSpeedMultiplier;
+		else if(IsSneaking && _movementMode != MovementMode.SHOOT && _movementMode != MovementMode.HEAVY_ATTACK) CurrentSpeedMultiplier = _sneakSpeedMultiplier;
 
 		if (_movementMode == MovementMode.IDLE || _movementMode == MovementMode.WALK)
     	{
-        	_movementMode = _direction.Length() > 0 ? MovementMode.WALK : MovementMode.IDLE;
-			if(!_isSprinting && !_isSneaking) _currentSpeedMultiplier = 1.0f;
+        	_movementMode = Direction.Length() > 0 ? MovementMode.WALK : MovementMode.IDLE;
+			if(!IsSprinting && !IsSneaking) CurrentSpeedMultiplier = 1.0f;
     	}
 
-		_desiredVelocity = _direction.Normalized() * _movementSpeed * _currentSpeedMultiplier * _statusSpeedMultiplier;
+		_desiredVelocity = Direction.Normalized() * FinalSpeed;
 
-		if(_direction.Length() > 0)
+		if(Direction.Length() > 0)
 		{
 			Velocity = Velocity.Lerp(_desiredVelocity, _acceleration * (float)delta);
 		}
@@ -110,37 +106,37 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
 	public virtual void _on_animation_player_animation_finished(string animName)
 	{
-    	if(animName == _animAttackName)
+    	if(animName == AnimAttackName)
     	{
         	_movementMode = MovementMode.IDLE;
     	}
-		else if(animName == _animHeavyAttackName)
+		else if(animName == AnimHeavyAttackName)
 		{
 			AfterHeavyAttack();
 			_movementMode = MovementMode.IDLE;
-			_currentSpeedMultiplier = 1.0f;
+			CurrentSpeedMultiplier = 1.0f;
 		}
-		else if(animName == _animShootName)
+		else if(animName == AnimShootName)
 		{
 			AfterShoot();
 			_movementMode = MovementMode.IDLE;
-			_currentSpeedMultiplier = 1.0f;
+			CurrentSpeedMultiplier = 1.0f;
 		}
-		else if(animName == _animTakeDamageName)
+		else if(animName == AnimTakeDamageName)
 		{
 			_movementMode = MovementMode.IDLE;
 		}
-		else if(animName == _animDeathName)
+		else if(animName == AnimDeathName)
 		{
-			PlayFadeAnimation(_targetSprite, 0.0f, 2.0f);
+			PlayFadeAnimation(TargetSprite, 0.0f, 2.0f);
 		}
 	}
 
 	public virtual float TakeDamage(float amount)
     {
 		if(_movementMode == MovementMode.DEATH) return 0;
-        _health -= amount;
-		if(_health <= 0)
+        Health -= amount;
+		if(Health <= 0)
 		{
 			Death();
 			return CalculateDroppedXp();
@@ -148,12 +144,17 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		else
 		{
 			_movementMode = MovementMode.TAKE_DAMAGE;
-			_animationPlayer.Play(_animTakeDamageName);
+			AnimPlayer.Play(AnimTakeDamageName);
 			return 0;
 		}
     }
 
-	protected abstract void CheckUpdateXp(float amount);
+	public void ChangeState(State state)
+	{
+		_currentState.Exit();
+		_currentState = state;
+		_currentState.Enter();
+	}
 
 	public virtual void ApplyKnockback(float amount, Vector2 direction)
 	{
@@ -165,6 +166,12 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		
 	}
 
+	public abstract void AfterAttack();
+	public abstract void AfterHeavyAttack();
+	public abstract void AfterShoot();
+
+	protected abstract void CheckUpdateXp(float amount);
+
 	private void UpdateMovementAnimation()
 	{
 		UpdateSpriteDirection();
@@ -172,14 +179,14 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 		{
 			if(_desiredVelocity.Length() ==  0)
 			{
-				_animationPlayer.Play(_animIdleName);
+				AnimPlayer.Play(AnimIdleName);
 			}
 			else if(_desiredVelocity.Length() > 0)
 			{
-				_animationPlayer.Play(_animWalkName);
-				if(_isSprinting && !_isSneaking) _animationPlayer.SpeedScale = 1.075f;
-				else if(!_isSprinting && _isSneaking) _animationPlayer.SpeedScale = 0.5f;
-				else _animationPlayer.SpeedScale = 1.0f;
+				AnimPlayer.Play(AnimWalkName);
+				if(IsSprinting && !IsSneaking) AnimPlayer.SpeedScale = 1.075f;
+				else if(!IsSprinting && IsSneaking) AnimPlayer.SpeedScale = 0.5f;
+				else AnimPlayer.SpeedScale = 1.0f;
 			}
 		}
 	}
@@ -201,38 +208,32 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	{
 		if(_movementMode == MovementMode.ATTACK || _movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.SHOOT) return false;
 		_movementMode = MovementMode.ATTACK;
-		_animationPlayer.Play(_animAttackName);
+		AnimPlayer.Play(AnimAttackName);
 		return true;
 	}
-
-	protected abstract void AfterAttack();
 
 	protected virtual bool HeavyAttack()
 	{
 		if(_movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.SHOOT) return false;
 		_movementMode = MovementMode.HEAVY_ATTACK;
-		_animationPlayer.Play(_animHeavyAttackName);
-		_currentSpeedMultiplier = 0.1f;
+		AnimPlayer.Play(AnimHeavyAttackName);
+		CurrentSpeedMultiplier = 0.1f;
 		return true;
 	}
-
-	protected abstract void AfterHeavyAttack();
 
 	protected virtual bool Shoot()
 	{
 		if(_movementMode == MovementMode.SHOOT || _movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.SHOOT) return false;
 		_movementMode = MovementMode.SHOOT;
-		_animationPlayer.Play(_animShootName);
-		_currentSpeedMultiplier = 0.25f;	
+		AnimPlayer.Play(AnimShootName);
+		CurrentSpeedMultiplier = 0.25f;	
 		return true;
 	}
-
-	protected abstract void AfterShoot();
 
 	protected virtual void Death()
 	{
 		_movementMode = MovementMode.DEATH;
-		_animationPlayer.Play(_animDeathName);
+		AnimPlayer.Play(AnimDeathName);
 		Velocity = Vector2.Zero;
 		SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, 0u);
 		SetDeferred(CollisionObject2D.PropertyName.CollisionMask, 0u);
@@ -241,9 +242,9 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	protected float CalculateDroppedXp()
 	{
 		RandomNumberGenerator rand = new RandomNumberGenerator();
-		float low = _baseXpAmountDropped - 5.0f;
-		float high = _baseXpAmountDropped + 5.0f;
-		float mulitplier = 1 + (1 - 1/_lvl);
+		float low = BaseXpAmountDropped - 5.0f;
+		float high = BaseXpAmountDropped + 5.0f;
+		float mulitplier = 1 + (1 - 1 / (float)Lvl);
 		return rand.RandfRange(low, high) * mulitplier;
 	}
 }
