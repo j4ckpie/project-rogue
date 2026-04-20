@@ -29,28 +29,25 @@ public partial class Enemy : Character
         base._Ready();
     }
 
-	// public override void _Input(InputEvent @event)
-    // {
-    //     if(@event.IsActionPressed("debug0")) Attack();
-	// 	if(@event.IsActionPressed("debug1")) HeavyAttack();
-    // }
-
 	public override void _PhysicsProcess(double delta)
 	{
-		if(_knockbackVelocity != Vector2.Zero)
-    	{
-        	Velocity = _knockbackVelocity;
-        	_knockbackVelocity = _knockbackVelocity.MoveToward(Vector2.Zero, KnockbackDeceleration * (float)delta);
-    	}
-    	else
-    	{
-			Velocity = Vector2.Zero;
-        	if (_movementMode == MovementMode.IDLE || _movementMode == MovementMode.WALK)
-        	{
-            	ThinkAndAct(delta);
-        	}
-    	}
-    	base._PhysicsProcess(delta);
+		if(!IsDead)
+		{
+			if(_knockbackVelocity != Vector2.Zero)
+    		{
+        		Velocity = _knockbackVelocity;
+        		_knockbackVelocity = _knockbackVelocity.MoveToward(Vector2.Zero, KnockbackDeceleration * (float)delta);
+    		}
+    		else
+    		{
+				Velocity = Vector2.Zero;
+        		if (_currentState is IdleState || _currentState is MoveState)
+        		{
+            		ThinkAndAct(delta);
+        		}
+    		}
+    		base._PhysicsProcess(delta);
+		}
 	}
 
     public override void _on_animation_player_animation_finished(string animName)
@@ -127,10 +124,10 @@ public partial class Enemy : Character
         }
     }
 
-	protected override void Death()
-	{
-		base.Death();
-	}
+	// protected override void Death()
+	// {
+	// 	base.Death();
+	// }
 
     protected override void UpdateSpriteDirection()
 	{

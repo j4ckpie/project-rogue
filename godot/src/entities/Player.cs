@@ -94,11 +94,14 @@ public partial class Player : Character
 
     public override void _PhysicsProcess(double delta)
     {
-        Direction = Input.GetVector(ActionLeftName, ActionRightName, ActionUpName, ActionDownName);
-		IsSprinting = Input.IsActionPressed(ActionSprintName);
-		IsSneaking = Input.IsActionPressed(ActionSneakName) && !IsSprinting;
+        if(!IsDead)
+        {
+            Direction = Input.GetVector(ActionLeftName, ActionRightName, ActionUpName, ActionDownName);
+		    IsSprinting = Input.IsActionPressed(ActionSprintName);
+		    IsSneaking = Input.IsActionPressed(ActionSneakName) && !IsSprinting;
 
-        base._PhysicsProcess(delta);
+            base._PhysicsProcess(delta);
+        }
     }
     
     public override void _Input(InputEvent @event)
@@ -246,11 +249,11 @@ public partial class Player : Character
         return base.Shoot();
     }
 
-    protected override void Death()
-    {
-        // TODO: saving, ui animation etc
-        base.Death();
-    }
+    // protected override void Death()
+    // {
+    //     // TODO: saving, ui animation etc
+    //     base.Death();
+    // }
 
     private void SpawnXpPopup(float amount)
     {

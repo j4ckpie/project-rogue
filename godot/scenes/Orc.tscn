@@ -178,6 +178,11 @@ DisplayedLvl = NodePath("DisplayedLevel")
 TargetSprite = NodePath("Sprite2D")
 AnimPlayer = NodePath("AnimationPlayer")
 AttackAreas = NodePath("AttackAreas")
+Health = 80.0
+BaseDamage = 10.0
+BaseHeavyDamage = 15.0
+BaseXpAmountDropped = 28.0
+MovementSpeed = 100.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {

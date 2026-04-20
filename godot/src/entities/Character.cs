@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 [GlobalClass]
 public abstract partial class Character : CharacterBody2D, IDamageable
 {
-	public enum MovementMode { IDLE, WALK, SPRINT, ATTACK, HEAVY_ATTACK, SHOOT, TAKE_DAMAGE, DEATH}	
 
 	[ExportGroup("Nodes")]
 	[Export]
@@ -46,19 +45,19 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	public bool IsSprinting { get; protected set; } = false;
 	public bool IsSneaking { get; protected set; } = false;
 	public bool IsStunned { get; protected set; } = false;
+	public bool IsDead { get; set; } = false;
 	public float FinalSpeed => MovementSpeed * CurrentSpeedMultiplier * _statusSpeedMultiplier;
-	// protected State _currentState;
 	public Vector2 Direction { get; protected set; } = Vector2.Zero;
-	protected Vector2 _desiredVelocity = Vector2.Zero;
 	public float CurrentSpeedMultiplier { get; set; } = 1.0f;
-	protected float _sprintSpeedMultiplier = 1.75f;
-	protected float _sneakSpeedMultiplier = 0.5f;
+	public float SprintSpeedMultiplier { get; protected set; } = 1.75f;
+	public float SneakSpeedMultiplier { get; protected set; } = 0.5f;
+	protected State _currentState;
+	protected Vector2 _desiredVelocity = Vector2.Zero;
 	protected float _acceleration = 12.0f;
 	protected float _friction = 7.0f;
 	protected float _maxHealth = 100.0f;
 	protected float _statusSpeedMultiplier = 1.0f;
 	protected float _baseStatusSpeedMultiplier = 1.0f;
-	protected MovementMode _movementMode = MovementMode.IDLE;
 	protected Tween _fadeTween;
 
 	[Signal]
@@ -68,7 +67,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
 	public override void _Ready()
 	{
-		//ChangeState(new IdleState(this));
+		ChangeState(new IdleState(this));
 	}
 
 	public override void _Process(double delta)
@@ -78,15 +77,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
     public override void _PhysicsProcess(double delta)
     {
-		if (_movementMode == MovementMode.DEATH) return;
-		if(IsSprinting && _movementMode != MovementMode.SHOOT && _movementMode != MovementMode.HEAVY_ATTACK) CurrentSpeedMultiplier = _sprintSpeedMultiplier;
-		else if(IsSneaking && _movementMode != MovementMode.SHOOT && _movementMode != MovementMode.HEAVY_ATTACK) CurrentSpeedMultiplier = _sneakSpeedMultiplier;
-
-		if (_movementMode == MovementMode.IDLE || _movementMode == MovementMode.WALK)
-    	{
-        	_movementMode = Direction.Length() > 0 ? MovementMode.WALK : MovementMode.IDLE;
-			if(!IsSprinting && !IsSneaking) CurrentSpeedMultiplier = 1.0f;
-    	}
+		_currentState?.PhysicsProcess(delta);
 
 		_desiredVelocity = Direction.Normalized() * FinalSpeed;
 
@@ -101,60 +92,36 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 
 
         MoveAndSlide();
-		UpdateMovementAnimation();
+		UpdateSpriteDirection();
     }
 
 	public virtual void _on_animation_player_animation_finished(string animName)
 	{
-    	if(animName == AnimAttackName)
-    	{
-        	_movementMode = MovementMode.IDLE;
-    	}
-		else if(animName == AnimHeavyAttackName)
-		{
-			AfterHeavyAttack();
-			_movementMode = MovementMode.IDLE;
-			CurrentSpeedMultiplier = 1.0f;
-		}
-		else if(animName == AnimShootName)
-		{
-			AfterShoot();
-			_movementMode = MovementMode.IDLE;
-			CurrentSpeedMultiplier = 1.0f;
-		}
-		else if(animName == AnimTakeDamageName)
-		{
-			_movementMode = MovementMode.IDLE;
-		}
-		else if(animName == AnimDeathName)
-		{
-			PlayFadeAnimation(TargetSprite, 0.0f, 2.0f);
-		}
+    	_currentState?.OnAnimationFinished(animName);
 	}
 
 	public virtual float TakeDamage(float amount)
     {
-		if(_movementMode == MovementMode.DEATH) return 0;
+		if(_currentState is DeathState) return 0;
         Health -= amount;
 		if(Health <= 0)
 		{
-			Death();
+			ChangeState(new DeathState(this));
 			return CalculateDroppedXp();
 		}
 		else
 		{
-			_movementMode = MovementMode.TAKE_DAMAGE;
-			AnimPlayer.Play(AnimTakeDamageName);
+			ChangeState(new TakeDamageState(this));
 			return 0;
 		}
     }
 
-	// public void ChangeState(State state)
-	// {
-	// 	_currentState.Exit();
-	// 	_currentState = state;
-	// 	_currentState.Enter();
-	// }
+	public void ChangeState(State state)
+	{
+		_currentState?.Exit();
+		_currentState = state;
+		_currentState.Enter();
+	}
 
 	public virtual void ApplyKnockback(float amount, Vector2 direction)
 	{
@@ -170,28 +137,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	public abstract void AfterHeavyAttack();
 	public abstract void AfterShoot();
 
-	protected abstract void CheckUpdateXp(float amount);
-
-	private void UpdateMovementAnimation()
-	{
-		UpdateSpriteDirection();
-		if(_movementMode == MovementMode.IDLE || _movementMode == MovementMode.WALK)
-		{
-			if(_desiredVelocity.Length() ==  0)
-			{
-				AnimPlayer.Play(AnimIdleName);
-			}
-			else if(_desiredVelocity.Length() > 0)
-			{
-				AnimPlayer.Play(AnimWalkName);
-				if(IsSprinting && !IsSneaking) AnimPlayer.SpeedScale = 1.075f;
-				else if(!IsSprinting && IsSneaking) AnimPlayer.SpeedScale = 0.5f;
-				else AnimPlayer.SpeedScale = 1.0f;
-			}
-		}
-	}
-
-	protected void PlayFadeAnimation(Node targetBody, float targetAlpha, float duration)
+	public void PlayFadeAnimation(Node targetBody, float targetAlpha, float duration)
     {
         if(_fadeTween != null && _fadeTween.IsRunning())
         {
@@ -202,41 +148,29 @@ public abstract partial class Character : CharacterBody2D, IDamageable
               .SetTrans(Tween.TransitionType.Cubic);
     }
 
+	protected abstract void CheckUpdateXp(float amount);
+
 	protected abstract void UpdateSpriteDirection();
 
 	protected virtual bool Attack()
 	{
-		if(_movementMode == MovementMode.ATTACK || _movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.SHOOT) return false;
-		_movementMode = MovementMode.ATTACK;
-		AnimPlayer.Play(AnimAttackName);
+		if(_currentState is AttackState || _currentState is HeavyAttackState || _currentState is ShootState || _currentState is TakeDamageState || _currentState is DeathState) return false;
+		ChangeState(new AttackState(this));
 		return true;
 	}
 
 	protected virtual bool HeavyAttack()
 	{
-		if(_movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.SHOOT) return false;
-		_movementMode = MovementMode.HEAVY_ATTACK;
-		AnimPlayer.Play(AnimHeavyAttackName);
-		CurrentSpeedMultiplier = 0.1f;
+		if(_currentState is AttackState || _currentState is HeavyAttackState || _currentState is ShootState || _currentState is TakeDamageState || _currentState is DeathState) return false;
+		ChangeState(new HeavyAttackState(this));
 		return true;
 	}
 
 	protected virtual bool Shoot()
 	{
-		if(_movementMode == MovementMode.SHOOT || _movementMode == MovementMode.HEAVY_ATTACK || _movementMode == MovementMode.SHOOT) return false;
-		_movementMode = MovementMode.SHOOT;
-		AnimPlayer.Play(AnimShootName);
-		CurrentSpeedMultiplier = 0.25f;	
+		if(_currentState is AttackState || _currentState is HeavyAttackState || _currentState is ShootState || _currentState is TakeDamageState || _currentState is DeathState) return false;
+		ChangeState(new ShootState(this));
 		return true;
-	}
-
-	protected virtual void Death()
-	{
-		_movementMode = MovementMode.DEATH;
-		AnimPlayer.Play(AnimDeathName);
-		Velocity = Vector2.Zero;
-		SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, 0u);
-		SetDeferred(CollisionObject2D.PropertyName.CollisionMask, 0u);
 	}
 
 	protected float CalculateDroppedXp()

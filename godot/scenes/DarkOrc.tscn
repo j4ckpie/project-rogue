@@ -174,11 +174,19 @@ _data = {
 }
 
 [node name="DarkOrc" node_paths=PackedStringArray("SlownessTimer", "DisplayedLvl", "TargetSprite", "AnimPlayer", "AttackAreas") instance=ExtResource("1_3u38n")]
+AttackRange = 30.0
+AttackCooldown = 1.2
 SlownessTimer = NodePath("SlownessTimer")
 DisplayedLvl = NodePath("DisplayedLevel")
+KnockbackDeceleration = 300.0
 TargetSprite = NodePath("Sprite2D")
 AnimPlayer = NodePath("AnimationPlayer")
 AttackAreas = NodePath("AttackAreas")
+Health = 175.0
+BaseDamage = 20.0
+BaseHeavyDamage = 35.0
+BaseXpAmountDropped = 53.0
+MovementSpeed = 66.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {
