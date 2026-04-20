@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://cobs305pcfo7m"]
 
 [ext_resource type="Shader" path="res://shaders/Sheer.gdshader" id="1_7ue8v"]
-[ext_resource type="Script" path="res://src/HUD.cs" id="1_cbt4a"]
+[ext_resource type="Script" path="res://src/ui/HUD.cs" id="1_cbt4a"]
 [ext_resource type="Texture2D" uid="uid://dgw6wenfbgrbe" path="res://sprites/Crosshair/crosshair.png" id="2_rno4s"]
 [ext_resource type="FontFile" uid="uid://dw8pamdidq86k" path="res://fonts/Jacquard12-Regular.ttf" id="3_rd8dw"]
 [ext_resource type="FontFile" uid="uid://2dh2a0wtqnm7" path="res://fonts/PixelifySans-Bold.ttf" id="4_64vef"]
@@ -42,13 +42,13 @@ width = 4
 height = 4
 fill_from = Vector2(1, 1)
 
-[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("_healthBar", "_damageBar", "_xpBar", "_newXpBar", "_displayedLvl")]
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("HealthBar", "DamageBar", "XpBar", "NewXpBar", "DisplayedLvl")]
 script = ExtResource("1_cbt4a")
-_healthBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/HealthProgressBar")
-_damageBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/DamageProgressBar")
-_xpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/XpProgressBar")
-_newXpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/NewXpProgressBar")
-_displayedLvl = NodePath("HBoxContainer/LevelFrame/VBoxContainer2/Level")
+HealthBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/HealthProgressBar")
+DamageBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/DamageProgressBar")
+XpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/XpProgressBar")
+NewXpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/NewXpProgressBar")
+DisplayedLvl = NodePath("HBoxContainer/LevelFrame/VBoxContainer2/Level")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_left = 10.0

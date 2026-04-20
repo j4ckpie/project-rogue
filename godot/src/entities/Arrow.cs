@@ -5,12 +5,12 @@ public partial class Arrow : Area2D
 {
     [ExportGroup("Base Variables")]
     [Export]
-    private float _speed = 200.0f;
+    public float Speed { get; private set; } = 200.0f;
     [Export]
-    private float _damage = 20.0f;
+    public float Damage { get; private set; } = 20.0f;
     [Export]
-    private float _slownessIntensity = 1.7f;
-    [Export]
+    public float SlownessIntensity { get; private set; } = 1.7f;
+    
     private float _lifespan = 5.0f;
 
     public override void _Ready()
@@ -20,7 +20,7 @@ public partial class Arrow : Area2D
 
     public override void _PhysicsProcess(double delta)
     {
-        Position += Transform.X * _speed * (float)delta;
+        Position += Transform.X * Speed * (float)delta;
     }
 
     public void _on_body_entered(Node2D body)
@@ -28,8 +28,8 @@ public partial class Arrow : Area2D
         if(body is Player) return;
         if(body is IDamageable damageable)
         {
-            damageable.TakeDamage(_damage);
-            damageable.ApplySlowness(1.0f / (1.0f + _slownessIntensity));
+            damageable.TakeDamage(Damage);
+            damageable.ApplySlowness(1.0f / (1.0f + SlownessIntensity));
         }
         QueueFree();
     }

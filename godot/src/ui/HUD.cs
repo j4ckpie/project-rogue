@@ -5,34 +5,34 @@ public partial class HUD : CanvasLayer
 {
     [ExportGroup("Nodes")]
     [Export]
-	private TextureProgressBar _healthBar;
+	public TextureProgressBar HealthBar { get; private set; }
     [Export]
-	private TextureProgressBar _damageBar;
+    public TextureProgressBar DamageBar { get; private set; }
 	[Export]
-	private TextureProgressBar _xpBar;
+	public TextureProgressBar XpBar { get; private set; }
     [Export]
-	private TextureProgressBar _newXpBar;
+	public TextureProgressBar NewXpBar { get; private set; }
     [Export]
-	private Label _displayedLvl;
+	public Label DisplayedLvl { get; private set; }
 
     private Tween _damageTween;
     private Tween _newXpTween;
 
     public void _on_player_hp_changed(float amount)
     {
-        _healthBar.Value = amount;
-        PlayFillProgressBarAnimation(_damageTween, _damageBar, amount, 0.5f, 0.5f);
+        HealthBar.Value = amount;
+        PlayFillProgressBarAnimation(_damageTween, DamageBar, amount, 0.5f, 0.5f);
     }
 
     public void _on_player_xp_changed(float amount)
     {
-        _newXpBar.Value = amount;
-        PlayFillProgressBarAnimation(_newXpTween, _xpBar, amount, 0.5f, 0.5f);
+        NewXpBar.Value = amount;
+        PlayFillProgressBarAnimation(_newXpTween, XpBar, amount, 0.5f, 0.5f);
     }
 
     public void _on_player_leveled_up(int amount)
     {
-        _displayedLvl.Text = amount.ToString();
+        DisplayedLvl.Text = amount.ToString();
     }
 
     private void PlayFillProgressBarAnimation(Tween tween, Node target, float amount, float duration, float pause)

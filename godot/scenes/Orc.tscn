@@ -172,12 +172,17 @@ _data = {
 "walk": SubResource("Animation_lttbr")
 }
 
-[node name="Orc" node_paths=PackedStringArray("_animationPlayer") instance=ExtResource("1_w4q5x")]
-_animationPlayer = NodePath("AnimationPlayer")
-_health = 80.0
-_baseDamage = 10.0
-_baseHeavyDamage = 15.0
-_movementSpeed = 100.0
+[node name="Orc" node_paths=PackedStringArray("SlownessTimer", "DisplayedLvl", "TargetSprite", "AnimPlayer", "AttackAreas") instance=ExtResource("1_w4q5x")]
+SlownessTimer = NodePath("SlownessTimer")
+DisplayedLvl = NodePath("DisplayedLevel")
+TargetSprite = NodePath("Sprite2D")
+AnimPlayer = NodePath("AnimationPlayer")
+AttackAreas = NodePath("AttackAreas")
+Health = 80.0
+BaseDamage = 10.0
+BaseHeavyDamage = 15.0
+BaseXpAmountDropped = 28.0
+MovementSpeed = 100.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {

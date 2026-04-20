@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://v1esu2c6ylsh"]
 
 [ext_resource type="Texture2D" uid="uid://rw04p1gv3wbi" path="res://sprites/Orc/Orc.png" id="1_gx33n"]
-[ext_resource type="Script" path="res://src/Enemy.cs" id="1_rt4g0"]
+[ext_resource type="Script" path="res://src/entities/Enemy.cs" id="1_rt4g0"]
 [ext_resource type="FontFile" uid="uid://bkl3mwsb7ggjg" path="res://fonts/PixelifySans-Regular.ttf" id="3_gepgm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6tpc6"]
@@ -15,16 +15,12 @@ height = 34.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aqqwx"]
 radius = 15.0
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("_slownessTimer", "_displayedLvl", "_targetSprite", "_attackAreas")]
+[node name="Enemy" type="CharacterBody2D"]
 y_sort_enabled = true
 position = Vector2(0, -10)
 collision_layer = 2
 collision_mask = 14
 script = ExtResource("1_rt4g0")
-_slownessTimer = NodePath("SlownessTimer")
-_displayedLvl = NodePath("DisplayedLevel")
-_targetSprite = NodePath("Sprite2D")
-_attackAreas = NodePath("AttackAreas")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_6tpc6")
