@@ -1,10 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://cobs305pcfo7m"]
+[gd_scene load_steps=17 format=3 uid="uid://cobs305pcfo7m"]
 
 [ext_resource type="Shader" path="res://shaders/Sheer.gdshader" id="1_7ue8v"]
 [ext_resource type="Script" path="res://src/ui/HUD.cs" id="1_cbt4a"]
+[ext_resource type="Texture2D" uid="uid://dwnfxnfg87ekg" path="res://sprites/UI/frame.png" id="2_ml4ek"]
 [ext_resource type="Texture2D" uid="uid://dgw6wenfbgrbe" path="res://sprites/Crosshair/crosshair.png" id="2_rno4s"]
 [ext_resource type="FontFile" uid="uid://dw8pamdidq86k" path="res://fonts/Jacquard12-Regular.ttf" id="3_rd8dw"]
 [ext_resource type="FontFile" uid="uid://2dh2a0wtqnm7" path="res://fonts/PixelifySans-Bold.ttf" id="4_64vef"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qt5t5"]
+texture = ExtResource("2_ml4ek")
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_x5lm7"]
 diffuse_texture = ExtResource("2_rno4s")
@@ -48,7 +52,7 @@ HealthBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/HealthProgress
 DamageBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/DamageProgressBar")
 XpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/XpProgressBar")
 NewXpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/NewXpProgressBar")
-DisplayedLvl = NodePath("HBoxContainer/LevelFrame/VBoxContainer2/Level")
+DisplayedLvl = NodePath("HBoxContainer/LevelFrame/VBoxContainer2/MarginContainer/Level")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_left = 10.0
@@ -61,6 +65,7 @@ theme_override_constants/separation = 10
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_qt5t5")
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/LevelFrame"]
 visible = false
@@ -71,7 +76,12 @@ texture = SubResource("CanvasTexture_x5lm7")
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Level" type="Label" parent="HBoxContainer/LevelFrame/VBoxContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/LevelFrame/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_bottom = -4
+
+[node name="Level" type="Label" parent="HBoxContainer/LevelFrame/VBoxContainer2/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("3_rd8dw")
@@ -80,7 +90,12 @@ text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Desc" type="Label" parent="HBoxContainer/LevelFrame/VBoxContainer2"]
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/LevelFrame/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_right = -1
+
+[node name="Desc" type="Label" parent="HBoxContainer/LevelFrame/VBoxContainer2/MarginContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1

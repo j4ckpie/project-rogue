@@ -58,6 +58,7 @@ position = Vector2(439, 152)
 environment = SubResource("Environment_fgqf5")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.604634, 0.670414, 0.770505, 1)
 
 [connection signal="HpChanged" from="Player" to="HUD" method="_on_player_hp_changed"]
 [connection signal="LeveledUp" from="Player" to="HUD" method="_on_player_leveled_up"]

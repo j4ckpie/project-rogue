@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://3ge6xu5jyc62"]
+[gd_scene load_steps=23 format=3 uid="uid://3ge6xu5jyc62"]
 
 [ext_resource type="Script" path="res://src/entities/Player.cs" id="1_8cjk2"]
 [ext_resource type="Texture2D" uid="uid://df7hcg84ravtb" path="res://sprites/Soldier/Soldier.png" id="2_7kh3q"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://src/core/Camera.cs" id="4_cudoe"]
 [ext_resource type="Texture2D" uid="uid://dvng1bluoquj" path="res://sprites/Soldier/Soldier-Attack01_Effect.png" id="5_521lb"]
 [ext_resource type="PackedScene" uid="uid://btoe4bl7ckamv" path="res://scenes/XpPopUp.tscn" id="5_cmy2n"]
+[ext_resource type="Texture2D" uid="uid://cutf6km0sltnv" path="res://sprites/LightMasks/lightmask_big.png" id="7_dscep"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t2ic1"]
 radius = 7.5
@@ -370,6 +371,13 @@ collision_mask = 2
 position = Vector2(48.5, 0)
 shape = SubResource("RectangleShape2D_p7wkq")
 disabled = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.172492, 0.512549, 0.561854, 1)
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("7_dscep")
+texture_scale = 0.5
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_stamina_timer_timeout"]
