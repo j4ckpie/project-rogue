@@ -8,7 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://btoe4bl7ckamv" path="res://scenes/XpPopUp.tscn" id="5_cmy2n"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t2ic1"]
-height = 24.0
+radius = 7.5
+height = 22.6
 
 [sub_resource type="Animation" id="Animation_s0svk"]
 length = 0.001
