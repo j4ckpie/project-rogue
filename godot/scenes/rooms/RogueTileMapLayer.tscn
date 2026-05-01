@@ -1,12 +1,33 @@
-[gd_scene load_steps=5 format=4 uid="uid://creklf1dqarnb"]
+[gd_scene load_steps=12 format=4 uid="uid://creklf1dqarnb"]
 
 [ext_resource type="Texture2D" uid="uid://bsythxgayno6n" path="res://sprites/Dungeon/Set 1.png" id="1_607d7"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ii34g"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_w26q3"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_gkjnj"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_xeyt8"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_eyuyl"]
 vertices = PackedVector2Array(8, 2.27344, -8, 2.27344, -8, -8, 8, -8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 2.27179, -8, 2.27179)])
 agent_radius = 0.0
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_f4b0v"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_q54mh"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_0b7gy"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rd286"]
 resource_name = "dungeon"
@@ -139,6 +160,7 @@ texture = ExtResource("1_607d7")
 2:7/0 = 0
 3:7/0 = 0
 4:7/0 = 0
+4:7/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_ii34g")
 4:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -6.99256, 8, -7.11855, 8, 8, -8, 8)
 5:7/0 = 0
 5:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -0.311815, -0.668174, -0.0445452, -0.846354, 8, -8, 8)
@@ -167,6 +189,7 @@ texture = ExtResource("1_607d7")
 2:8/0 = 0
 3:8/0 = 0
 4:8/0 = 0
+4:8/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_w26q3")
 4:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 5:8/0 = 0
 5:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -1.02453, -8, -0.935444, 8, -8, 8)
@@ -197,12 +220,16 @@ texture = ExtResource("1_607d7")
 2:9/0 = 0
 3:9/0 = 0
 4:9/0 = 0
+4:9/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_gkjnj")
 4:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 1.91543, -8, 1.82634)
 5:9/0 = 0
+5:9/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_xeyt8")
 5:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 2.00452, -8, 2.09361)
 6:9/0 = 0
+6:9/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_f4b0v")
 6:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 2.00452, -8, 2.09361)
 7:9/0 = 0
+7:9/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_q54mh")
 7:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 2.00452, -8, 2.09361)
 8:9/0 = 0
 8:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -235,6 +262,7 @@ texture = ExtResource("1_607d7")
 8:10/0 = 0
 8:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:10/0 = 0
+9:10/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_0b7gy")
 9:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 10:10/0 = 0
 10:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -372,5 +400,7 @@ navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_rd286")
 
 [node name="TileMapLayer" type="TileMapLayer"]
+z_index = -1
+y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAAAAAAAAAFAAcAAAABAAAAAAAGAAcAAAACAAAAAAAGAAcAAAADAAAAAAAGAAcAAAAEAAAAAAAGAAcAAAAFAAAAAAAGAAcAAAAGAAAAAAAGAAcAAAAHAAAAAAAGAAcAAAAIAAAAAAAHAAcAAAAIAAEAAAAHAAgAAAAIAAIAAAAHAAgAAAAIAAMAAAAHAAgAAAAIAAQAAAAHAAgAAAAIAAUAAAAHAAgAAAAIAAYAAAAHAAgAAAAIAAcAAAAHAAkAAAAHAAcAAAAGAAkAAAAGAAcAAAAGAAkAAAAFAAcAAAAGAAkAAAAEAAcAAAAGAAkAAAADAAcAAAAGAAkAAAACAAcAAAAGAAkAAAABAAcAAAAGAAkAAAAAAAcAAAAFAAkAAAAAAAYAAAAFAAgAAAAAAAUAAAAFAAgAAAAAAAQAAAAFAAgAAAAAAAMAAAAFAAgAAAAAAAIAAAAFAAgAAAAAAAEAAAAFAAgAAAABAAEAAAAGAAgAAAACAAIAAAAGAAgAAAADAAIAAAAGAAgAAAACAAEAAAAGAAgAAAADAAEAAAAGAAgAAAAEAAIAAAAEAAcAAAAEAAEAAAAGAAgAAAAFAAEAAAAGAAgAAAAGAAEAAAAGAAgAAAAHAAEAAAAGAAgAAAAHAAIAAAAGAAgAAAAGAAIAAAAGAAgAAAAFAAIAAAAGAAgAAAABAAIAAAAGAAgAAAABAAMAAAAGAAgAAAACAAMAAAAGAAgAAAADAAMAAAAGAAgAAAAEAAMAAAAEAAgAAAAFAAMAAAAGAAgAAAAGAAMAAAAGAAgAAAAHAAMAAAAGAAgAAAAHAAQAAAAGAAgAAAAGAAQAAAAGAAgAAAAFAAQAAAAGAAgAAAAEAAQAAAAEAAkAAAADAAQAAAAGAAgAAAACAAQAAAAGAAgAAAABAAQAAAAGAAgAAAABAAUAAAAGAAgAAAABAAYAAAAGAAgAAAACAAYAAAAGAAgAAAADAAYAAAAGAAgAAAAEAAYAAAAGAAgAAAAFAAYAAAAGAAgAAAAGAAYAAAAGAAgAAAAHAAYAAAAGAAgAAAAHAAUAAAAGAAgAAAAGAAUAAAAGAAgAAAAFAAUAAAAGAAgAAAAEAAUAAAAGAAgAAAADAAUAAAAGAAgAAAACAAUAAAAGAAgAAAA=")
 tile_set = SubResource("TileSet_gsp17")

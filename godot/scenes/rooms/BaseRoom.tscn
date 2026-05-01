@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dj0em66l2e2ga"]
+
+[ext_resource type="PackedScene" uid="uid://creklf1dqarnb" path="res://scenes/rooms/RogueTileMapLayer.tscn" id="1_wcwe4"]
+
+[node name="BaseRoom" type="Node2D"]
+
+[node name="Structure" type="Node2D" parent="."]
+
+[node name="TileMapLayer" parent="Structure" instance=ExtResource("1_wcwe4")]
+
+[node name="Entities" type="Node2D" parent="."]

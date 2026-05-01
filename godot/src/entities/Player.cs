@@ -68,6 +68,8 @@ public partial class Player : Character
 
 		Engine.MaxFps = 0;	// TODO: PLACEHOLDER
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
+
+        GlobalPosition = Vector2.Zero;
         StaminaBar.Value = _staminaCurrent;
 	}
 
