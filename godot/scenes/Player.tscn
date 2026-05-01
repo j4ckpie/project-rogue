@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://src/core/Camera.cs" id="4_cudoe"]
 [ext_resource type="Texture2D" uid="uid://dvng1bluoquj" path="res://sprites/Soldier/Soldier-Attack01_Effect.png" id="5_521lb"]
 [ext_resource type="PackedScene" uid="uid://btoe4bl7ckamv" path="res://scenes/XpPopUp.tscn" id="5_cmy2n"]
-[ext_resource type="Texture2D" uid="uid://cutf6km0sltnv" path="res://sprites/LightMasks/lightmask_big.png" id="7_dscep"]
+[ext_resource type="Texture2D" uid="uid://dg1lbte1ojj7q" path="res://sprites/LightMasks/lightmask_shallow.png" id="7_amggm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t2ic1"]
 radius = 7.5
@@ -374,9 +374,9 @@ disabled = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(0.172492, 0.512549, 0.561854, 1)
-energy = 0.5
+energy = 2.0
 shadow_enabled = true
-texture = ExtResource("7_dscep")
+texture = ExtResource("7_amggm")
 texture_scale = 0.5
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
