@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://creklf1dqarnb"]
+[gd_scene load_steps=24 format=4 uid="uid://creklf1dqarnb"]
 
 [ext_resource type="Texture2D" uid="uid://bsythxgayno6n" path="res://sprites/Dungeon/Set 1.png" id="1_607d7"]
 
@@ -27,6 +27,9 @@ polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_gkjnj"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_i13n4"]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_5naiy"]
@@ -246,10 +249,10 @@ texture = ExtResource("1_607d7")
 8:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:8/0 = 0
 9:8/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_15ctd")
-9:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -1.02453, -8, -0.935444, 8, -8, 8)
+9:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -1.02453, -8, -1.11362, 2.09361, -8, 8)
 10:8/0 = 0
 10:8/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_o5ejl")
-10:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.692957, -8, 8, -8, 8, 8, 0.692957, 8)
+10:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.692957, -8, 8, -8, 8, 8, 0.846354, 2.71724)
 11:8/0 = 0
 11:8/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_2botf")
 11:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -413,7 +416,11 @@ texture = ExtResource("1_607d7")
 17:13/0 = 0
 18:13/0 = 0
 5:14/0 = 0
+5:14/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_i13n4")
+5:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:14/0 = 0
+6:14/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_i13n4")
+6:14/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:14/0 = 0
 8:14/0 = 0
 9:14/0 = 0

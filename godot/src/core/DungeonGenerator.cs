@@ -32,38 +32,49 @@ public partial class DungeonGenerator : Node
         while(_exitsToProcess.Count > 0)
         {
             Marker2D currentExit = _exitsToProcess.Dequeue();
-            if(_currentRoomCount < 2)
-            {
-                SpawnRoom(MidRooms.PickRandom(), currentExit);
-            } 
-            else
-            {
-                SpawnRoom(EndRooms.PickRandom(), currentExit);
-            }
+            PackedScene pickedRoom = _currentRoomCount < 2
+                ? PickCompatibleRoom(MidRooms, currentExit)
+                : PickCompatibleRoom(EndRooms, currentExit);
+
+            //if(pickedRoom == null && _currentRoomCount < 2) pickedRoom = PickCompatibleRoom(EndRooms, currentExit);
+            if(pickedRoom != null) SpawnRoom(pickedRoom, currentExit);
         }
+    }
+
+    private PackedScene PickCompatibleRoom(Godot.Collections.Array<PackedScene> rooms, Marker2D exit)
+    {
+        var shuffled = rooms.OrderBy(_ => GD.Randf()).ToList();
+        foreach(PackedScene room in shuffled)
+        {
+            if(CheckRoomCompatibility(room, exit)) return room;
+        }
+        return null;
+}
+
+    private bool CheckRoomCompatibility(PackedScene roomPrefab, Marker2D exit)
+    {
+        Room newRoom = roomPrefab.Instantiate<Room>();
+        Marker2D entrance = newRoom.GetNode<Marker2D>("Entrance");
+
+        bool isCompatible = entrance.RotationDegrees == exit.RotationDegrees &&
+            entrance.GetParent<Room>().EntranceWidth == exit.GetParent<Room>().ExitWidth;
+        newRoom.Free();
+        
+        return isCompatible;
     }
 
     private void SpawnRoom(PackedScene roomPrefab, Marker2D exit)
     {
-        // TODO: Make more room variants and don't rotate them -> makes them look off.
-        Node2D newRoom = roomPrefab.Instantiate<Node2D>();
+        Room newRoom = roomPrefab.Instantiate<Room>();
         AddChild(newRoom);
+
+        GD.Print("seima");
 
         Marker2D entrance = newRoom.GetNode<Marker2D>("Entrance");
         newRoom.GlobalPosition = exit.GlobalPosition - entrance.Position;
-        newRoom.GlobalRotationDegrees = exit.GlobalRotationDegrees;
-        // ResetEntityRotation(newRoom);
 
         _currentRoomCount++;
         AddExitsToQueue(newRoom);
-    }
-
-    private void ResetEntityRotation(Node2D room)
-    {
-        foreach(Node child in room.GetChildren())
-        {
-            if(child is Character character) character.GlobalRotationDegrees = 0.0f;
-        }
     }
 
     private void AddExitsToQueue(Node2D room)

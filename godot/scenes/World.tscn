@@ -1,14 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://bvbqmlvyuyrtc"]
+[gd_scene load_steps=15 format=3 uid="uid://bvbqmlvyuyrtc"]
 
 [ext_resource type="PackedScene" uid="uid://3ge6xu5jyc62" path="res://scenes/Player.tscn" id="1_jast4"]
 [ext_resource type="Script" path="res://src/core/DungeonGenerator.cs" id="1_x7boq"]
-[ext_resource type="PackedScene" uid="uid://cc2ijq5m53wxm" path="res://scenes/rooms/StartRoom1.tscn" id="2_5b028"]
+[ext_resource type="PackedScene" uid="uid://bawjykjqyqd0n" path="res://scenes/rooms/StartRoom0.tscn" id="2_a5507"]
 [ext_resource type="PackedScene" uid="uid://bixj6o88fpnho" path="res://scenes/Crosshair.tscn" id="2_wkc02"]
-[ext_resource type="PackedScene" uid="uid://dr4wmkryjo83u" path="res://scenes/rooms/MidRoom1.tscn" id="3_13srw"]
+[ext_resource type="PackedScene" uid="uid://cg6ssjh2ul6ik" path="res://scenes/rooms/MidRoom1.tscn" id="3_13srw"]
+[ext_resource type="PackedScene" uid="uid://b2alc54ur6gg6" path="res://scenes/rooms/MidRoom0.tscn" id="3_stybg"]
 [ext_resource type="PackedScene" uid="uid://brg5q45d53ea4" path="res://scenes/DarkOrc.tscn" id="4_ovo77"]
-[ext_resource type="PackedScene" uid="uid://dg6lutv4ig53k" path="res://scenes/rooms/EndRoom1.tscn" id="4_psgyn"]
 [ext_resource type="PackedScene" uid="uid://cobs305pcfo7m" path="res://scenes/HUD.tscn" id="5_5q6ae"]
+[ext_resource type="PackedScene" uid="uid://civtg7okijpxb" path="res://scenes/rooms/EndRoom0.tscn" id="5_fq7ed"]
 [ext_resource type="PackedScene" uid="uid://brgjr1drfyi84" path="res://scenes/Orc.tscn" id="5_t45rs"]
+[ext_resource type="PackedScene" uid="uid://c026crqjxegmk" path="res://scenes/rooms/EndRoom1.tscn" id="6_lsb5m"]
+[ext_resource type="PackedScene" uid="uid://by7bjp1a5knpk" path="res://scenes/rooms/EndRoom2.tscn" id="7_eikij"]
+[ext_resource type="PackedScene" uid="uid://cp36vnr04s6bp" path="res://scenes/rooms/EndRoom3.tscn" id="8_35hxx"]
 
 [sub_resource type="Environment" id="Environment_fgqf5"]
 background_mode = 3
@@ -24,9 +28,9 @@ y_sort_enabled = true
 [node name="DungeonGenerator" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_x7boq")
-StartRooms = Array[PackedScene]([ExtResource("2_5b028")])
-MidRooms = Array[PackedScene]([ExtResource("3_13srw")])
-EndRooms = Array[PackedScene]([ExtResource("4_psgyn")])
+StartRooms = Array[PackedScene]([ExtResource("2_a5507")])
+MidRooms = Array[PackedScene]([ExtResource("3_stybg"), ExtResource("3_13srw")])
+EndRooms = Array[PackedScene]([ExtResource("5_fq7ed"), ExtResource("6_lsb5m"), ExtResource("7_eikij"), ExtResource("8_35hxx")])
 
 [node name="Player" parent="." instance=ExtResource("1_jast4")]
 y_sort_enabled = true
