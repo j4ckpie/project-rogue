@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dfmblnb87al12"]
 
-[ext_resource type="Script" path="res://src/entities/Explosion.cs" id="1_dwnjd"]
+[ext_resource type="Script" path="res://src/entities/Explosion.cs" id="1_hqyju"]
 
 [sub_resource type="Curve" id="Curve_ftnwv"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -11,7 +11,7 @@ offsets = PackedFloat32Array(0, 0.994318)
 colors = PackedColorArray(0.395367, 0.395367, 0.395367, 1, 0.0288498, 0.231605, 0.325711, 1)
 
 [node name="ExplosionEffect" type="Node2D" node_paths=PackedStringArray("Particles", "KillTimer")]
-script = ExtResource("1_dwnjd")
+script = ExtResource("1_hqyju")
 Particles = NodePath("CPUParticles2D")
 KillTimer = NodePath("KillTimer")
 

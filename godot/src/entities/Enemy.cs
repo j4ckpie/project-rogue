@@ -31,7 +31,7 @@ public partial class Enemy : Character
 		// i have no clue why this exact export isn't working
 		if(DamagePopUp == null)
     	{
-        	DamagePopUp = GD.Load<PackedScene>("res://scenes/DamagePopUp.tscn");
+        	DamagePopUp = GD.Load<PackedScene>("res://scenes/ui/DamagePopUp.tscn");
     	}
         base._Ready();
     }

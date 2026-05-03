@@ -1,7 +1,5 @@
 using Godot;
-using Godot.NativeInterop;
 using System;
-using System.ComponentModel;
 
 public partial class Player : Character
 {
@@ -206,13 +204,15 @@ public partial class Player : Character
     {
         if(GlobalPosition.X - GetGlobalMousePosition().X > 0)
 		{
-			TargetSprite.FlipH = true;
+			//TargetSprite.FlipH = true;
+            TargetSprite.Scale = new Vector2(-1 ,1);
             AttackAreas.Scale = new Vector2(-1, 1);
             DustParticles.Direction = new Vector2(1, 0);
 		}
 		else if(GlobalPosition.X - GetGlobalMousePosition().X < 0)
 		{
-			TargetSprite.FlipH = false;
+			//TargetSprite.FlipH = false;
+            TargetSprite.Scale = new Vector2(1,1);
             AttackAreas.Scale = new Vector2(1, 1);
             DustParticles.Direction = new Vector2(-1, 0);
 		}
