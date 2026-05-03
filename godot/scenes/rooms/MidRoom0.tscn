@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dj0em66l2e2ga" path="res://scenes/rooms/BaseRoom.tscn" id="1_1trdd"]
 
 [node name="MidRoom0" instance=ExtResource("1_1trdd")]
+y_sort_enabled = true
 EntranceWidth = 3
 ExitWidth = 3
 

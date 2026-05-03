@@ -3,6 +3,10 @@ using System;
 
 public partial class Arrow : Area2D
 {
+    [ExportGroup("Nodes")]
+    [Export]
+    public PackedScene Explosion { get; private set; }
+
     [ExportGroup("Base Variables")]
     [Export]
     public float Speed { get; private set; } = 200.0f;
@@ -31,6 +35,9 @@ public partial class Arrow : Area2D
             damageable.TakeDamage(Damage);
             damageable.ApplySlowness(1.0f / (1.0f + SlownessIntensity));
         }
+        Explosion effect = Explosion.Instantiate<Explosion>();
+        effect.GlobalPosition = GlobalPosition;
+        GetTree().CurrentScene.AddChild(effect);
         QueueFree();
     }
 }

@@ -41,22 +41,34 @@ position = Vector2(240, 135)
 [node name="HUD" parent="." instance=ExtResource("5_5q6ae")]
 
 [node name="DarkOrc" parent="." instance=ExtResource("4_ovo77")]
+visible = false
 position = Vector2(386, 118)
+DamagePopUp = null
 
 [node name="Orc" parent="." instance=ExtResource("5_t45rs")]
+visible = false
 position = Vector2(391, 68)
+DamagePopUp = null
 
 [node name="Orc2" parent="." instance=ExtResource("5_t45rs")]
+visible = false
 position = Vector2(391, 152)
+DamagePopUp = null
 
 [node name="DarkOrc2" parent="." instance=ExtResource("4_ovo77")]
+visible = false
 position = Vector2(434, 118)
+DamagePopUp = null
 
 [node name="Orc3" parent="." instance=ExtResource("5_t45rs")]
+visible = false
 position = Vector2(439, 68)
+DamagePopUp = null
 
 [node name="Orc4" parent="." instance=ExtResource("5_t45rs")]
+visible = false
 position = Vector2(439, 152)
+DamagePopUp = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fgqf5")

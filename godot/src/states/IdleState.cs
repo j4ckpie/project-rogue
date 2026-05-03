@@ -9,6 +9,7 @@ public partial class IdleState : State
     {
         _character.AnimPlayer.Play(_character.AnimIdleName);
         _character.CurrentSpeedMultiplier = 1.0f;
+        _character.DustParticles.Emitting = false;
     }
 
     public override void PhysicsProcess(double delta)

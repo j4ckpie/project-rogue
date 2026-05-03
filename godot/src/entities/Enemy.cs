@@ -16,6 +16,8 @@ public partial class Enemy : Character
 	public Timer SlownessTimer { get; protected set; }
 	[Export]
 	public Label DisplayedLvl { get; protected set; }
+	[Export]
+	public PackedScene DamagePopUp { get; protected set; }
 
 	[ExportGroup("Base Variables")]
 	[Export]
@@ -26,6 +28,11 @@ public partial class Enemy : Character
 
     public override void _Ready()
     {
+		// i have no clue why this exact export isn't working
+		if(DamagePopUp == null)
+    	{
+        	DamagePopUp = GD.Load<PackedScene>("res://scenes/DamagePopUp.tscn");
+    	}
         base._Ready();
     }
 
@@ -107,6 +114,16 @@ public partial class Enemy : Character
 	{
 	}
 
+    protected override void SpawnDamagePopUp()
+    {
+        PopUp popup = DamagePopUp.Instantiate<PopUp>();
+    
+        GetTree().CurrentScene.AddChild(popup);
+	
+        popup.GlobalPosition = GlobalPosition + new Vector2((float)GD.RandRange(-30, 15), (float)GD.RandRange(-30, 0));
+        popup.Start(LastDamageTaken, "-", "HP");
+    }
+
 	protected override void CheckUpdateXp(float amount)
     {
         Xp += amount;
@@ -135,11 +152,13 @@ public partial class Enemy : Character
 		{
 			TargetSprite.FlipH = true;
 			AttackAreas.Scale = new Vector2(-1, 1);
+			DustParticles.Direction = new Vector2(1, 0);
 		}
 		else if(GlobalPosition.X - Player.CurrentPlayerPosition.X < 0)
 		{
 			TargetSprite.FlipH = false;
 			AttackAreas.Scale = new Vector2(1, 1);
+			DustParticles.Direction = new Vector2(-1, 0);
 		}
 	}
 

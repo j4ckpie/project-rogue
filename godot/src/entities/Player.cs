@@ -208,11 +208,13 @@ public partial class Player : Character
 		{
 			TargetSprite.FlipH = true;
             AttackAreas.Scale = new Vector2(-1, 1);
+            DustParticles.Direction = new Vector2(1, 0);
 		}
 		else if(GlobalPosition.X - GetGlobalMousePosition().X < 0)
 		{
 			TargetSprite.FlipH = false;
             AttackAreas.Scale = new Vector2(1, 1);
+            DustParticles.Direction = new Vector2(-1, 0);
 		}
     }
 
@@ -259,12 +261,12 @@ public partial class Player : Character
 
     private void SpawnXpPopup(float amount)
     {
-        XpPopUp popup = XpPopUp.Instantiate<XpPopUp>();
+        PopUp popup = XpPopUp.Instantiate<PopUp>();
     
         GetTree().CurrentScene.AddChild(popup);
     
         popup.GlobalPosition = GlobalPosition + new Vector2((float)GD.RandRange(-30, 15), (float)GD.RandRange(-30, 0));
-        popup.Start(amount);
+        popup.Start(amount, "+", "XP");
     }
 
     private bool SpendStamina(float amount)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://3ge6xu5jyc62"]
+[gd_scene load_steps=26 format=3 uid="uid://3ge6xu5jyc62"]
 
 [ext_resource type="Script" path="res://src/entities/Player.cs" id="1_8cjk2"]
 [ext_resource type="Texture2D" uid="uid://df7hcg84ravtb" path="res://sprites/Soldier/Soldier.png" id="2_7kh3q"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ulbt77jso2sj" path="res://sprites/Soldier/Soldier-Attack02_Effect.png" id="6_yx4bu"]
 [ext_resource type="Texture2D" uid="uid://cqrenijwkiif2" path="res://sprites/Soldier/Soldier-Attack03_Effect.png" id="7_86d6d"]
 [ext_resource type="Texture2D" uid="uid://dg1lbte1ojj7q" path="res://sprites/LightMasks/lightmask_shallow.png" id="7_amggm"]
+[ext_resource type="PackedScene" uid="uid://hwi1qmq76d8d" path="res://scenes/Dust.tscn" id="10_nt4w1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t2ic1"]
 radius = 7.5
@@ -327,7 +328,7 @@ height = 66.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p7wkq"]
 size = Vector2(87, 66)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("PlayerCamera", "StaminaBar", "StaminaRegenTimer", "HealthRegenTimer", "HeavyAttackDelayTimer", "TargetSprite", "AnimPlayer", "AttackAreas")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("PlayerCamera", "StaminaBar", "StaminaRegenTimer", "HealthRegenTimer", "HeavyAttackDelayTimer", "TargetSprite", "AnimPlayer", "AttackAreas", "DustParticles")]
 position = Vector2(0, -10)
 collision_mask = 8
 script = ExtResource("1_8cjk2")
@@ -341,6 +342,7 @@ HeavyAttackDelayTimer = NodePath("HeavyAttackTimer")
 TargetSprite = NodePath("Sprite2D")
 AnimPlayer = NodePath("AnimationPlayer")
 AttackAreas = NodePath("AttackAreas")
+DustParticles = NodePath("Dust")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_t2ic1")
@@ -439,6 +441,8 @@ energy = 2.0
 shadow_enabled = true
 texture = ExtResource("7_amggm")
 texture_scale = 0.5
+
+[node name="Dust" parent="." instance=ExtResource("10_nt4w1")]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_stamina_timer_timeout"]

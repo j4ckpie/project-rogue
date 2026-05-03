@@ -13,6 +13,8 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	public AnimationPlayer AnimPlayer { get; private set; }
 	[Export]
     public Node2D AttackAreas { get; private set; }
+	[Export]
+	public CpuParticles2D DustParticles { get; protected set; }
 
 	[ExportGroup("Base Variables")]
 	[Export]
@@ -51,6 +53,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	public float CurrentSpeedMultiplier { get; set; } = 1.0f;
 	public float SprintSpeedMultiplier { get; protected set; } = 1.75f;
 	public float SneakSpeedMultiplier { get; protected set; } = 0.5f;
+	public float LastDamageTaken { get; private set; }
 	protected State _currentState;
 	protected Vector2 _desiredVelocity = Vector2.Zero;
 	protected float _acceleration = 12.0f;
@@ -104,6 +107,8 @@ public abstract partial class Character : CharacterBody2D, IDamageable
     {
 		if(_currentState is DeathState) return 0;
         Health -= amount;
+		LastDamageTaken = amount;
+		SpawnDamagePopUp();
 		if(Health <= 0)
 		{
 			ChangeState(new DeathState(this));
@@ -147,6 +152,8 @@ public abstract partial class Character : CharacterBody2D, IDamageable
         _fadeTween.TweenProperty(targetBody, "modulate:a", targetAlpha, duration)
               .SetTrans(Tween.TransitionType.Cubic);
     }
+
+	protected virtual void SpawnDamagePopUp() {}
 
 	protected abstract void CheckUpdateXp(float amount);
 

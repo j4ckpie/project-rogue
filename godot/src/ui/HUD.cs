@@ -32,6 +32,10 @@ public partial class HUD : CanvasLayer
 
     public void _on_player_leveled_up(int amount)
     {
+        if(amount > 999)
+        {
+            DisplayedLvl.Text = "999+";
+        }
         DisplayedLvl.Text = amount.ToString();
     }
 

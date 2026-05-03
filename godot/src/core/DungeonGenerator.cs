@@ -68,8 +68,6 @@ public partial class DungeonGenerator : Node
         Room newRoom = roomPrefab.Instantiate<Room>();
         AddChild(newRoom);
 
-        GD.Print("seima");
-
         Marker2D entrance = newRoom.GetNode<Marker2D>("Entrance");
         newRoom.GlobalPosition = exit.GlobalPosition - entrance.Position;
 
