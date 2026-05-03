@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" path="res://src/entities/Player.cs" id="1_8cjk2"]
 [ext_resource type="Texture2D" uid="uid://df7hcg84ravtb" path="res://sprites/Soldier/Soldier.png" id="2_7kh3q"]
-[ext_resource type="PackedScene" uid="uid://baejn2du4r8qi" path="res://scenes/Arrow.tscn" id="2_w8j0u"]
+[ext_resource type="PackedScene" uid="uid://baejn2du4r8qi" path="res://scenes/entities/Arrow.tscn" id="2_w8j0u"]
 [ext_resource type="Script" path="res://src/core/Camera.cs" id="4_cudoe"]
 [ext_resource type="Texture2D" uid="uid://dvng1bluoquj" path="res://sprites/Soldier/Soldier-Attack01_Effect.png" id="5_521lb"]
-[ext_resource type="PackedScene" uid="uid://btoe4bl7ckamv" path="res://scenes/XpPopUp.tscn" id="5_cmy2n"]
+[ext_resource type="PackedScene" uid="uid://btoe4bl7ckamv" path="res://scenes/ui/XpPopUp.tscn" id="5_cmy2n"]
 [ext_resource type="Texture2D" uid="uid://ulbt77jso2sj" path="res://sprites/Soldier/Soldier-Attack02_Effect.png" id="6_yx4bu"]
 [ext_resource type="Texture2D" uid="uid://cqrenijwkiif2" path="res://sprites/Soldier/Soldier-Attack03_Effect.png" id="7_86d6d"]
 [ext_resource type="Texture2D" uid="uid://dg1lbte1ojj7q" path="res://sprites/LightMasks/lightmask_shallow.png" id="7_amggm"]
-[ext_resource type="PackedScene" uid="uid://hwi1qmq76d8d" path="res://scenes/Dust.tscn" id="10_nt4w1"]
+[ext_resource type="PackedScene" uid="uid://hwi1qmq76d8d" path="res://scenes/entities/Dust.tscn" id="10_nt4w1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t2ic1"]
 radius = 7.5

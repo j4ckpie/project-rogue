@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://rw04p1gv3wbi" path="res://sprites/Orc/Orc.png" id="1_gx33n"]
 [ext_resource type="Script" path="res://src/entities/Enemy.cs" id="1_rt4g0"]
-[ext_resource type="PackedScene" uid="uid://bkby16p52534t" path="res://scenes/DamagePopUp.tscn" id="2_eqv1n"]
+[ext_resource type="PackedScene" uid="uid://bkby16p52534t" path="res://scenes/ui/DamagePopUp.tscn" id="2_eqv1n"]
 [ext_resource type="FontFile" uid="uid://bkl3mwsb7ggjg" path="res://fonts/PixelifySans-Regular.ttf" id="3_gepgm"]
-[ext_resource type="PackedScene" uid="uid://hwi1qmq76d8d" path="res://scenes/Dust.tscn" id="5_scu0c"]
+[ext_resource type="PackedScene" uid="uid://hwi1qmq76d8d" path="res://scenes/entities/Dust.tscn" id="5_scu0c"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6tpc6"]
 radius = 8.0

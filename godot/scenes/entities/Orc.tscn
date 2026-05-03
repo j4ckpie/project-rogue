@@ -1,8 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://brg5q45d53ea4"]
+[gd_scene load_steps=10 format=3 uid="uid://brgjr1drfyi84"]
 
-[ext_resource type="PackedScene" uid="uid://v1esu2c6ylsh" path="res://scenes/Enemy.tscn" id="1_3u38n"]
-[ext_resource type="Texture2D" uid="uid://bixphlqjjsqn" path="res://sprites/DarkOrc/DarkOrc.png" id="2_c2csc"]
-[ext_resource type="Texture2D" uid="uid://dg1lbte1ojj7q" path="res://sprites/LightMasks/lightmask_shallow.png" id="3_fl2je"]
+[ext_resource type="PackedScene" uid="uid://v1esu2c6ylsh" path="res://scenes/entities/Enemy.tscn" id="1_w4q5x"]
 
 [sub_resource type="Animation" id="Animation_kb1ep"]
 length = 0.001
@@ -174,34 +172,17 @@ _data = {
 "walk": SubResource("Animation_lttbr")
 }
 
-[node name="DarkOrc" node_paths=PackedStringArray("SlownessTimer", "DisplayedLvl", "TargetSprite", "AnimPlayer", "AttackAreas") instance=ExtResource("1_3u38n")]
-AttackRange = 30.0
-AttackCooldown = 1.2
-SlownessTimer = NodePath("SlownessTimer")
-DisplayedLvl = NodePath("DisplayedLevel")
-KnockbackDeceleration = 300.0
-TargetSprite = NodePath("Sprite2D")
+[node name="Orc" node_paths=PackedStringArray("AnimPlayer") instance=ExtResource("1_w4q5x")]
 AnimPlayer = NodePath("AnimationPlayer")
-AttackAreas = NodePath("AttackAreas")
-Health = 175.0
-BaseDamage = 20.0
-BaseHeavyDamage = 35.0
-BaseXpAmountDropped = 53.0
-MovementSpeed = 66.0
+Health = 80.0
+BaseDamage = 10.0
+BaseHeavyDamage = 15.0
+BaseXpAmountDropped = 28.0
+MovementSpeed = 100.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {
 "": SubResource("AnimationLibrary_ugowm")
 }
-
-[node name="Sprite2D" parent="." index="2"]
-texture = ExtResource("2_c2csc")
-
-[node name="PointLight2D" type="PointLight2D" parent="." index="6"]
-color = Color(1, 0, 0, 1)
-energy = 0.8
-shadow_enabled = true
-texture = ExtResource("3_fl2je")
-texture_scale = 0.5
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
