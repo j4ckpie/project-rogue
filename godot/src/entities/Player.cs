@@ -190,12 +190,7 @@ public partial class Player : Character
             EmitSignal(SignalName.XpChanged, Xp);
             if(Xp >= 100.0f)
             {
-                // todo: upgrades etc
-                float xpDiff = Xp - 100.0f; // todo change 100.0f to xp stages
-                Xp = xpDiff;
-                Lvl++;
-                EmitSignal(SignalName.XpChanged, Xp);
-                EmitSignal(SignalName.LeveledUp, Lvl);
+                LevelUp();
             }
         }
     }
@@ -204,14 +199,12 @@ public partial class Player : Character
     {
         if(GlobalPosition.X - GetGlobalMousePosition().X > 0)
 		{
-			//TargetSprite.FlipH = true;
             TargetSprite.Scale = new Vector2(-1 ,1);
             AttackAreas.Scale = new Vector2(-1, 1);
             DustParticles.Direction = new Vector2(1, 0);
 		}
 		else if(GlobalPosition.X - GetGlobalMousePosition().X < 0)
 		{
-			//TargetSprite.FlipH = false;
             TargetSprite.Scale = new Vector2(1,1);
             AttackAreas.Scale = new Vector2(1, 1);
             DustParticles.Direction = new Vector2(-1, 0);
@@ -258,6 +251,25 @@ public partial class Player : Character
     //     // TODO: saving, ui animation etc
     //     base.Death();
     // }
+
+    private void LevelUp()
+    {
+        // todo: upgrades etc
+        float xpDiff = Xp - 100.0f; // todo change 100.0f to xp stages
+        Xp = xpDiff;
+        Lvl++;
+
+        // todo: temporary, create GameManager in the futre VVV
+        _maxHealth *= 1.125f;
+        _staminaMax *= 1.125f;
+        _baseStatusSpeedMultiplier *= 1.075f;
+        _knockbackForce *= 1.125f;
+        BaseDamage *= 1.125f;
+        BaseHeavyDamage *= 1.125f;
+
+        EmitSignal(SignalName.XpChanged, Xp);
+        EmitSignal(SignalName.LeveledUp, Lvl);
+    }
 
     private void SpawnXpPopup(float amount)
     {
