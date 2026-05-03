@@ -5,6 +5,8 @@ public partial class Player : Character
 {
     [ExportGroup("Nodes")]
     [Export]
+	public PackedScene Explosion { get; private set; }
+    [Export]
 	public PackedScene ArrowSprite { get; private set; }
     [Export]
 	public PackedScene XpPopUp { get; private set; }
@@ -239,6 +241,10 @@ public partial class Player : Character
     protected virtual void MidHeavyAttack()
     {
         PlayerCamera.StartCameraShake(_heavyAttackShakeIntensity);
+        Explosion effect = Explosion.Instantiate<Explosion>();
+        if(TargetSprite.Scale.X == -1) effect.Position = new Vector2(-13, 7);
+        else effect.Position = new Vector2(13, 7);
+        AddChild(effect);
     }
 
     protected override bool Shoot()

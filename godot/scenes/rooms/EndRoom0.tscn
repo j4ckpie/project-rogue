@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1lu13"]
 size = Vector2(95, 112)
 
-[node name="BaseRoom" instance=ExtResource("1_ktotw")]
+[node name="EndRoom0" instance=ExtResource("1_ktotw")]
 EntranceWidth = 3
 
 [node name="TileMapLayer" parent="." index="0"]
