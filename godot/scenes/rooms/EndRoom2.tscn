@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=4 uid="uid://by7bjp1a5knpk"]
+[gd_scene load_steps=3 format=4 uid="uid://by7bjp1a5knpk"]
 
 [ext_resource type="PackedScene" uid="uid://dj0em66l2e2ga" path="res://scenes/rooms/BaseRoom.tscn" id="1_ps3dg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_la10g"]
+size = Vector2(95, 112)
 
 [node name="BaseRoom" instance=ExtResource("1_ps3dg")]
 EntranceWidth = 3
@@ -11,3 +14,7 @@ tile_map_data = PackedByteArray("AAAFAAcAAAAHAAkAAAAEAAcAAAANAAsAAAADAAcAAAAGAAk
 
 [node name="Entrance" type="Marker2D" parent="." index="1"]
 rotation = 1.5708
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(48.5, 0)
+shape = SubResource("RectangleShape2D_la10g")

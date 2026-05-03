@@ -4,6 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://creklf1dqarnb" path="res://scenes/rooms/RogueTileMapLayer.tscn" id="1_wcwe4"]
 
 [node name="BaseRoom" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_cl6b5")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("1_wcwe4")]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]

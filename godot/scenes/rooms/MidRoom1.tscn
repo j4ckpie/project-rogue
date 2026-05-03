@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=4 uid="uid://cg6ssjh2ul6ik"]
+[gd_scene load_steps=4 format=4 uid="uid://cg6ssjh2ul6ik"]
 
 [ext_resource type="PackedScene" uid="uid://dj0em66l2e2ga" path="res://scenes/rooms/BaseRoom.tscn" id="1_phfxq"]
 
-[node name="MidRoom0" instance=ExtResource("1_phfxq")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eqpdy"]
+size = Vector2(334, 144)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fiasx"]
+size = Vector2(80, 15)
+
+[node name="MidRoom1" instance=ExtResource("1_phfxq")]
 EntranceWidth = 3
 ExitWidth = 3
 
@@ -19,3 +25,11 @@ rotation = -1.5708
 [node name="Exit2" type="Marker2D" parent="." index="3"]
 position = Vector2(168, -88)
 rotation = 1.5708
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, -88)
+shape = SubResource("RectangleShape2D_eqpdy")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" index="1"]
+position = Vector2(0, -8.5)
+shape = SubResource("RectangleShape2D_fiasx")

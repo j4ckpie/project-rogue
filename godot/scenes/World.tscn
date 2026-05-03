@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bvbqmlvyuyrtc"]
+[gd_scene load_steps=33 format=3 uid="uid://bvbqmlvyuyrtc"]
 
 [ext_resource type="PackedScene" uid="uid://3ge6xu5jyc62" path="res://scenes/entities/Player.tscn" id="1_jast4"]
 [ext_resource type="Script" path="res://src/core/DungeonGenerator.cs" id="1_x7boq"]
@@ -6,13 +6,31 @@
 [ext_resource type="PackedScene" uid="uid://bixj6o88fpnho" path="res://scenes/entities/Crosshair.tscn" id="2_wkc02"]
 [ext_resource type="PackedScene" uid="uid://cg6ssjh2ul6ik" path="res://scenes/rooms/MidRoom1.tscn" id="3_13srw"]
 [ext_resource type="PackedScene" uid="uid://b2alc54ur6gg6" path="res://scenes/rooms/MidRoom0.tscn" id="3_stybg"]
-[ext_resource type="PackedScene" uid="uid://brg5q45d53ea4" path="res://scenes/entities/DarkOrc.tscn" id="4_ovo77"]
 [ext_resource type="PackedScene" uid="uid://cobs305pcfo7m" path="res://scenes/ui/HUD.tscn" id="5_5q6ae"]
 [ext_resource type="PackedScene" uid="uid://civtg7okijpxb" path="res://scenes/rooms/EndRoom0.tscn" id="5_fq7ed"]
-[ext_resource type="PackedScene" uid="uid://brgjr1drfyi84" path="res://scenes/entities/Orc.tscn" id="5_t45rs"]
+[ext_resource type="PackedScene" uid="uid://d04yp25olfxhr" path="res://scenes/rooms/MidRoom2.tscn" id="6_e0oat"]
 [ext_resource type="PackedScene" uid="uid://c026crqjxegmk" path="res://scenes/rooms/EndRoom1.tscn" id="6_lsb5m"]
+[ext_resource type="PackedScene" uid="uid://ctn1y4n4q3exh" path="res://scenes/rooms/MidRoom3.tscn" id="6_o5wq2"]
+[ext_resource type="PackedScene" uid="uid://lsil8po4psnw" path="res://scenes/rooms/MidRoom4.tscn" id="6_qi5c8"]
+[ext_resource type="PackedScene" uid="uid://dqivyb54kkeao" path="res://scenes/rooms/MidRoom5.tscn" id="7_28osg"]
 [ext_resource type="PackedScene" uid="uid://by7bjp1a5knpk" path="res://scenes/rooms/EndRoom2.tscn" id="7_eikij"]
 [ext_resource type="PackedScene" uid="uid://cp36vnr04s6bp" path="res://scenes/rooms/EndRoom3.tscn" id="8_35hxx"]
+[ext_resource type="PackedScene" uid="uid://dhooip7bl4ek5" path="res://scenes/rooms/MidRoom6.tscn" id="8_i77jx"]
+[ext_resource type="PackedScene" uid="uid://1kqj8fopkpp2" path="res://scenes/rooms/MidRoom7.tscn" id="9_1ukgb"]
+[ext_resource type="PackedScene" uid="uid://e6xeqhc81ps1" path="res://scenes/rooms/EndRoom4.tscn" id="9_b2yjw"]
+[ext_resource type="PackedScene" uid="uid://day7t2mffe07j" path="res://scenes/rooms/MidRoom8.tscn" id="10_6hqvf"]
+[ext_resource type="PackedScene" uid="uid://dvu2xehrpof50" path="res://scenes/rooms/EndRoom5.tscn" id="10_tjqe0"]
+[ext_resource type="PackedScene" uid="uid://82ubo8d8yfwv" path="res://scenes/rooms/EndRoom6.tscn" id="11_spngo"]
+[ext_resource type="PackedScene" uid="uid://bi728g8bel8yo" path="res://scenes/rooms/MidRoom9.tscn" id="11_tdofa"]
+[ext_resource type="PackedScene" uid="uid://dekyuucgmlyux" path="res://scenes/rooms/EndRoom7.tscn" id="12_ax2nv"]
+[ext_resource type="PackedScene" uid="uid://cb3whiq474sxe" path="res://scenes/rooms/MidRoom10.tscn" id="13_oxqrf"]
+[ext_resource type="PackedScene" uid="uid://decwosde6j7ur" path="res://scenes/rooms/MidRoom11.tscn" id="14_iu1sg"]
+[ext_resource type="PackedScene" uid="uid://l57ltrstuv4o" path="res://scenes/rooms/MidRoom12.tscn" id="15_d7is7"]
+[ext_resource type="PackedScene" uid="uid://disjgj5wh12fd" path="res://scenes/rooms/MidRoom13.tscn" id="16_d8egk"]
+[ext_resource type="PackedScene" uid="uid://cp6crqyj3snrt" path="res://scenes/rooms/EndRoom8.tscn" id="25_gpcvw"]
+[ext_resource type="PackedScene" uid="uid://biytq4w4l5p0h" path="res://scenes/rooms/EndRoom9.tscn" id="26_ft1j1"]
+[ext_resource type="PackedScene" uid="uid://dij1rhxi1wjf" path="res://scenes/rooms/EndRoom10.tscn" id="27_507t8"]
+[ext_resource type="PackedScene" uid="uid://b2qwcpvir5fqb" path="res://scenes/rooms/EndRoom11.tscn" id="28_1g461"]
 
 [sub_resource type="Environment" id="Environment_fgqf5"]
 background_mode = 3
@@ -29,8 +47,8 @@ y_sort_enabled = true
 y_sort_enabled = true
 script = ExtResource("1_x7boq")
 StartRooms = Array[PackedScene]([ExtResource("2_a5507")])
-MidRooms = Array[PackedScene]([ExtResource("3_stybg"), ExtResource("3_13srw")])
-EndRooms = Array[PackedScene]([ExtResource("5_fq7ed"), ExtResource("6_lsb5m"), ExtResource("7_eikij"), ExtResource("8_35hxx")])
+MidRooms = Array[PackedScene]([ExtResource("3_stybg"), ExtResource("3_13srw"), ExtResource("6_e0oat"), ExtResource("6_o5wq2"), ExtResource("6_qi5c8"), ExtResource("7_28osg"), ExtResource("8_i77jx"), ExtResource("9_1ukgb"), ExtResource("10_6hqvf"), ExtResource("11_tdofa"), ExtResource("13_oxqrf"), ExtResource("14_iu1sg"), ExtResource("15_d7is7"), ExtResource("16_d8egk")])
+EndRooms = Array[PackedScene]([ExtResource("5_fq7ed"), ExtResource("6_lsb5m"), ExtResource("7_eikij"), ExtResource("8_35hxx"), ExtResource("9_b2yjw"), ExtResource("10_tjqe0"), ExtResource("11_spngo"), ExtResource("12_ax2nv"), ExtResource("25_gpcvw"), ExtResource("26_ft1j1"), ExtResource("27_507t8"), ExtResource("28_1g461")])
 
 [node name="Player" parent="." instance=ExtResource("1_jast4")]
 y_sort_enabled = true
@@ -39,36 +57,6 @@ position = Vector2(240, 135)
 [node name="Crosshair" parent="." instance=ExtResource("2_wkc02")]
 
 [node name="HUD" parent="." instance=ExtResource("5_5q6ae")]
-
-[node name="DarkOrc" parent="." instance=ExtResource("4_ovo77")]
-visible = false
-position = Vector2(386, 118)
-DamagePopUp = null
-
-[node name="Orc" parent="." instance=ExtResource("5_t45rs")]
-visible = false
-position = Vector2(391, 68)
-DamagePopUp = null
-
-[node name="Orc2" parent="." instance=ExtResource("5_t45rs")]
-visible = false
-position = Vector2(391, 152)
-DamagePopUp = null
-
-[node name="DarkOrc2" parent="." instance=ExtResource("4_ovo77")]
-visible = false
-position = Vector2(434, 118)
-DamagePopUp = null
-
-[node name="Orc3" parent="." instance=ExtResource("5_t45rs")]
-visible = false
-position = Vector2(439, 68)
-DamagePopUp = null
-
-[node name="Orc4" parent="." instance=ExtResource("5_t45rs")]
-visible = false
-position = Vector2(439, 152)
-DamagePopUp = null
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fgqf5")
