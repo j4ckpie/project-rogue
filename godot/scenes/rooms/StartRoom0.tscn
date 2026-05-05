@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://bawjykjqyqd0n"]
+[gd_scene load_steps=6 format=4 uid="uid://bawjykjqyqd0n"]
 
 [ext_resource type="PackedScene" uid="uid://dj0em66l2e2ga" path="res://scenes/rooms/BaseRoom.tscn" id="1_2xv1v"]
 [ext_resource type="PackedScene" uid="uid://creklf1dqarnb" path="res://scenes/rooms/RogueTileMapLayer.tscn" id="2_gm10f"]
+[ext_resource type="PackedScene" uid="uid://co3unsskly6k2" path="res://scenes/entities/Spawner.tscn" id="3_mg18x"]
+[ext_resource type="PackedScene" uid="uid://brgjr1drfyi84" path="res://scenes/entities/Orc.tscn" id="3_u28o0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ulypl"]
 size = Vector2(238, 222)
@@ -34,3 +36,8 @@ rotation = 3.14159
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_ulypl")
+
+[node name="Spawner" parent="Area2D" index="1" instance=ExtResource("3_mg18x")]
+position = Vector2(-70, 59)
+EnemyPrefab = ExtResource("3_u28o0")
+EnemiesToSpawn = 100

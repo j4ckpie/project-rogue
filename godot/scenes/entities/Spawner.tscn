@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://co3unsskly6k2"]
+
+[ext_resource type="Texture2D" uid="uid://bbx5u0caoq006" path="res://icon.svg" id="1_7ipf7"]
+[ext_resource type="Script" path="res://src/entities/Spawner.cs" id="1_h63fs"]
+[ext_resource type="PackedScene" uid="uid://brgjr1drfyi84" path="res://scenes/entities/Orc.tscn" id="2_y1yyc"]
+[ext_resource type="FontFile" uid="uid://bkl3mwsb7ggjg" path="res://fonts/PixelifySans-Regular.ttf" id="4_3qfgm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4x5n8"]
+radius = 32.0624
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7oub7"]
+size = Vector2(12, 12)
+
+[node name="Spawner" type="Node2D" node_paths=PackedStringArray("SpawnTimer", "DisplayEnemiesLeft")]
+script = ExtResource("1_h63fs")
+EnemyPrefab = ExtResource("2_y1yyc")
+SpawnTimer = NodePath("SpawnTimer")
+DisplayEnemiesLeft = NodePath("Label")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_7ipf7")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_4x5n8")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_3qfgm")
+theme_override_font_sizes/font_size = 6
+text = "999"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area2D2" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource("RectangleShape2D_7oub7")
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://v1esu2c6ylsh"]
+[gd_scene load_steps=10 format=3 uid="uid://v1esu2c6ylsh"]
 
 [ext_resource type="Texture2D" uid="uid://rw04p1gv3wbi" path="res://sprites/Orc/Orc.png" id="1_gx33n"]
 [ext_resource type="Script" path="res://src/entities/Enemy.cs" id="1_rt4g0"]
 [ext_resource type="PackedScene" uid="uid://bkby16p52534t" path="res://scenes/ui/DamagePopUp.tscn" id="2_eqv1n"]
 [ext_resource type="FontFile" uid="uid://bkl3mwsb7ggjg" path="res://fonts/PixelifySans-Regular.ttf" id="3_gepgm"]
 [ext_resource type="PackedScene" uid="uid://hwi1qmq76d8d" path="res://scenes/entities/Dust.tscn" id="5_scu0c"]
+[ext_resource type="PackedScene" uid="uid://dfmblnb87al12" path="res://scenes/entities/Explosion.tscn" id="6_3btqc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6tpc6"]
 radius = 8.0
@@ -81,6 +82,9 @@ disabled = true
 [node name="SlownessTimer" type="Timer" parent="."]
 
 [node name="Dust" parent="." instance=ExtResource("5_scu0c")]
+
+[node name="ExplosionEffect" parent="." instance=ExtResource("6_3btqc")]
+position = Vector2(0, 9)
 
 [connection signal="LeveledUp" from="." to="." method="_on_leveled_up"]
 [connection signal="body_entered" from="AttackAreas/LightAttackArea" to="." method="_on_light_attack_area_body_entered"]
