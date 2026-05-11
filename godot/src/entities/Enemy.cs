@@ -7,7 +7,7 @@ public partial class Enemy : Character
 	[Export]
 	public float ChaseRange { get; protected set; } = 250.0f;
 	[Export]
-	public float AttackRange { get; protected set; } = 45.0f;
+	public float AttackRange { get; protected set; } = 30.0f;
 	[Export]
 	public float AttackCooldown { get; protected set; } = 2.0f;
 
@@ -18,6 +18,8 @@ public partial class Enemy : Character
 	public Label DisplayedLvl { get; protected set; }
 	[Export]
 	public PackedScene DamagePopUp { get; protected set; }
+	[Export]
+	public VisibleOnScreenNotifier2D VisibilityNotifier { get; private set; }
 
 	[ExportGroup("Base Variables")]
 	[Export]
@@ -38,6 +40,11 @@ public partial class Enemy : Character
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if(!VisibilityNotifier.IsOnScreen())
+		{
+			Velocity = Vector2.Zero;
+			return;
+		}
 		if(!IsDead)
 		{
 			if(_knockbackVelocity != Vector2.Zero)

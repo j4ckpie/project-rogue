@@ -5,7 +5,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wfb05"]
 size = Vector2(334, 112)
 
-[node name="MidRoom9" instance=ExtResource("1_ygl4f")]
+[node name="MidRoom9" node_paths=PackedStringArray("PossiblePositions") instance=ExtResource("1_ygl4f")]
+PossiblePositions = [NodePath("EnemyLoc"), NodePath("EnemyLoc2"), NodePath("EnemyLoc3"), NodePath("EnemyLoc4")]
 EntranceWidth = 3
 ExitWidth = 3
 
@@ -24,3 +25,15 @@ rotation = -1.5708
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2(-168, 0)
 shape = SubResource("RectangleShape2D_wfb05")
+
+[node name="EnemyLoc" parent="." index="4"]
+position = Vector2(-44, -18)
+
+[node name="EnemyLoc2" type="Marker2D" parent="." index="5"]
+position = Vector2(-99, 20)
+
+[node name="EnemyLoc3" type="Marker2D" parent="." index="6"]
+position = Vector2(-196, -22)
+
+[node name="EnemyLoc4" type="Marker2D" parent="." index="7"]
+position = Vector2(-289, 21)

@@ -30,13 +30,14 @@ public partial class HUD : CanvasLayer
         PlayFillProgressBarAnimation(_newXpTween, XpBar, amount, 0.5f, 0.5f);
     }
 
-    public void _on_player_leveled_up(int amount)
+    public void _on_player_leveled_up(int amount, float maxHp)
     {
         if(amount > 999)
         {
             DisplayedLvl.Text = "999+";
         }
         DisplayedLvl.Text = amount.ToString();
+        HealthBar.MaxValue = maxHp;
     }
 
     private void PlayFillProgressBarAnimation(Tween tween, Node target, float amount, float duration, float pause)

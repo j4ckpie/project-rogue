@@ -174,15 +174,10 @@ _data = {
 "walk": SubResource("Animation_lttbr")
 }
 
-[node name="DarkOrc" node_paths=PackedStringArray("SlownessTimer", "DisplayedLvl", "TargetSprite", "AnimPlayer", "AttackAreas") instance=ExtResource("1_3u38n")]
-AttackRange = 30.0
+[node name="DarkOrc" node_paths=PackedStringArray("AnimPlayer") instance=ExtResource("1_3u38n")]
 AttackCooldown = 1.2
-SlownessTimer = NodePath("SlownessTimer")
-DisplayedLvl = NodePath("DisplayedLevel")
 KnockbackDeceleration = 300.0
-TargetSprite = NodePath("Sprite2D")
 AnimPlayer = NodePath("AnimationPlayer")
-AttackAreas = NodePath("AttackAreas")
 Health = 175.0
 BaseDamage = 20.0
 BaseHeavyDamage = 35.0
@@ -198,6 +193,7 @@ libraries = {
 texture = ExtResource("2_c2csc")
 
 [node name="PointLight2D" type="PointLight2D" parent="." index="6"]
+enabled = false
 color = Color(1, 0, 0, 1)
 energy = 0.8
 shadow_enabled = true

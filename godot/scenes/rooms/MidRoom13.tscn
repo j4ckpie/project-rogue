@@ -8,7 +8,8 @@ size = Vector2(174, 143)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fx4ac"]
 size = Vector2(80, 15)
 
-[node name="MidRoom13" instance=ExtResource("1_qje85")]
+[node name="MidRoom13" node_paths=PackedStringArray("PossiblePositions") instance=ExtResource("1_qje85")]
+PossiblePositions = [NodePath("EnemyLoc"), NodePath("EnemyLoc2")]
 EntranceWidth = 3
 ExitWidth = 3
 
@@ -38,3 +39,9 @@ shape = SubResource("RectangleShape2D_ahcrs")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" index="1"]
 position = Vector2(0, 8.5)
 shape = SubResource("RectangleShape2D_fx4ac")
+
+[node name="EnemyLoc" parent="." index="6"]
+position = Vector2(-43, 87)
+
+[node name="EnemyLoc2" type="Marker2D" parent="." index="7"]
+position = Vector2(44, 87)

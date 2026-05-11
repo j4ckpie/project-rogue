@@ -21,3 +21,6 @@ tile_map_data = PackedByteArray("AAABAP//AAACAAwAAAD/////AAALAA0AAAA=")
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2(0, -16.5)
 shape = SubResource("RectangleShape2D_kepi4")
+
+[node name="EnemyLoc" parent="." index="4"]
+position = Vector2(-13, -8)

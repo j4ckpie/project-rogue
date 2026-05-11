@@ -5,7 +5,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wkihu"]
 size = Vector2(112, 95)
 
-[node name="EndRoom1" instance=ExtResource("1_t08qk")]
+[node name="EndRoom1" node_paths=PackedStringArray("PossiblePositions") instance=ExtResource("1_t08qk")]
+PossiblePositions = [NodePath("EnemyLoc"), NodePath("EnemyLoc2")]
 EntranceWidth = 3
 
 [node name="TileMapLayer" parent="." index="0"]
@@ -21,3 +22,9 @@ position = Vector2(0, 1)
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2(0, 47.5)
 shape = SubResource("RectangleShape2D_wkihu")
+
+[node name="EnemyLoc" parent="." index="3"]
+position = Vector2(-27, 49)
+
+[node name="EnemyLoc2" type="Marker2D" parent="." index="4"]
+position = Vector2(26, 49)

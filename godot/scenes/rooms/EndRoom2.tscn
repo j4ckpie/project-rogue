@@ -5,7 +5,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_la10g"]
 size = Vector2(95, 112)
 
-[node name="EndRoom2" instance=ExtResource("1_ps3dg")]
+[node name="EndRoom2" node_paths=PackedStringArray("PossiblePositions") instance=ExtResource("1_ps3dg")]
+PossiblePositions = [NodePath("EnemyLoc"), NodePath("EnemyLoc2")]
 EntranceWidth = 3
 
 [node name="TileMapLayer" parent="." index="0"]
@@ -18,3 +19,9 @@ rotation = 1.5708
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2(48.5, 0)
 shape = SubResource("RectangleShape2D_la10g")
+
+[node name="EnemyLoc" parent="." index="3"]
+position = Vector2(49, -24)
+
+[node name="EnemyLoc2" type="Marker2D" parent="." index="4"]
+position = Vector2(49, 21)

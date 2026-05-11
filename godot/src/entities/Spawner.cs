@@ -12,6 +12,8 @@ public partial class Spawner : Node2D
     public int EnemiesToSpawn { get; private set; } = 30;
     [Export]
     public Label DisplayEnemiesLeft { get; private set; }
+    [Export]
+    public PointLight2D Light { get; private set; }
 
     private int _enemiesSpawned = 0;
 
@@ -55,5 +57,13 @@ public partial class Spawner : Node2D
     
             enemy.GlobalPosition = GlobalPosition + new Vector2((float)GD.RandRange(-30, 15), (float)GD.RandRange(-30, 0));
         }
+        Light.Energy = 0.0f;
+        Tween tween = CreateTween();
+		tween.TweenProperty(Light, "energy", 5.0f, 0.125f)
+            .SetTrans(Tween.TransitionType.Cubic)
+			.SetEase(Tween.EaseType.Out);
+        tween.Chain().TweenProperty(Light, "energy", 0.0f, 0.125f)
+            .SetTrans(Tween.TransitionType.Cubic)
+            .SetEase(Tween.EaseType.In);
     }
 }

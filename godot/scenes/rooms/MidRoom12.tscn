@@ -34,3 +34,6 @@ shape = SubResource("RectangleShape2D_ahcrs")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" index="1"]
 position = Vector2(0, 8.5)
 shape = SubResource("RectangleShape2D_fx4ac")
+
+[node name="EnemyLoc" parent="." index="5"]
+position = Vector2(0, 88)

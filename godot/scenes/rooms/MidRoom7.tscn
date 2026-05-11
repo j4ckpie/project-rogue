@@ -8,7 +8,8 @@ size = Vector2(334, 144)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c0nkw"]
 size = Vector2(159, 127)
 
-[node name="MidRoom7" instance=ExtResource("1_nw6qs")]
+[node name="MidRoom7" node_paths=PackedStringArray("PossiblePositions") instance=ExtResource("1_nw6qs")]
+PossiblePositions = [NodePath("EnemyLoc"), NodePath("EnemyLoc2"), NodePath("EnemyLoc3"), NodePath("EnemyLoc4"), NodePath("EnemyLoc5"), NodePath("EnemyLoc6"), NodePath("EnemyLoc7"), NodePath("EnemyLoc8"), NodePath("EnemyLoc9"), NodePath("EnemyLoc10"), NodePath("EnemyLoc11"), NodePath("EnemyLoc12"), NodePath("EnemyLoc13"), NodePath("EnemyLoc14"), NodePath("EnemyLoc15"), NodePath("EnemyLoc16")]
 EntranceWidth = 3
 ExitWidth = 3
 
@@ -34,3 +35,51 @@ shape = SubResource("RectangleShape2D_mhihh")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" index="1"]
 position = Vector2(-255.5, 135.5)
 shape = SubResource("RectangleShape2D_c0nkw")
+
+[node name="EnemyLoc" parent="." index="5"]
+position = Vector2(-35, 39)
+
+[node name="EnemyLoc2" type="Marker2D" parent="." index="6"]
+position = Vector2(-46, 2)
+
+[node name="EnemyLoc3" type="Marker2D" parent="." index="7"]
+position = Vector2(-51, -33)
+
+[node name="EnemyLoc4" type="Marker2D" parent="." index="8"]
+position = Vector2(-111, -27)
+
+[node name="EnemyLoc5" type="Marker2D" parent="." index="9"]
+position = Vector2(-113, 4)
+
+[node name="EnemyLoc6" type="Marker2D" parent="." index="10"]
+position = Vector2(-163, 34)
+
+[node name="EnemyLoc7" type="Marker2D" parent="." index="11"]
+position = Vector2(-183, -35)
+
+[node name="EnemyLoc8" type="Marker2D" parent="." index="12"]
+position = Vector2(-244, -42)
+
+[node name="EnemyLoc9" type="Marker2D" parent="." index="13"]
+position = Vector2(-291, -17)
+
+[node name="EnemyLoc10" type="Marker2D" parent="." index="14"]
+position = Vector2(-250, 7)
+
+[node name="EnemyLoc11" type="Marker2D" parent="." index="15"]
+position = Vector2(-286, 47)
+
+[node name="EnemyLoc12" type="Marker2D" parent="." index="16"]
+position = Vector2(-212, 67)
+
+[node name="EnemyLoc13" type="Marker2D" parent="." index="17"]
+position = Vector2(-269, 102)
+
+[node name="EnemyLoc14" type="Marker2D" parent="." index="18"]
+position = Vector2(-215, 126)
+
+[node name="EnemyLoc15" type="Marker2D" parent="." index="19"]
+position = Vector2(-298, 151)
+
+[node name="EnemyLoc16" type="Marker2D" parent="." index="20"]
+position = Vector2(-233, 162)

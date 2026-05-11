@@ -18,7 +18,7 @@ height = 34.0
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aqqwx"]
 radius = 15.0
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("SlownessTimer", "DisplayedLvl", "TargetSprite", "AttackAreas", "DustParticles")]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("SlownessTimer", "DisplayedLvl", "VisibilityNotifier", "TargetSprite", "AttackAreas", "DustParticles")]
 y_sort_enabled = true
 position = Vector2(0, -10)
 collision_layer = 2
@@ -27,6 +27,7 @@ script = ExtResource("1_rt4g0")
 SlownessTimer = NodePath("SlownessTimer")
 DisplayedLvl = NodePath("DisplayedLevel")
 DamagePopUp = ExtResource("2_eqv1n")
+VisibilityNotifier = NodePath("VisibleOnScreenNotifier2D")
 TargetSprite = NodePath("Sprite2D")
 AttackAreas = NodePath("AttackAreas")
 DustParticles = NodePath("Dust")
@@ -85,6 +86,8 @@ disabled = true
 
 [node name="ExplosionEffect" parent="." instance=ExtResource("6_3btqc")]
 position = Vector2(0, 9)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [connection signal="LeveledUp" from="." to="." method="_on_leveled_up"]
 [connection signal="body_entered" from="AttackAreas/LightAttackArea" to="." method="_on_light_attack_area_body_entered"]

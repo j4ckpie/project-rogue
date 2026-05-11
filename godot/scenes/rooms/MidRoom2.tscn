@@ -8,7 +8,8 @@ size = Vector2(334, 143)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_su4iy"]
 size = Vector2(80, 15)
 
-[node name="MidRoom2" instance=ExtResource("1_1dkt0")]
+[node name="MidRoom2" node_paths=PackedStringArray("PossiblePositions") instance=ExtResource("1_1dkt0")]
+PossiblePositions = [NodePath("EnemyLoc"), NodePath("EnemyLoc2"), NodePath("EnemyLoc3"), NodePath("EnemyLoc4"), NodePath("EnemyLoc5"), NodePath("EnemyLoc6"), NodePath("EnemyLoc7"), NodePath("EnemyLoc8"), NodePath("EnemyLoc9")]
 EntranceWidth = 3
 ExitWidth = 3
 
@@ -38,3 +39,30 @@ shape = SubResource("RectangleShape2D_7rfsl")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" index="1"]
 position = Vector2(0, 8.5)
 shape = SubResource("RectangleShape2D_su4iy")
+
+[node name="EnemyLoc" parent="." index="6"]
+position = Vector2(-126, 43)
+
+[node name="EnemyLoc2" type="Marker2D" parent="." index="7"]
+position = Vector2(-125, 82)
+
+[node name="EnemyLoc3" type="Marker2D" parent="." index="8"]
+position = Vector2(-126, 121)
+
+[node name="EnemyLoc4" type="Marker2D" parent="." index="9"]
+position = Vector2(-61, 82)
+
+[node name="EnemyLoc5" type="Marker2D" parent="." index="10"]
+position = Vector2(-14, 48)
+
+[node name="EnemyLoc6" type="Marker2D" parent="." index="11"]
+position = Vector2(-2, 128)
+
+[node name="EnemyLoc7" type="Marker2D" parent="." index="12"]
+position = Vector2(60, 87)
+
+[node name="EnemyLoc8" type="Marker2D" parent="." index="13"]
+position = Vector2(98, 122)
+
+[node name="EnemyLoc9" type="Marker2D" parent="." index="14"]
+position = Vector2(128, 56)

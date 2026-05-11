@@ -53,12 +53,12 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	public float CurrentSpeedMultiplier { get; set; } = 1.0f;
 	public float SprintSpeedMultiplier { get; protected set; } = 1.75f;
 	public float SneakSpeedMultiplier { get; protected set; } = 0.5f;
+	public float MaxHealth { get; protected set; } = 100.0f;
 	public float LastDamageTaken { get; private set; }
 	protected State _currentState;
 	protected Vector2 _desiredVelocity = Vector2.Zero;
 	protected float _acceleration = 12.0f;
 	protected float _friction = 7.0f;
-	protected float _maxHealth = 100.0f;
 	protected float _statusSpeedMultiplier = 1.0f;
 	protected float _baseStatusSpeedMultiplier = 1.0f;
 	protected Tween _fadeTween;
@@ -66,7 +66,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	[Signal]
     public delegate void XpChangedEventHandler(float amount);
 	[Signal]
-    public delegate void LeveledUpEventHandler(int amount);
+    public delegate void LeveledUpEventHandler(int amount, float lvl);
 
 	public override void _Ready()
 	{

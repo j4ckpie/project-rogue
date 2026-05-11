@@ -48,10 +48,10 @@ public partial class Player : Character
 
     public static Vector2 CurrentPlayerPosition { get; private set; }
 
-    private float _staminaMax = 100.0f;
+    public float StaminaMax { get; private set; } = 100.0f;
     private float _staminaRate = 25.0f;
     private float _staminaDelay = 2.0f;
-    private float _healthRate = 1.0f;
+    private float _healthRate = 5.0f;
     private float _healthDelay = 5.0f;
 	private float _knockbackForce = 175.0f;
     private float _attackShakeIntensity = 1.25f;
@@ -81,15 +81,15 @@ public partial class Player : Character
 
         CurrentPlayerPosition = GlobalPosition;
 
-        if(_canRegenStamina && _staminaCurrent < _staminaMax)
+        if(_canRegenStamina && _staminaCurrent < StaminaMax)
         {
-            _staminaCurrent = Mathf.MoveToward(_staminaCurrent, _staminaMax, _staminaRate * (float)delta);
+            _staminaCurrent = Mathf.MoveToward(_staminaCurrent, StaminaMax, _staminaRate * (float)delta);
             StaminaBar.Value = _staminaCurrent;
         }
 
-        if(_canRegenHealth && Health < _maxHealth)
+        if(_canRegenHealth && Health < MaxHealth)
         {
-            Health = Mathf.MoveToward(Health, _maxHealth, _healthRate * (float)delta);
+            Health = Mathf.MoveToward(Health, MaxHealth, _healthRate * (float)delta);
             EmitSignal(SignalName.HpChanged, Health);
         }
 	}
@@ -266,15 +266,19 @@ public partial class Player : Character
         Lvl++;
 
         // todo: temporary, create GameManager in the futre VVV
-        _maxHealth *= 1.125f;
-        _staminaMax *= 1.125f;
+        MaxHealth *= 1.125f;
+        _healthRate *= 1.075f;
+        StaminaMax *= 1.125f;
+        _staminaRate *= 1.075f;
         _baseStatusSpeedMultiplier *= 1.075f;
-        _knockbackForce *= 1.125f;
+        _knockbackForce *= 1.05f;
         BaseDamage *= 1.125f;
         BaseHeavyDamage *= 1.125f;
 
+        StaminaBar.MaxValue = StaminaMax;
+
         EmitSignal(SignalName.XpChanged, Xp);
-        EmitSignal(SignalName.LeveledUp, Lvl);
+        EmitSignal(SignalName.LeveledUp, Lvl, MaxHealth);
     }
 
     private void SpawnXpPopup(float amount)

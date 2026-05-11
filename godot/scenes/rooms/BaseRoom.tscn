@@ -1,11 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://dj0em66l2e2ga"]
+[gd_scene load_steps=5 format=3 uid="uid://dj0em66l2e2ga"]
 
 [ext_resource type="Script" path="res://src/entities/Room.cs" id="1_cl6b5"]
 [ext_resource type="PackedScene" uid="uid://creklf1dqarnb" path="res://scenes/rooms/RogueTileMapLayer.tscn" id="1_wcwe4"]
+[ext_resource type="PackedScene" uid="uid://brgjr1drfyi84" path="res://scenes/entities/Orc.tscn" id="2_o5tk6"]
+[ext_resource type="PackedScene" uid="uid://brg5q45d53ea4" path="res://scenes/entities/DarkOrc.tscn" id="3_jvujx"]
 
-[node name="BaseRoom" type="Node2D"]
+[node name="BaseRoom" type="Node2D" node_paths=PackedStringArray("PossiblePositions")]
 y_sort_enabled = true
 script = ExtResource("1_cl6b5")
+PossibleEnemies = Array[PackedScene]([ExtResource("2_o5tk6"), ExtResource("3_jvujx")])
+PossiblePositions = [NodePath("EnemyLoc")]
 
 [node name="TileMapLayer" parent="." instance=ExtResource("1_wcwe4")]
 
@@ -14,3 +18,5 @@ collision_layer = 8
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+
+[node name="EnemyLoc" type="Marker2D" parent="."]

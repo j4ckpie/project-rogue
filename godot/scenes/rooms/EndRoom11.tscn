@@ -5,7 +5,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kepi4"]
 size = Vector2(80, 31)
 
-[node name="EndRoom1" instance=ExtResource("1_om6pi")]
+[node name="EndRoom1" node_paths=PackedStringArray("PossiblePositions") instance=ExtResource("1_om6pi")]
+PossibleEnemies = Array[PackedScene]([])
+PossiblePositions = Array[PackedScene]([])
 EntranceWidth = 3
 
 [node name="TileMapLayer" parent="." index="0"]

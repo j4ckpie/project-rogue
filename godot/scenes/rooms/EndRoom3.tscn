@@ -5,7 +5,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wbyp6"]
 size = Vector2(112, 95)
 
-[node name="EndRoom3" instance=ExtResource("1_fmkav")]
+[node name="EndRoom3" node_paths=PackedStringArray("PossiblePositions") instance=ExtResource("1_fmkav")]
+PossiblePositions = [NodePath("EnemyLoc"), NodePath("EnemyLoc2")]
 EntranceWidth = 3
 
 [node name="TileMapLayer" parent="." index="0"]
@@ -17,3 +18,9 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAGAAgAAAABAAAAAAAGAAgAAAACAAAAAAAHAAg
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2(0, -48.5)
 shape = SubResource("RectangleShape2D_wbyp6")
+
+[node name="EnemyLoc" parent="." index="3"]
+position = Vector2(-25, -49)
+
+[node name="EnemyLoc2" type="Marker2D" parent="." index="4"]
+position = Vector2(27, -49)
