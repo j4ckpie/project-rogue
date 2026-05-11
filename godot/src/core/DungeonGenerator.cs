@@ -14,6 +14,9 @@ public partial class DungeonGenerator : Node2D
     [Export]
     public Godot.Collections.Array<PackedScene> EndRooms { get; private set; }
 
+    [Signal]
+    public delegate void GenerationCompletedEventHandler();
+
     private int _currentRoomCount = 0;
     private Queue<Marker2D> _exitsToProcess = new Queue<Marker2D>();
 
@@ -40,6 +43,8 @@ public partial class DungeonGenerator : Node2D
 
             if(pickedRoom != null) await SpawnRoomAsync(pickedRoom, currentExit);
         }
+
+        EmitSignal(SignalName.GenerationCompleted);
     }
 
     private PackedScene PickCompatibleRoom(Godot.Collections.Array<PackedScene> rooms, Marker2D exit)

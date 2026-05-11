@@ -1,5 +1,6 @@
-[gd_scene load_steps=33 format=3 uid="uid://bvbqmlvyuyrtc"]
+[gd_scene load_steps=34 format=3 uid="uid://bvbqmlvyuyrtc"]
 
+[ext_resource type="Script" path="res://src/core/GameManager.cs" id="1_44ul0"]
 [ext_resource type="PackedScene" uid="uid://3ge6xu5jyc62" path="res://scenes/entities/Player.tscn" id="1_jast4"]
 [ext_resource type="Script" path="res://src/core/DungeonGenerator.cs" id="1_x7boq"]
 [ext_resource type="PackedScene" uid="uid://bawjykjqyqd0n" path="res://scenes/rooms/StartRoom0.tscn" id="2_a5507"]
@@ -43,6 +44,9 @@ glow_blend_mode = 1
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource("1_44ul0")
+
 [node name="DungeonGenerator" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("1_x7boq")
@@ -64,6 +68,7 @@ environment = SubResource("Environment_fgqf5")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.604634, 0.670414, 0.770505, 1)
 
+[connection signal="GenerationCompleted" from="DungeonGenerator" to="GameManager" method="_on_dungeon_generator_generation_completed"]
 [connection signal="HpChanged" from="Player" to="HUD" method="_on_player_hp_changed"]
 [connection signal="LeveledUp" from="Player" to="HUD" method="_on_player_leveled_up"]
 [connection signal="XpChanged" from="Player" to="HUD" method="_on_player_xp_changed"]
