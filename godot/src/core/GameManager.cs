@@ -8,6 +8,16 @@ public partial class GameManager : Node2D
 
     public override void _Ready()
     {
+        CreateCanvasLayer();
+    }
+
+    public void _on_dungeon_generator_generation_completed()
+    {
+        FadeIn();
+    }
+
+    private void CreateCanvasLayer()
+    {
         _fadeRect = new ColorRect();
         _fadeRect.Color = Colors.Black;
         _fadeRect.SetAnchorsPreset(Control.LayoutPreset.FullRect);
@@ -16,11 +26,6 @@ public partial class GameManager : Node2D
         _layer.Layer = 100;
         AddChild(_layer);
         _layer.AddChild(_fadeRect);
-    }
-
-    public void _on_dungeon_generator_generation_completed()
-    {
-        FadeIn();
     }
 
     private void FadeIn()
