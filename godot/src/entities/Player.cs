@@ -49,6 +49,9 @@ public partial class Player : Character
     public delegate void HpChangedEventHandler(float amount);
 
     public static Vector2 CurrentPlayerPosition { get; private set; }
+    public static float TotalXp { get; private set; }
+    public static float StartTime {get; private set; }
+    public static int TotalMeleeElims { get; private set; }
 
     public float StaminaMax { get; private set; } = 100.0f;
     private float _staminaRate = 25.0f;
@@ -69,8 +72,12 @@ public partial class Player : Character
 	{
         base._Ready();
 
-		Engine.MaxFps = 0;	// TODO: PLACEHOLDER
+		Engine.MaxFps = 0;
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
+
+        TotalXp = 0;
+        TotalMeleeElims = 0;
+        StartTime = Time.GetTicksMsec() / 1000.0f;
 
         GlobalPosition = Vector2.Zero;
         StaminaBar.Value = _staminaCurrent;
@@ -80,7 +87,7 @@ public partial class Player : Character
 	{
         base._Process(delta);
 
-		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps");	// TODO: PLACEHOLDER
+		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps");
 
         CurrentPlayerPosition = GlobalPosition;
 
@@ -193,6 +200,8 @@ public partial class Player : Character
         if(amount != 0)
         {
             Xp += amount;
+            TotalXp += amount;
+            TotalMeleeElims++;
             SpawnXpPopup(amount);
             EmitSignal(SignalName.XpChanged, Xp);
             if(Xp >= 100.0f)

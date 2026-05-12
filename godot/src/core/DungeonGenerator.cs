@@ -37,7 +37,7 @@ public partial class DungeonGenerator : Node2D
         while(_exitsToProcess.Count > 0)
         {
             Marker2D currentExit = _exitsToProcess.Dequeue();
-            PackedScene pickedRoom = _currentRoomCount < 30
+            PackedScene pickedRoom = _currentRoomCount < 40
                 ? PickCompatibleRoom(MidRooms, currentExit)
                 : PickCompatibleRoom(EndRooms, currentExit);
 

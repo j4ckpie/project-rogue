@@ -38,6 +38,7 @@ public partial class HUD : CanvasLayer
         }
         DisplayedLvl.Text = amount.ToString();
         HealthBar.MaxValue = maxHp;
+        DamageBar.MaxValue = maxHp;
     }
 
     private void PlayFillProgressBarAnimation(Tween tween, Node target, float amount, float duration, float pause)
