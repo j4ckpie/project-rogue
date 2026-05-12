@@ -5,6 +5,8 @@ public partial class Player : Character
 {
     [ExportGroup("Nodes")]
     [Export]
+    public Sprite2D PointerSprite { get; private set; }
+    [Export]
 	public PackedScene Explosion { get; private set; }
     [Export]
 	public PackedScene ArrowSprite { get; private set; }
@@ -61,6 +63,7 @@ public partial class Player : Character
     private bool _canRegenStamina = true;
     private bool _canRegenHealth = true;
     private bool _canHeavyAttack = true;
+    private Tween _pointerTween;
     
     public override void _Ready()
 	{
@@ -80,6 +83,8 @@ public partial class Player : Character
 		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps");	// TODO: PLACEHOLDER
 
         CurrentPlayerPosition = GlobalPosition;
+
+        ManagePointerBehavior();
 
         if(_canRegenStamina && _staminaCurrent < StaminaMax)
         {
@@ -312,5 +317,29 @@ public partial class Player : Character
         _fadeTween = CreateTween();
         _fadeTween.TweenProperty(StaminaBar, "modulate:a", targetAlpha, duration)
               .SetTrans(Tween.TransitionType.Cubic);
+    }
+
+    private void ManagePointerBehavior()
+    {
+        RotatePointer();
+        FadePointer();
+    }
+
+    private void RotatePointer()
+    {
+        PointerSprite.Rotation = PointerSprite.GlobalPosition.AngleToPoint(Escape.CurrentEscapePosition) + Mathf.Pi / 2;
+    }
+
+    private void FadePointer()
+    {
+        bool shouldBeVisible = (GlobalPosition - Escape.CurrentEscapePosition).Length() >= 80.0f;
+        float targetAlpha = shouldBeVisible ? 1.0f : 0.0f;
+
+        if(_pointerTween != null && _pointerTween.IsRunning()) _pointerTween.Kill();
+    
+        _pointerTween = CreateTween();
+        _pointerTween.TweenProperty(PointerSprite, "modulate:a", targetAlpha, 0.25f)
+             .SetTrans(Tween.TransitionType.Cubic)
+             .SetEase(Tween.EaseType.Out);
     }
 }
