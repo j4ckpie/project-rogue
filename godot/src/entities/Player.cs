@@ -54,6 +54,7 @@ public partial class Player : Character
     public static float TotalXp { get; private set; }
     public static float StartTime {get; private set; }
     public static int TotalMeleeElims { get; private set; }
+    public static int PlayerLvl { get; private set; } = 1;
 
     public float StaminaMax { get; private set; } = 100.0f;
     private float _staminaRate = 25.0f;
@@ -284,6 +285,7 @@ public partial class Player : Character
         float xpDiff = Xp - 100.0f; // todo change 100.0f to xp stages
         Xp = xpDiff;
         Lvl++;
+        PlayerLvl = Lvl;
 
         // todo: temporary, create GameManager in the futre VVV
         MaxHealth *= 1.125f;

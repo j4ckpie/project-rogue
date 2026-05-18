@@ -94,13 +94,13 @@ public partial class EndRun : CanvasLayer
         int seconds = (int)totalTime % 60;
 
         int score = (int)((Player.TotalMeleeElims * 400.0f)
-            + (Player.Lvl * 200.0f)
+            + (Player.PlayerLvl * 200.0f)
             + (Player.TotalXp * 5.0f)
             + (10000.0f / totalTime * 100.0f));
 
         TotalMeleeElims.Text = Player.TotalMeleeElims.ToString();
         TotalXp.Text = ((int)Player.TotalXp).ToString();
-        TotalLvl.Text = Player.Lvl.ToString();
+        TotalLvl.Text = Player.PlayerLvl.ToString();
         TotalTimeSpent.Text = $"{minutes}m, {seconds}s";
         TotalScore.Text = score.ToString();
 
