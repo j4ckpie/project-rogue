@@ -67,7 +67,7 @@ public partial class Enemy : Character
     public override void _on_animation_player_animation_finished(string animName)
 	{
 		base._on_animation_player_animation_finished(animName);
-		if(animName == AnimDeathName)
+		if(animName.Equals(AnimDeathName))
 		{
 			Tween deleteTween = CreateTween();
 			deleteTween.TweenInterval(2.0f);
@@ -147,11 +147,6 @@ public partial class Enemy : Character
             EmitSignal(SignalName.LeveledUp, Lvl);
         }
     }
-
-	// protected override void Death()
-	// {
-	// 	base.Death();
-	// }
 
     protected override void UpdateSpriteDirection()
 	{

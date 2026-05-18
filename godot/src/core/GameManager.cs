@@ -3,12 +3,31 @@ using System;
 
 public partial class GameManager : Node2D
 {
+    [ExportGroup("Nodes")]
+    [Export]
+    public PackedScene PauseScene { get; private set; }
+
+    [ExportGroup("Basic Variables")]
+    [Export]
+    public string ActionPauseName { get; private set; } = "pause";
+
     private ColorRect _fadeRect;
     private CanvasLayer _layer;
+    private CanvasLayer _pauseView;
 
     public override void _Ready()
     {
         CreateCanvasLayer();
+        
+        if(PauseScene == null)
+        {
+            PauseScene = GD.Load<PackedScene>("res://scenes/ui/Pause.tscn");
+        }
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if(@event.IsActionPressed(ActionPauseName)) TogglePause();
     }
 
     public void _on_dungeon_generator_generation_completed()
@@ -34,5 +53,20 @@ public partial class GameManager : Node2D
         tween.TweenProperty(_fadeRect, "modulate:a", 0.0f, 0.8f)
               .SetTrans(Tween.TransitionType.Cubic);
         tween.Chain().TweenCallback(Callable.From(_layer.QueueFree));
+    }
+
+    private void TogglePause()
+    {
+        if(!GetTree().Paused)
+        {
+            GetTree().Paused = true;
+            _pauseView = PauseScene.Instantiate<CanvasLayer>();
+            AddChild(_pauseView);
+        }
+        else
+        {
+            GetTree().Paused = false;
+            _pauseView.QueueFree();
+        }
     }
 }

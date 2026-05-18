@@ -13,6 +13,11 @@ public partial class DeathState : State
 
         _character.SetDeferred(CollisionObject2D.PropertyName.CollisionLayer, 0u);
         _character.SetDeferred(CollisionObject2D.PropertyName.CollisionMask, 0u);
+
+        if(_character is Player)
+        {
+            _character.DeathSequence();
+        }
     }
 
     public override void OnAnimationFinished(string animName)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cobs305pcfo7m"]
+[gd_scene load_steps=18 format=3 uid="uid://cobs305pcfo7m"]
 
 [ext_resource type="Shader" path="res://shaders/Sheer.gdshader" id="1_7ue8v"]
 [ext_resource type="Script" path="res://src/ui/HUD.cs" id="1_cbt4a"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dgw6wenfbgrbe" path="res://sprites/Crosshair/crosshair.png" id="2_rno4s"]
 [ext_resource type="FontFile" uid="uid://dw8pamdidq86k" path="res://fonts/Jacquard12-Regular.ttf" id="3_rd8dw"]
 [ext_resource type="FontFile" uid="uid://2dh2a0wtqnm7" path="res://fonts/PixelifySans-Bold.ttf" id="4_64vef"]
+[ext_resource type="FontFile" uid="uid://bkl3mwsb7ggjg" path="res://fonts/PixelifySans-Regular.ttf" id="7_xcsng"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qt5t5"]
 texture = ExtResource("2_ml4ek")
@@ -166,3 +167,28 @@ texture_under = SubResource("GradientTexture2D_5761n")
 texture_progress = SubResource("GradientTexture2D_5761n")
 tint_under = Color(0.431373, 0.380392, 0, 0)
 tint_progress = Color(0.512195, 0.807066, 1, 1)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -179.0
+offset_right = -1.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 0.498039)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("7_xcsng")
+theme_override_font_sizes/font_size = 5
+text = "WASD - Movement
+L Shift - Sprint
+L Alt - Sneak
+Mouse - Look
+LMB - Light Attack
+RMB - Heavy Attack
+Space - Shoot"
+horizontal_alignment = 2
+vertical_alignment = 2

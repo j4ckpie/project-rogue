@@ -1,0 +1,306 @@
+[gd_scene load_steps=10 format=3 uid="uid://bjr2hhkxnlntm"]
+
+[ext_resource type="Script" path="res://src/ui/Death.cs" id="1_8d14b"]
+[ext_resource type="FontFile" uid="uid://2dh2a0wtqnm7" path="res://fonts/PixelifySans-Bold.ttf" id="2_gwfuh"]
+[ext_resource type="FontFile" uid="uid://bkl3mwsb7ggjg" path="res://fonts/PixelifySans-Regular.ttf" id="3_und8u"]
+
+[sub_resource type="Animation" id="Animation_tk0js"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VBoxContainer/Label:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("VBoxContainer/HSeparator:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("VBoxContainer/Label3:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("VBoxContainer/HBoxContainer6:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_eml74"]
+resource_name = "fade_in"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Background:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5o4hs"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_11lhq"]
+resource_name = "show"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer/Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("VBoxContainer/HSeparator:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.5, 2.60333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("VBoxContainer/Label3:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.5, 2.60333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("VBoxContainer/HBoxContainer6:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.5, 2.60333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gxyhm"]
+_data = {
+"RESET": SubResource("Animation_tk0js"),
+"fade_in": SubResource("Animation_eml74"),
+"fade_out": SubResource("Animation_5o4hs"),
+"show": SubResource("Animation_11lhq")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4gj3n"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Death" type="CanvasLayer" node_paths=PackedStringArray("AnimPlayer", "YesButton", "NoButton")]
+process_mode = 3
+layer = 128
+script = ExtResource("1_8d14b")
+AnimPlayer = NodePath("AnimationPlayer")
+YesButton = NodePath("VBoxContainer/HBoxContainer6/YesButton")
+NoButton = NodePath("VBoxContainer/HBoxContainer6/NoButton")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gxyhm")
+}
+
+[node name="Background" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -99.5
+offset_top = -54.0
+offset_right = 99.5
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_gwfuh")
+text = "- YOU'RE DEAD -"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_und8u")
+theme_override_font_sizes/font_size = 12
+text = "- PLAY AGAIN? -"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer6" type="VBoxContainer" parent="VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="YesButton" type="Button" parent="VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_und8u")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/focus = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4gj3n")
+text = "Yes!"
+
+[node name="NoButton" type="Button" parent="VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_und8u")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/focus = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_4gj3n")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4gj3n")
+text = "No...
+"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="mouse_entered" from="VBoxContainer/HBoxContainer6/YesButton" to="." method="_on_yes_button_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/HBoxContainer6/YesButton" to="." method="_on_yes_button_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer6/YesButton" to="." method="_on_yes_button_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/HBoxContainer6/NoButton" to="." method="_on_no_button_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/HBoxContainer6/NoButton" to="." method="_on_no_button_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer6/NoButton" to="." method="_on_no_button_pressed"]

@@ -143,6 +143,8 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	public abstract void AfterHeavyAttack();
 	public abstract void AfterShoot();
 
+	public virtual void DeathSequence() {}
+
 	public void PlayFadeAnimation(Node targetBody, float targetAlpha, float duration)
     {
         if(_fadeTween != null && _fadeTween.IsRunning())

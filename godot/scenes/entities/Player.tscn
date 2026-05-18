@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://3ge6xu5jyc62"]
+[gd_scene load_steps=31 format=3 uid="uid://3ge6xu5jyc62"]
 
 [ext_resource type="Script" path="res://src/entities/Player.cs" id="1_8cjk2"]
 [ext_resource type="Texture2D" uid="uid://df7hcg84ravtb" path="res://sprites/Soldier/Soldier.png" id="2_7kh3q"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://baejn2du4r8qi" path="res://scenes/entities/Arrow.tscn" id="2_w8j0u"]
 [ext_resource type="Script" path="res://src/core/Camera.cs" id="4_cudoe"]
 [ext_resource type="Texture2D" uid="uid://dvng1bluoquj" path="res://sprites/Soldier/Soldier-Attack01_Effect.png" id="5_521lb"]
+[ext_resource type="PackedScene" uid="uid://bjr2hhkxnlntm" path="res://scenes/ui/Death.tscn" id="5_b17lu"]
 [ext_resource type="PackedScene" uid="uid://btoe4bl7ckamv" path="res://scenes/ui/XpPopUp.tscn" id="5_cmy2n"]
 [ext_resource type="Texture2D" uid="uid://ulbt77jso2sj" path="res://sprites/Soldier/Soldier-Attack02_Effect.png" id="6_yx4bu"]
 [ext_resource type="Texture2D" uid="uid://cqrenijwkiif2" path="res://sprites/Soldier/Soldier-Attack03_Effect.png" id="7_86d6d"]
@@ -476,6 +477,8 @@ size = Vector2(87, 66)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lcrtj"]
 shader = ExtResource("12_ke554")
+shader_parameter/flip = false
+shader_parameter/triangle_color = Color(1, 1, 1, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_opk47"]
 
@@ -487,6 +490,7 @@ PointerSprite = NodePath("Pointer")
 Explosion = ExtResource("2_h06ik")
 ArrowSprite = ExtResource("2_w8j0u")
 XpPopUp = ExtResource("5_cmy2n")
+DeathScene = ExtResource("5_b17lu")
 PlayerCamera = NodePath("Camera2D")
 StaminaBar = NodePath("StaminaTextureProgressBar")
 StaminaRegenTimer = NodePath("StaminaTimer")

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class EndRun : CanvasLayer
+public partial class Death : CanvasLayer
 {
     [ExportGroup("Nodes")]
     [Export]
@@ -10,17 +10,6 @@ public partial class EndRun : CanvasLayer
     public Button YesButton { get; private set; }
     [Export]
     public Button NoButton { get; private set; }
-    [Export]
-    public Label TotalMeleeElims { get; private set; }
-    [Export]
-    public Label TotalXp { get; private set; }
-    [Export]
-    public Label TotalLvl { get; private set; }
-    [Export]
-    public Label TotalTimeSpent { get; private set; }
-    [Export]
-    public Label TotalScore { get; private set; }
-
 
     [ExportGroup("Basic Variables")]
     [Export]
@@ -28,21 +17,23 @@ public partial class EndRun : CanvasLayer
     [Export]
     public string FadeOutAnimName { get; private set; } = "fade_out";
     [Export]
-    public string ShowStatsAnimName { get; private set; } = "show_stats";
+    public string ShowAnimName { get; private set; } = "show";
 
     private int _exitDecision;
-
+    
     public override void _Ready()
     {
         Visible = true;
         AnimPlayer.Play(FadeInAnimName);
+        GetTree().Paused = true;
+        Input.MouseMode = Input.MouseModeEnum.Visible;
     }
 
     public void _on_animation_player_animation_finished(string animName)
     {
         if(animName.Equals(FadeInAnimName))
         {
-            SetupStats();
+            AnimPlayer.Play(ShowAnimName);
         }
         else if(animName.Equals(FadeOutAnimName))
         {
@@ -85,25 +76,5 @@ public partial class EndRun : CanvasLayer
     {
         _exitDecision = 0;
         AnimPlayer.Play(FadeOutAnimName);
-    }
-
-    private void SetupStats()
-    {
-        float totalTime = Time.GetTicksMsec() / 1000.0f - Player.StartTime;
-        int minutes = (int)totalTime / 60;
-        int seconds = (int)totalTime % 60;
-
-        int score = (int)((Player.TotalMeleeElims * 400.0f)
-            + (Player.Lvl * 200.0f)
-            + (Player.TotalXp * 5.0f)
-            + (10000.0f / totalTime * 100.0f));
-
-        TotalMeleeElims.Text = Player.TotalMeleeElims.ToString();
-        TotalXp.Text = ((int)Player.TotalXp).ToString();
-        TotalLvl.Text = Player.Lvl.ToString();
-        TotalTimeSpent.Text = $"{minutes}m, {seconds}s";
-        TotalScore.Text = score.ToString();
-
-        AnimPlayer.Play(ShowStatsAnimName);
     }
 }

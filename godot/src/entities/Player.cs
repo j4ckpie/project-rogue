@@ -12,6 +12,8 @@ public partial class Player : Character
 	public PackedScene ArrowSprite { get; private set; }
     [Export]
 	public PackedScene XpPopUp { get; private set; }
+    [Export]
+    public PackedScene DeathScene { get; private set; }
 	[Export]
 	public Control CrosshairSprite { get; private set; }
     [Export]
@@ -195,6 +197,16 @@ public partial class Player : Character
         GetTree().CurrentScene.AddChild(arrow);
     }
 
+    public override void DeathSequence()
+    {
+        if(DeathScene == null)
+        {
+            DeathScene = GD.Load<PackedScene>("res://scenes/ui/Death.tscn");
+        }
+        Death deathView = DeathScene.Instantiate<Death>();
+        AddChild(deathView);
+    }
+
     protected override void CheckUpdateXp(float amount)
     {
         if(amount != 0)
@@ -265,12 +277,6 @@ public partial class Player : Character
     {
         return base.Shoot();
     }
-
-    // protected override void Death()
-    // {
-    //     // TODO: saving, ui animation etc
-    //     base.Death();
-    // }
 
     private void LevelUp()
     {

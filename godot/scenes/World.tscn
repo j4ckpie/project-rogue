@@ -45,6 +45,7 @@ glow_blend_mode = 1
 y_sort_enabled = true
 
 [node name="GameManager" type="Node2D" parent="."]
+process_mode = 3
 script = ExtResource("1_44ul0")
 
 [node name="DungeonGenerator" type="Node2D" parent="."]
