@@ -42,7 +42,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	[Export]
 	public string AnimTakeDamageName { get; private set; } = "take_damage";
 
-	public static int Lvl { get; protected set; }
+	public int Lvl { get; protected set; }
 	public float Xp { get; protected set; } = 0.0f;
 	public bool IsSprinting { get; protected set; } = false;
 	public bool IsSneaking { get; protected set; } = false;
