@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=4 uid="uid://cp36vnr04s6bp"]
+
+[ext_resource type="PackedScene" uid="uid://dj0em66l2e2ga" path="res://scenes/rooms/BaseRoom.tscn" id="1_fmkav"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wbyp6"]
+size = Vector2(112, 95)
+
+[node name="EndRoom3" node_paths=PackedStringArray("PossiblePositions") instance=ExtResource("1_fmkav")]
+PossiblePositions = [NodePath("EnemyLoc"), NodePath("EnemyLoc2")]
+EntranceWidth = 3
+
+[node name="TileMapLayer" parent="." index="0"]
+position = Vector2(8, -80)
+tile_map_data = PackedByteArray("AAAAAAAAAAAGAAgAAAABAAAAAAAGAAgAAAACAAAAAAAHAAgAAAAAAAQAAAAGAAgAAAAAAAMAAAAGAAgAAAAAAAIAAAAGAAgAAAAAAAEAAAAGAAgAAAABAAEAAAAGAAgAAAACAAIAAAAHAAgAAAACAAEAAAAHAAgAAAABAAIAAAAGAAgAAAABAAMAAAAGAAgAAAACAAMAAAAHAAgAAAACAAQAAAAHAAkAAAABAAQAAAAKAAkAAAD//wQAAAAGAAgAAAD+/wQAAAAGAAgAAAD9/wQAAAAJAAkAAAD8/wQAAAAFAAkAAAD8////AAAFAAcAAAD8/wAAAAAFAAgAAAD8/wEAAAAFAAgAAAD8/wIAAAAFAAgAAAD8/wMAAAAFAAgAAAD9////AAAGAAcAAAD9/wAAAAAGAAgAAAD9/wEAAAAGAAgAAAD9/wIAAAAGAAgAAAD9/wMAAAAGAAgAAAD+////AAAGAAcAAAD+/wAAAAAGAAgAAAD+/wEAAAAGAAgAAAD+/wIAAAAGAAgAAAD+/wMAAAAGAAgAAAD/////AAAGAAcAAAD//wAAAAAGAAgAAAD//wEAAAAGAAgAAAD//wIAAAAGAAgAAAD//wMAAAAGAAgAAAAAAP//AAAGAAcAAAABAP//AAAGAAcAAAACAP//AAAHAAcAAAA=")
+
+[node name="Entrance" type="Marker2D" parent="." index="1"]
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, -48.5)
+shape = SubResource("RectangleShape2D_wbyp6")
+
+[node name="EnemyLoc" parent="." index="3"]
+position = Vector2(-25, -49)
+
+[node name="EnemyLoc2" type="Marker2D" parent="." index="4"]
+position = Vector2(27, -49)

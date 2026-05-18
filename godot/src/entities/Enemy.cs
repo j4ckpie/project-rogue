@@ -7,7 +7,7 @@ public partial class Enemy : Character
 	[Export]
 	public float ChaseRange { get; protected set; } = 250.0f;
 	[Export]
-	public float AttackRange { get; protected set; } = 45.0f;
+	public float AttackRange { get; protected set; } = 30.0f;
 	[Export]
 	public float AttackCooldown { get; protected set; } = 2.0f;
 
@@ -16,6 +16,10 @@ public partial class Enemy : Character
 	public Timer SlownessTimer { get; protected set; }
 	[Export]
 	public Label DisplayedLvl { get; protected set; }
+	[Export]
+	public PackedScene DamagePopUp { get; protected set; }
+	[Export]
+	public VisibleOnScreenNotifier2D VisibilityNotifier { get; private set; }
 
 	[ExportGroup("Base Variables")]
 	[Export]
@@ -26,11 +30,21 @@ public partial class Enemy : Character
 
     public override void _Ready()
     {
+		// i have no clue why this exact export isn't working
+		if(DamagePopUp == null)
+    	{
+        	DamagePopUp = GD.Load<PackedScene>("res://scenes/ui/DamagePopUp.tscn");
+    	}
         base._Ready();
     }
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if(!VisibilityNotifier.IsOnScreen())
+		{
+			Velocity = Vector2.Zero;
+			return;
+		}
 		if(!IsDead)
 		{
 			if(_knockbackVelocity != Vector2.Zero)
@@ -53,7 +67,7 @@ public partial class Enemy : Character
     public override void _on_animation_player_animation_finished(string animName)
 	{
 		base._on_animation_player_animation_finished(animName);
-		if(animName == AnimDeathName)
+		if(animName.Equals(AnimDeathName))
 		{
 			Tween deleteTween = CreateTween();
 			deleteTween.TweenInterval(2.0f);
@@ -107,6 +121,16 @@ public partial class Enemy : Character
 	{
 	}
 
+    protected override void SpawnDamagePopUp()
+    {
+        PopUp popup = DamagePopUp.Instantiate<PopUp>();
+    
+        GetTree().CurrentScene.AddChild(popup);
+	
+        popup.GlobalPosition = GlobalPosition + new Vector2((float)GD.RandRange(-30, 15), (float)GD.RandRange(-30, 0));
+        popup.Start(LastDamageTaken, "-", "HP");
+    }
+
 	protected override void CheckUpdateXp(float amount)
     {
         Xp += amount;
@@ -124,22 +148,19 @@ public partial class Enemy : Character
         }
     }
 
-	// protected override void Death()
-	// {
-	// 	base.Death();
-	// }
-
     protected override void UpdateSpriteDirection()
 	{
 		if(GlobalPosition.X - Player.CurrentPlayerPosition.X > 0)
 		{
 			TargetSprite.FlipH = true;
 			AttackAreas.Scale = new Vector2(-1, 1);
+			DustParticles.Direction = new Vector2(1, 0);
 		}
 		else if(GlobalPosition.X - Player.CurrentPlayerPosition.X < 0)
 		{
 			TargetSprite.FlipH = false;
 			AttackAreas.Scale = new Vector2(1, 1);
+			DustParticles.Direction = new Vector2(-1, 0);
 		}
 	}
 

@@ -1,0 +1,194 @@
+[gd_scene load_steps=18 format=3 uid="uid://cobs305pcfo7m"]
+
+[ext_resource type="Shader" path="res://shaders/Sheer.gdshader" id="1_7ue8v"]
+[ext_resource type="Script" path="res://src/ui/HUD.cs" id="1_cbt4a"]
+[ext_resource type="Texture2D" uid="uid://dwnfxnfg87ekg" path="res://sprites/UI/frame.png" id="2_ml4ek"]
+[ext_resource type="Texture2D" uid="uid://dgw6wenfbgrbe" path="res://sprites/Crosshair/crosshair.png" id="2_rno4s"]
+[ext_resource type="FontFile" uid="uid://dw8pamdidq86k" path="res://fonts/Jacquard12-Regular.ttf" id="3_rd8dw"]
+[ext_resource type="FontFile" uid="uid://2dh2a0wtqnm7" path="res://fonts/PixelifySans-Bold.ttf" id="4_64vef"]
+[ext_resource type="FontFile" uid="uid://bkl3mwsb7ggjg" path="res://fonts/PixelifySans-Regular.ttf" id="7_xcsng"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qt5t5"]
+texture = ExtResource("2_ml4ek")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_x5lm7"]
+diffuse_texture = ExtResource("2_rno4s")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4e5y7"]
+shader = ExtResource("1_7ue8v")
+
+[sub_resource type="Gradient" id="Gradient_dstqu"]
+colors = PackedColorArray(0, 0.42446, 0.831782, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_em67s"]
+gradient = SubResource("Gradient_dstqu")
+width = 4
+height = 4
+fill_from = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dom7q"]
+shader = ExtResource("1_7ue8v")
+
+[sub_resource type="Gradient" id="Gradient_a53p8"]
+colors = PackedColorArray(0.720928, 0.855998, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ysjsw"]
+gradient = SubResource("Gradient_a53p8")
+width = 4
+height = 4
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_7se8w"]
+colors = PackedColorArray(0, 0.439764, 0.90221, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5761n"]
+gradient = SubResource("Gradient_7se8w")
+width = 4
+height = 4
+fill_from = Vector2(1, 1)
+
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("HealthBar", "DamageBar", "XpBar", "NewXpBar", "DisplayedLvl")]
+script = ExtResource("1_cbt4a")
+HealthBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/HealthProgressBar")
+DamageBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer/DamageProgressBar")
+XpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/XpProgressBar")
+NewXpBar = NodePath("HBoxContainer/VBoxContainer/MarginContainer2/NewXpProgressBar")
+DisplayedLvl = NodePath("HBoxContainer/LevelFrame/VBoxContainer2/MarginContainer/Level")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 196.0
+offset_bottom = 42.0
+theme_override_constants/separation = 10
+
+[node name="LevelFrame" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_qt5t5")
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/LevelFrame"]
+visible = false
+layout_mode = 2
+texture = SubResource("CanvasTexture_x5lm7")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/LevelFrame"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/LevelFrame/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_bottom = -3
+
+[node name="Level" type="Label" parent="HBoxContainer/LevelFrame/VBoxContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_rd8dw")
+theme_override_font_sizes/font_size = 24
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/LevelFrame/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_right = -1
+
+[node name="Desc" type="Label" parent="HBoxContainer/LevelFrame/VBoxContainer2/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("4_64vef")
+theme_override_font_sizes/font_size = 5
+text = "lvl"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+
+[node name="DamageProgressBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer/MarginContainer"]
+material = SubResource("ShaderMaterial_4e5y7")
+custom_minimum_size = Vector2(140, 6)
+layout_mode = 2
+size_flags_horizontal = 0
+step = 0.001
+value = 100.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_em67s")
+texture_progress = SubResource("GradientTexture2D_em67s")
+tint_under = Color(0, 0.301961, 0.0666667, 0.776471)
+tint_progress = Color(0.994436, 0.011626, 3.85046e-07, 1)
+
+[node name="HealthProgressBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer/MarginContainer"]
+material = SubResource("ShaderMaterial_4e5y7")
+custom_minimum_size = Vector2(140, 6)
+layout_mode = 2
+size_flags_horizontal = 0
+step = 0.001
+value = 100.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_em67s")
+texture_progress = SubResource("GradientTexture2D_em67s")
+tint_under = Color(0, 0.301961, 0.0666667, 0)
+tint_progress = Color(0, 1, 0.305882, 1)
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="NewXpProgressBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer/MarginContainer2"]
+material = SubResource("ShaderMaterial_dom7q")
+custom_minimum_size = Vector2(120, 4)
+layout_mode = 2
+size_flags_horizontal = 0
+step = 0.001
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_ysjsw")
+texture_progress = SubResource("GradientTexture2D_ysjsw")
+tint_under = Color(7.21961e-07, 0.353386, 0.466749, 0.776471)
+tint_progress = Color(0, 0.94902, 0.941176, 1)
+
+[node name="XpProgressBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer/MarginContainer2"]
+material = SubResource("ShaderMaterial_dom7q")
+custom_minimum_size = Vector2(120, 4)
+layout_mode = 2
+size_flags_horizontal = 0
+step = 0.001
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_5761n")
+texture_progress = SubResource("GradientTexture2D_5761n")
+tint_under = Color(0.431373, 0.380392, 0, 0)
+tint_progress = Color(0.512195, 0.807066, 1, 1)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -179.0
+offset_right = -1.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 0.498039)
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("7_xcsng")
+theme_override_font_sizes/font_size = 5
+text = "WASD - Movement
+L Shift - Sprint
+L Alt - Sneak
+Mouse - Look
+LMB - Light Attack
+RMB - Heavy Attack
+Space - Shoot"
+horizontal_alignment = 2
+vertical_alignment = 2

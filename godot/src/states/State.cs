@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public abstract partial class State
+public abstract partial class State : Node
 {
     protected Character _character;
 

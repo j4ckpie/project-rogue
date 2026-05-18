@@ -13,6 +13,8 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	public AnimationPlayer AnimPlayer { get; private set; }
 	[Export]
     public Node2D AttackAreas { get; private set; }
+	[Export]
+	public CpuParticles2D DustParticles { get; protected set; }
 
 	[ExportGroup("Base Variables")]
 	[Export]
@@ -40,7 +42,7 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	[Export]
 	public string AnimTakeDamageName { get; private set; } = "take_damage";
 
-	public int Lvl { get; protected set; } = 1;
+	public static int Lvl { get; protected set; }
 	public float Xp { get; protected set; } = 0.0f;
 	public bool IsSprinting { get; protected set; } = false;
 	public bool IsSneaking { get; protected set; } = false;
@@ -51,11 +53,12 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	public float CurrentSpeedMultiplier { get; set; } = 1.0f;
 	public float SprintSpeedMultiplier { get; protected set; } = 1.75f;
 	public float SneakSpeedMultiplier { get; protected set; } = 0.5f;
+	public float MaxHealth { get; protected set; } = 100.0f;
+	public float LastDamageTaken { get; private set; }
 	protected State _currentState;
 	protected Vector2 _desiredVelocity = Vector2.Zero;
 	protected float _acceleration = 12.0f;
 	protected float _friction = 7.0f;
-	protected float _maxHealth = 100.0f;
 	protected float _statusSpeedMultiplier = 1.0f;
 	protected float _baseStatusSpeedMultiplier = 1.0f;
 	protected Tween _fadeTween;
@@ -63,10 +66,11 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	[Signal]
     public delegate void XpChangedEventHandler(float amount);
 	[Signal]
-    public delegate void LeveledUpEventHandler(int amount);
+    public delegate void LeveledUpEventHandler(int amount, float lvl);
 
 	public override void _Ready()
 	{
+		Lvl = 1;
 		ChangeState(new IdleState(this));
 	}
 
@@ -104,6 +108,8 @@ public abstract partial class Character : CharacterBody2D, IDamageable
     {
 		if(_currentState is DeathState) return 0;
         Health -= amount;
+		LastDamageTaken = amount;
+		SpawnDamagePopUp();
 		if(Health <= 0)
 		{
 			ChangeState(new DeathState(this));
@@ -137,6 +143,8 @@ public abstract partial class Character : CharacterBody2D, IDamageable
 	public abstract void AfterHeavyAttack();
 	public abstract void AfterShoot();
 
+	public virtual void DeathSequence() {}
+
 	public void PlayFadeAnimation(Node targetBody, float targetAlpha, float duration)
     {
         if(_fadeTween != null && _fadeTween.IsRunning())
@@ -147,6 +155,8 @@ public abstract partial class Character : CharacterBody2D, IDamageable
         _fadeTween.TweenProperty(targetBody, "modulate:a", targetAlpha, duration)
               .SetTrans(Tween.TransitionType.Cubic);
     }
+
+	protected virtual void SpawnDamagePopUp() {}
 
 	protected abstract void CheckUpdateXp(float amount);
 

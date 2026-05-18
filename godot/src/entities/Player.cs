@@ -1,15 +1,19 @@
 using Godot;
-using Godot.NativeInterop;
 using System;
-using System.ComponentModel;
 
 public partial class Player : Character
 {
     [ExportGroup("Nodes")]
     [Export]
+    public Sprite2D PointerSprite { get; private set; }
+    [Export]
+	public PackedScene Explosion { get; private set; }
+    [Export]
 	public PackedScene ArrowSprite { get; private set; }
     [Export]
 	public PackedScene XpPopUp { get; private set; }
+    [Export]
+    public PackedScene DeathScene { get; private set; }
 	[Export]
 	public Control CrosshairSprite { get; private set; }
     [Export]
@@ -47,11 +51,14 @@ public partial class Player : Character
     public delegate void HpChangedEventHandler(float amount);
 
     public static Vector2 CurrentPlayerPosition { get; private set; }
+    public static float TotalXp { get; private set; }
+    public static float StartTime {get; private set; }
+    public static int TotalMeleeElims { get; private set; }
 
-    private float _staminaMax = 100.0f;
+    public float StaminaMax { get; private set; } = 100.0f;
     private float _staminaRate = 25.0f;
     private float _staminaDelay = 2.0f;
-    private float _healthRate = 1.0f;
+    private float _healthRate = 5.0f;
     private float _healthDelay = 5.0f;
 	private float _knockbackForce = 175.0f;
     private float _attackShakeIntensity = 1.25f;
@@ -61,13 +68,20 @@ public partial class Player : Character
     private bool _canRegenStamina = true;
     private bool _canRegenHealth = true;
     private bool _canHeavyAttack = true;
+    private Tween _pointerTween;
     
     public override void _Ready()
 	{
         base._Ready();
 
-		Engine.MaxFps = 0;	// TODO: PLACEHOLDER
+		Engine.MaxFps = 0;
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
+
+        TotalXp = 0;
+        TotalMeleeElims = 0;
+        StartTime = Time.GetTicksMsec() / 1000.0f;
+
+        GlobalPosition = Vector2.Zero;
         StaminaBar.Value = _staminaCurrent;
 	}
 
@@ -75,19 +89,21 @@ public partial class Player : Character
 	{
         base._Process(delta);
 
-		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps");	// TODO: PLACEHOLDER
+		DisplayServer.WindowSetTitle("Rogue | " + Engine.GetFramesPerSecond() + " fps");
 
         CurrentPlayerPosition = GlobalPosition;
 
-        if(_canRegenStamina && _staminaCurrent < _staminaMax)
+        ManagePointerBehavior();
+
+        if(_canRegenStamina && _staminaCurrent < StaminaMax)
         {
-            _staminaCurrent = Mathf.MoveToward(_staminaCurrent, _staminaMax, _staminaRate * (float)delta);
+            _staminaCurrent = Mathf.MoveToward(_staminaCurrent, StaminaMax, _staminaRate * (float)delta);
             StaminaBar.Value = _staminaCurrent;
         }
 
-        if(_canRegenHealth && Health < _maxHealth)
+        if(_canRegenHealth && Health < MaxHealth)
         {
-            Health = Mathf.MoveToward(Health, _maxHealth, _healthRate * (float)delta);
+            Health = Mathf.MoveToward(Health, MaxHealth, _healthRate * (float)delta);
             EmitSignal(SignalName.HpChanged, Health);
         }
 	}
@@ -181,21 +197,28 @@ public partial class Player : Character
         GetTree().CurrentScene.AddChild(arrow);
     }
 
+    public override void DeathSequence()
+    {
+        if(DeathScene == null)
+        {
+            DeathScene = GD.Load<PackedScene>("res://scenes/ui/Death.tscn");
+        }
+        Death deathView = DeathScene.Instantiate<Death>();
+        AddChild(deathView);
+    }
+
     protected override void CheckUpdateXp(float amount)
     {
         if(amount != 0)
         {
             Xp += amount;
+            TotalXp += amount;
+            TotalMeleeElims++;
             SpawnXpPopup(amount);
             EmitSignal(SignalName.XpChanged, Xp);
             if(Xp >= 100.0f)
             {
-                // todo: upgrades etc
-                float xpDiff = Xp - 100.0f; // todo change 100.0f to xp stages
-                Xp = xpDiff;
-                Lvl++;
-                EmitSignal(SignalName.XpChanged, Xp);
-                EmitSignal(SignalName.LeveledUp, Lvl);
+                LevelUp();
             }
         }
     }
@@ -204,13 +227,15 @@ public partial class Player : Character
     {
         if(GlobalPosition.X - GetGlobalMousePosition().X > 0)
 		{
-			TargetSprite.FlipH = true;
+            TargetSprite.Scale = new Vector2(-1 ,1);
             AttackAreas.Scale = new Vector2(-1, 1);
+            DustParticles.Direction = new Vector2(1, 0);
 		}
 		else if(GlobalPosition.X - GetGlobalMousePosition().X < 0)
 		{
-			TargetSprite.FlipH = false;
+            TargetSprite.Scale = new Vector2(1,1);
             AttackAreas.Scale = new Vector2(1, 1);
+            DustParticles.Direction = new Vector2(-1, 0);
 		}
     }
 
@@ -242,6 +267,10 @@ public partial class Player : Character
     protected virtual void MidHeavyAttack()
     {
         PlayerCamera.StartCameraShake(_heavyAttackShakeIntensity);
+        Explosion effect = Explosion.Instantiate<Explosion>();
+        if(TargetSprite.Scale.X == -1) effect.Position = new Vector2(-13, 7);
+        else effect.Position = new Vector2(13, 7);
+        AddChild(effect);
     }
 
     protected override bool Shoot()
@@ -249,20 +278,37 @@ public partial class Player : Character
         return base.Shoot();
     }
 
-    // protected override void Death()
-    // {
-    //     // TODO: saving, ui animation etc
-    //     base.Death();
-    // }
+    private void LevelUp()
+    {
+        // todo: upgrades etc
+        float xpDiff = Xp - 100.0f; // todo change 100.0f to xp stages
+        Xp = xpDiff;
+        Lvl++;
+
+        // todo: temporary, create GameManager in the futre VVV
+        MaxHealth *= 1.125f;
+        _healthRate *= 1.075f;
+        StaminaMax *= 1.125f;
+        _staminaRate *= 1.075f;
+        _baseStatusSpeedMultiplier *= 1.075f;
+        _knockbackForce *= 1.05f;
+        BaseDamage *= 1.125f;
+        BaseHeavyDamage *= 1.125f;
+
+        StaminaBar.MaxValue = StaminaMax;
+
+        EmitSignal(SignalName.XpChanged, Xp);
+        EmitSignal(SignalName.LeveledUp, Lvl, MaxHealth);
+    }
 
     private void SpawnXpPopup(float amount)
     {
-        XpPopUp popup = XpPopUp.Instantiate<XpPopUp>();
+        PopUp popup = XpPopUp.Instantiate<PopUp>();
     
         GetTree().CurrentScene.AddChild(popup);
     
         popup.GlobalPosition = GlobalPosition + new Vector2((float)GD.RandRange(-30, 15), (float)GD.RandRange(-30, 0));
-        popup.Start(amount);
+        popup.Start(amount, "+", "XP");
     }
 
     private bool SpendStamina(float amount)
@@ -286,5 +332,29 @@ public partial class Player : Character
         _fadeTween = CreateTween();
         _fadeTween.TweenProperty(StaminaBar, "modulate:a", targetAlpha, duration)
               .SetTrans(Tween.TransitionType.Cubic);
+    }
+
+    private void ManagePointerBehavior()
+    {
+        RotatePointer();
+        FadePointer();
+    }
+
+    private void RotatePointer()
+    {
+        PointerSprite.Rotation = PointerSprite.GlobalPosition.AngleToPoint(Escape.CurrentEscapePosition) + Mathf.Pi / 2;
+    }
+
+    private void FadePointer()
+    {
+        bool shouldBeVisible = (GlobalPosition - Escape.CurrentEscapePosition).Length() >= 80.0f;
+        float targetAlpha = shouldBeVisible ? 1.0f : 0.0f;
+
+        if(_pointerTween != null && _pointerTween.IsRunning()) _pointerTween.Kill();
+    
+        _pointerTween = CreateTween();
+        _pointerTween.TweenProperty(PointerSprite, "modulate:a", targetAlpha, 0.25f)
+             .SetTrans(Tween.TransitionType.Cubic)
+             .SetEase(Tween.EaseType.Out);
     }
 }

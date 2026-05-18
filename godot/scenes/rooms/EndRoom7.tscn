@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=4 uid="uid://dekyuucgmlyux"]
+
+[ext_resource type="PackedScene" uid="uid://dj0em66l2e2ga" path="res://scenes/rooms/BaseRoom.tscn" id="1_kmrmf"]
+[ext_resource type="PackedScene" uid="uid://creklf1dqarnb" path="res://scenes/rooms/RogueTileMapLayer.tscn" id="2_4vryp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kepi4"]
+size = Vector2(80, 31)
+
+[node name="EndRoom7" instance=ExtResource("1_kmrmf")]
+EntranceWidth = 3
+
+[node name="TileMapLayer" parent="." index="0"]
+position = Vector2(8, -80)
+tile_map_data = PackedByteArray("AAAAAAQAAAAGAAgAAAAAAAMAAAAGAAcAAAABAAMAAAAHAAcAAAABAAQAAAAHAAgAAAD//wQAAAAGAAgAAAD+/wQAAAAGAAgAAAD9/wQAAAAFAAgAAAD9/wMAAAAFAAcAAAD+/wMAAAAGAAcAAAD//wMAAAAGAAcAAAA=")
+
+[node name="Entrance" type="Marker2D" parent="." index="1"]
+
+[node name="TileMapLayer2" parent="." index="2" instance=ExtResource("2_4vryp")]
+tile_map_data = PackedByteArray("AAABAP//AAACAAwAAAD/////AAALAA0AAAA=")
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, -16.5)
+shape = SubResource("RectangleShape2D_kepi4")
+
+[node name="EnemyLoc" parent="." index="4"]
+position = Vector2(-13, -8)

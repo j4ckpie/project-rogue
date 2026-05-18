@@ -8,6 +8,7 @@ public partial class MoveState : State
     public override void Enter()
     {
         _character.AnimPlayer.Play(_character.AnimWalkName);
+        _character.DustParticles.Emitting = true;
     }
 
     public override void PhysicsProcess(double delta)
