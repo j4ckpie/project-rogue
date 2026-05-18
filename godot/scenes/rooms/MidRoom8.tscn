@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=4 uid="uid://day7t2mffe07j"]
+[gd_scene load_steps=4 format=4 uid="uid://day7t2mffe07j"]
 
 [ext_resource type="PackedScene" uid="uid://dj0em66l2e2ga" path="res://scenes/rooms/BaseRoom.tscn" id="1_xuyax"]
+[ext_resource type="PackedScene" uid="uid://co3unsskly6k2" path="res://scenes/entities/Spawner.tscn" id="2_7545x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5odc0"]
 size = Vector2(334, 112)
@@ -37,3 +38,7 @@ position = Vector2(222, -20)
 
 [node name="EnemyLoc4" type="Marker2D" parent="." index="7"]
 position = Vector2(292, 23)
+
+[node name="Spawner" parent="." index="8" instance=ExtResource("2_7545x")]
+position = Vector2(168, -1)
+EnemyPrefab = null

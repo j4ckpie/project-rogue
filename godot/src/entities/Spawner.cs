@@ -5,20 +5,37 @@ public partial class Spawner : Node2D
 {
     [ExportGroup("Nodes")]
     [Export]
-    public PackedScene EnemyPrefab { get; private set; }
+    public Godot.Collections.Array<PackedScene> EnemyPrefab { get; private set; }
     [Export]
     public Timer SpawnTimer { get; private set; }
     [Export]
-    public int EnemiesToSpawn { get; private set; } = 30;
+    public int EnemiesToSpawn { get; set; } = 30;
     [Export]
     public Label DisplayEnemiesLeft { get; private set; }
     [Export]
     public PointLight2D Light { get; private set; }
 
+    [ExportGroup("Basic Variables")]
+    [Export]
+    public bool IsTrap { get; private set; } = false;
+
     private int _enemiesSpawned = 0;
+    private int _wave;
 
     public override void _Ready()
     {
+        SetupImports();
+        if(!IsTrap)
+        {
+            if(GD.RandRange(0, 1) < 0.5)
+            {
+                QueueFree();
+                return;
+            }
+            EnemiesToSpawn = GD.RandRange(10, 50);
+            _wave = GD.RandRange(1, 5);
+        }
+
         DisplayEnemiesLeft.Text = EnemiesToSpawn.ToString();
     }
 
@@ -45,13 +62,12 @@ public partial class Spawner : Node2D
 
     private void SpawnEnemy()
     {
-        int wave = GD.RandRange(1, 3);
-        for(int i = 0; i < wave; i++)
+        for(int i = 0; i < _wave; i++)
         {
             _enemiesSpawned++;
             DisplayEnemiesLeft.Text = (EnemiesToSpawn - _enemiesSpawned).ToString();
 
-            Enemy enemy = EnemyPrefab.Instantiate<Enemy>();
+            Enemy enemy = EnemyPrefab.PickRandom().Instantiate<Enemy>();
     
             GetTree().CurrentScene.AddChild(enemy);
     
@@ -65,5 +81,18 @@ public partial class Spawner : Node2D
         tween.Chain().TweenProperty(Light, "energy", 0.0f, 0.125f)
             .SetTrans(Tween.TransitionType.Cubic)
             .SetEase(Tween.EaseType.In);
+    }
+
+    private void SetupImports()
+    {
+        // [export] is not working again...
+        if(EnemyPrefab == null || EnemyPrefab.Count == 0)
+        {
+            EnemyPrefab = new Godot.Collections.Array<PackedScene>
+            {
+                GD.Load<PackedScene>("res://scenes/entities/Orc.tscn"),
+                GD.Load<PackedScene>("res://scenes/entities/DarkOrc.tscn")
+            };
+        }
     }
 }

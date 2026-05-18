@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://co3unsskly6k2"]
+[gd_scene load_steps=9 format=3 uid="uid://co3unsskly6k2"]
 
-[ext_resource type="Texture2D" uid="uid://bbx5u0caoq006" path="res://icon.svg" id="1_7ipf7"]
 [ext_resource type="Script" path="res://src/entities/Spawner.cs" id="1_h63fs"]
 [ext_resource type="PackedScene" uid="uid://brgjr1drfyi84" path="res://scenes/entities/Orc.tscn" id="2_y1yyc"]
+[ext_resource type="PackedScene" uid="uid://brg5q45d53ea4" path="res://scenes/entities/DarkOrc.tscn" id="3_q5vip"]
 [ext_resource type="FontFile" uid="uid://bkl3mwsb7ggjg" path="res://fonts/PixelifySans-Regular.ttf" id="4_3qfgm"]
+[ext_resource type="Texture2D" uid="uid://dyfiscwyro537" path="res://sprites/Spawner/Spawner.png" id="4_ow543"]
 [ext_resource type="Texture2D" uid="uid://dg1lbte1ojj7q" path="res://sprites/LightMasks/lightmask_shallow.png" id="5_p8jta"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4x5n8"]
@@ -14,14 +15,13 @@ size = Vector2(12, 12)
 
 [node name="Spawner" type="Node2D" node_paths=PackedStringArray("SpawnTimer", "DisplayEnemiesLeft", "Light")]
 script = ExtResource("1_h63fs")
-EnemyPrefab = ExtResource("2_y1yyc")
+EnemyPrefab = Array[PackedScene]([ExtResource("2_y1yyc"), ExtResource("3_q5vip")])
 SpawnTimer = NodePath("SpawnTimer")
 DisplayEnemiesLeft = NodePath("Label")
 Light = NodePath("PointLight2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("1_7ipf7")
+texture = ExtResource("4_ow543")
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 0.05
@@ -51,8 +51,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Area2D2" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 7
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
 shape = SubResource("RectangleShape2D_7oub7")
